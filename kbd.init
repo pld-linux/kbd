@@ -13,7 +13,7 @@
 
 [ -f /etc/sysconfig/console ] || exit 0
 
-[ -f /bin/loadkeys -o -f /usr/bin/loadkeys] || exit 0
+[ -f /bin/loadkeys -o -f /usr/bin/loadkeys ] || exit 0
 [ -f /bin/setfont -o -f /usr/bin/setfont ] || exit 0
 
 # Source function library
