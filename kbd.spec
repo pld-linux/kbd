@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.05
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -16,11 +16,13 @@ BuildRequires:	flex
 BuildRequires:	gzip
 BuildRequires:	gettext-devel
 Prereq:		rc-scripts
-Obsoletes:	console-tools
-Obsoletes:	console-data
 Provides:	console-tools
 Provides:	console-data
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	console-data
+Obsoletes:	console-tools
+Obsoletes:	console-tools-devel
+Obsoletes:	console-tools-static
 
 %description
 This package contains utilities to load console fonts and keyboard
