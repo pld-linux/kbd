@@ -94,12 +94,20 @@ case "$1" in
 		if [ $BACKGROUND_COLOUR ]; then
 			/usr/bin/setterm -background $BACKGROUND_COLOUR
 		fi
+		if [ $NUM_LOCK ]; then
+			if [ $NUM_LOCK = "on" ]; then
+				/usr/bin/setleds -D +num
+			else
+				/usr/bin/setleds -D -num
+			fi
+		fi
 		;;
 	stop)
-		/usr/bin/setterm -defaults
+		/usr/bin/setterm -default
+		/usr/bin/setleds -D -num
 		;;
 	status)
-		# Nothing to report
+		/usr/bin/setleds
 		;;
 	*)
 		msg_usage "$0 {start|stop|status|restart}"
