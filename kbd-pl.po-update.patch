@@ -1,6 +1,6 @@
---- kbd-1.09/po/pl.po.orig	2004-01-02 02:32:34.000000000 +0100
-+++ kbd-1.09/po/pl.po	2004-01-03 15:01:13.937100256 +0100
-@@ -1,13 +1,13 @@
+--- kbd-1.10/po/pl.po.orig	2004-01-02 02:32:34.000000000 +0100
++++ kbd-1.10/po/pl.po	2004-01-11 21:17:15.027921208 +0100
+@@ -1,71 +1,75 @@
  # Polish translations for kbd.
 -# Copyright (C) 2002 Free Software Foundation, Inc.
 +# Copyright (C) 2002, 2004 Free Software Foundation, Inc.
@@ -14,72 +14,82 @@
 -"POT-Creation-Date: 2002-10-25 09:40-0400\n"
 -"PO-Revision-Date: 2002-11-23 23:34+0100\n"
 +"Project-Id-Version: kbd 1.09\n"
-+"POT-Creation-Date: 2004-01-03 14:52+0100\n"
-+"PO-Revision-Date: 2004-01-03 14:53+0100\n"
++"POT-Creation-Date: 2004-01-11 21:14+0100\n"
++"PO-Revision-Date: 2004-01-11 21:15+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "MIME-Version: 1.0\n"
-@@ -20,14 +20,17 @@
+ "Content-Type: text/plain; charset=ISO-8859-2\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: openvt/openvt.c:67
++#: openvt/openvt.c:69
+ #, c-format
+ msgid "openvt: %s: illegal vt number\n"
  msgstr "openvt: %s: b³êdny numer vt\n"
  
- #: openvt/openvt.c:91
+-#: openvt/openvt.c:91
++#: openvt/openvt.c:96
 +#, c-format
  msgid "openvt: only root can use the -u flag.\n"
  msgstr "openvt: tylko root mo¿e u¿yæ flagi -u.\n"
  
 -#: openvt/openvt.c:105 src/getfd.c:68
-+#: openvt/openvt.c:105 src/getfd.c:83
++#: openvt/openvt.c:110 src/getfd.c:83
 +#, c-format
  msgid "Couldnt get a file descriptor referring to the console\n"
  msgstr "Nie mo¿na uzyskaæ deskryptora pliku wskazuj±cego na konsolê\n"
  
- #: openvt/openvt.c:117
+-#: openvt/openvt.c:117
++#: openvt/openvt.c:122
 +#, c-format
  msgid "openvt: cannot find a free vt\n"
  msgstr "openvt: nie mo¿na znale¼æ wolnego vt\n"
  
-@@ -36,36 +39,37 @@
+-#: openvt/openvt.c:122
++#: openvt/openvt.c:127
+ #, c-format
  msgid "openvt: cannot check whether vt %d is free\n"
  msgstr "openvt: nie mo¿na sprawdziæ, czy vt %d jest wolny\n"
  
 -#: openvt/openvt.c:123 openvt/openvt.c:128
-+#: openvt/openvt.c:124 openvt/openvt.c:129
++#: openvt/openvt.c:129 openvt/openvt.c:134
 +#, c-format
  msgid "        use `openvt -f' to force.\n"
  msgstr "        mo¿na u¿yæ `openvt -f' w celu wymuszenia.\n"
  
 -#: openvt/openvt.c:127
-+#: openvt/openvt.c:128
++#: openvt/openvt.c:133
  #, c-format
  msgid "openvt: vt %d is in use; command aborted\n"
  msgstr "openvt: vt %d jest u¿ywany; program przerwano\n"
  
 -#: openvt/openvt.c:155
-+#: openvt/openvt.c:156
++#: openvt/openvt.c:161
  #, c-format
  msgid "openvt: Unable to open %s: %s\n"
  msgstr "openvt: Nie mo¿na otworzyæ %s: %s\n"
  
 -#: openvt/openvt.c:167
-+#: openvt/openvt.c:168
++#: openvt/openvt.c:173
  #, c-format
  msgid "openvt: Cannot open %s read/write (%s)\n"
  msgstr "openvt: Nie mo¿na otworzyæ %s do odczytu i zapisu (%s)\n"
  
 -#: openvt/openvt.c:205
-+#: openvt/openvt.c:206
++#: openvt/openvt.c:211
  #, c-format
  msgid "openvt: using VT %s\n"
  msgstr "openvt: u¿ycie VT %s\n"
  
 -#: openvt/openvt.c:217
-+#: openvt/openvt.c:218
++#: openvt/openvt.c:224
  #, c-format
  msgid "openvt: Unable to set new session (%s)\n"
  msgstr "openvt: Nie mo¿na ustanowiæ nowej sesji (%s)\n"
  
 -#: openvt/openvt.c:225
-+#: openvt/openvt.c:226
++#: openvt/openvt.c:233
  #, c-format
  msgid ""
  "\n"
@@ -88,7 +98,7 @@
  "openvt: nie mo¿na otworzyæ %s w trybie R/W (%s)\n"
  
 -#: openvt/openvt.c:281
-+#: openvt/openvt.c:284
++#: openvt/openvt.c:291
  #, c-format
  msgid "openvt: could not deallocate console %d\n"
  msgstr "openvt: nie mo¿na zwolniæ konsoli %d\n"
