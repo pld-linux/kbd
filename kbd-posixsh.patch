@@ -1,0 +1,12 @@
+diff -urN kbd-1.06/configure aaa/kbd-1.06/configure
+--- kbd-1.06/configure	Tue May  8 13:56:09 2001
++++ aaa/kbd-1.06/configure	Tue Feb 26 21:35:57 2002
+@@ -160,7 +160,7 @@
+ #
+ # 3. Does xgettext exist and take the option --foreign-user?
+ #
+-if (test $ENABLE_NLS = yes && type xgettext > /dev/null 2>&1); then
++if (test $ENABLE_NLS = yes && test -x /usr/bin/xgettext > /dev/null 2>&1); then
+ 	msg=`xgettext --foreign-user 2>&1 | grep unrecognized`
+ 	if test -n "$msg"; then
+ 		echo "FOREIGN = " >> make_include
