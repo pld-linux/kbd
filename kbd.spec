@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -10,7 +10,7 @@ Group(pl):	Aplikacje/Konsola
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Source3:	kbdrate.8.pl
+Source3:	%{name}-non-english-man-pages.tar.bz2
 Source4:	lat2u-16.psf.gz
 Source5:	lat2u.sfm.gz
 Source6:	console.sh
@@ -60,7 +60,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/{profile.d,rc.d/init.d,sysconfig},%{_mandir}/pl/man8}
+install -d $RPM_BUILD_ROOT/etc/{profile.d,rc.d/init.d,sysconfig}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
@@ -68,7 +68,7 @@ ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
-install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man8
+bzip2 -dc %{SOURCE3} | tar xvf - -C $RPM_BUILD_ROOT%{_mandir}
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
@@ -104,4 +104,9 @@ fi
 %{_datadir}/unimaps
 
 %{_mandir}/man?/*
+%lang(es) %{_mandir}/es/man?/*
+%lang(fi) %{_mandir}/fi/man?/*
+%lang(fr) %{_mandir}/fr/man?/*
+%lang(hu) %{_mandir}/hu/man?/*
+%lang(ko) %{_mandir}/ko/man?/*
 %lang(pl) %{_mandir}/pl/man?/*
