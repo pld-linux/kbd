@@ -19,6 +19,7 @@ Prereq:		rc-scripts
 Provides:	console-tools
 Provides:	console-data
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Conflicts:	util-linux < 2.11
 Obsoletes:	console-data
 Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
