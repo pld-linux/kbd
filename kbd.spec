@@ -2,12 +2,12 @@ Summary:	Linux console utilities
 Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
-Version:	1.09
-Release:	2
+Version:	1.10
+Release:	1
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	493ff483b8b536fef5aa60ad108b647c
+# Source0-md5:	4976501c90d82dc987eaf36ccefce70c
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -24,9 +24,8 @@ Source9:	%{name}-pl1.kmap.gz
 # Source9-md5:	18d119b54f3fbacbfb561d81ac1a9472
 Source10:	%{name}-mac-pl.kmap.gz
 # Source10-md5:	47f26751e2d633e0d663e5774d5c1516
-# MIME-decoded from po/kbd.sv
-Source11:	%{name}-1.06.sv.po
-Source13:	pl3.map.gz
+Source11:	pl3.map.gz
+Source12:	%{name}-pl4.map.gz
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-missing-nls.patch
 Patch2:		%{name}-install.patch
@@ -35,9 +34,7 @@ Patch4:		%{name}-compose.patch
 Patch5:		%{name}-compat-suffixes.patch
 Patch6:		%{name}-unicode_start.patch
 Patch7:		%{name}-posixsh.patch
-Patch8:		%{name}-DESTDIR.patch
-Patch9:		%{name}-gcc33.patch
-Patch10:	%{name}-po.patch
+Patch8:		%{name}-gcc33.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -67,7 +64,6 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %prep
 %setup -q
-cp -f %{SOURCE11} po/sv.po
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -77,11 +73,6 @@ cp -f %{SOURCE11} po/sv.po
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
-
-sed -e 's@ tr\.\(po\|gmo\)$@ tr.\1 sv.\1@;s@\(\.gmo pl\.\)po@\1gmo@' po/Makefile > po/Makefile.tmp
-mv -f po/Makefile.tmp po/Makefile
 
 %build
 ./configure \
@@ -112,7 +103,8 @@ gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
 
 install %{SOURCE9} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl1.map.gz
 install %{SOURCE10} $RPM_BUILD_ROOT%{_datadir}/keymaps/mac/all/mac-pl.map.gz
-install %{SOURCE13} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl3.map.gz
+install %{SOURCE11} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl3.map.gz
+install %{SOURCE12} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl4.map.gz
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
