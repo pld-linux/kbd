@@ -1,34 +1,13 @@
-diff -urN kbd-1.05.org/Makefile.in kbd-1.05/Makefile.in
---- kbd-1.05.org/Makefile.in	Thu Apr 19 20:10:18 2001
-+++ kbd-1.05/Makefile.in	Thu Apr 19 20:29:22 2001
-@@ -1,5 +1,5 @@
- # Note: BINDIR, DATADIR also occur in src/Makefile.
--MANDIR  = $(DESTDIR)/usr/man
-+MANDIR  = $(DESTDIR)/usr/share/man
- BINDIR  = $(DESTDIR)/usr/bin
- DATADIR = $(DESTDIR)@datadir@
- # If you change the names of any of the following subdirs,
-diff -urN kbd-1.05.org/src/Makefile.in kbd-1.05/src/Makefile.in
---- kbd-1.05.org/src/Makefile.in	Thu Apr 19 20:10:19 2001
-+++ kbd-1.05/src/Makefile.in	Thu Apr 19 20:19:10 2001
-@@ -11,7 +11,7 @@
- 
- # Maybe we want to use a qwertz keyboard before /usr is mounted
- ifndef LOADKEYS_BINDIR
--LOADKEYS_BINDIR = /bin
-+LOADKEYS_BINDIR = $(DESTDIR)/bin
- endif
- 
- PROGS   = dumpkeys loadkeys showkey setfont showfont \
-@@ -58,14 +58,16 @@
- old:	$(OLDPROGS)
+diff -urN kbd-1.06.org/src/Makefile.in kbd-1.06/src/Makefile.in
+--- kbd-1.06.org/src/Makefile.in	Sun May 20 10:40:53 2001
++++ kbd-1.06/src/Makefile.in	Sun May 20 10:42:33 2001
+@@ -59,14 +59,14 @@
  
  install:	all
+ 	install -d -m 755 $(BINDIR) $(LOADKEYS_BINDIR)
 -	install -s -m 0755 -o root $(PROGS) $(OLDPROGS) $(BINDIR)
 -#	install -s -m 0755 -o root $(MISC) $(BINDIR)
 -	install -c -m 0755 -o root $(SHCMDS) $(BINDIR)
-+	install -d $(BINDIR)
-+	install -d $(LOADKEYS_BINDIR)
 +	install -s -m 0755 $(PROGS) $(OLDPROGS) $(BINDIR)
 +#	install -s -m 0755 $(MISC) $(BINDIR)
 +	install -c -m 0755 $(SHCMDS) $(BINDIR)
@@ -37,7 +16,7 @@ diff -urN kbd-1.05.org/src/Makefile.in kbd-1.05/src/Makefile.in
  	done
  	rm -f $(BINDIR)/loadkeys
 -	install -s -m 0755 -o root loadkeys $(LOADKEYS_BINDIR)
-+	install -m 0755 loadkeys $(LOADKEYS_BINDIR)
++	install -s -m 0755 loadkeys $(LOADKEYS_BINDIR)
  	@echo "You may also want to add psf.magic to /usr/lib/magic"
  
  
