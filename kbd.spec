@@ -20,6 +20,7 @@ Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
 Patch3:		%{name}-compat-suffixes.patch
 Patch4:		%{name}-unicode_start.patch
+Patch5:		%{name}-posixsh.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -53,6 +54,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 ./configure \
