@@ -2,7 +2,7 @@ Summary:	Linux terminal utilities
 Summary(pl):	Narzêdzia do obs³ugi terminala
 Name:		kbd
 Version:	1.08
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -16,6 +16,10 @@ Source7:	console.csh
 Source8:	console-man-pages.tar.bz2
 Source9:	%{name}-pl1.kmap.gz
 Source10:	%{name}-mac-pl.kmap.gz
+# MIME-decoded from po/kbd.sv
+Source11:	%{name}-1.06.sv.po
+# new
+Source12:	%{name}-pl.po
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
@@ -23,6 +27,7 @@ Patch3:		%{name}-compat-suffixes.patch
 Patch4:		%{name}-unicode_start.patch
 Patch5:		%{name}-posixsh.patch
 Patch6:		%{name}-DESTDIR.patch
+Patch7:		%{name}-missing-nls.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -59,6 +64,13 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+
+cp -f %{SOURCE11} po/sv.po
+cp -f %{SOURCE12} po/pl.po
+
+sed -e 's@ ru\.\(po\|gmo\)$@ ru.\1 sv.\1 pl.\1@' po/Makefile > po/Makefile.tmp
+mv -f po/Makefile.tmp po/Makefile
 
 %build
 ./configure \

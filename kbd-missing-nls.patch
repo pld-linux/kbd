@@ -1,0 +1,104 @@
+--- kbd-1.08/src/loadkeys.y.orig	Sun Nov 24 10:44:56 2002
++++ kbd-1.08/src/loadkeys.y	Sun Nov 24 10:50:43 2002
+@@ -248,12 +248,12 @@
+ "valid options are:\n"
+ "\n"
+ "	-c --clearcompose clear kernel compose table\n"
+-"	-d --default	  load \"" DEFMAP "\"\n"
++"	-d --default	  load \"%s\"\n"
+ "	-h --help	  display this help text\n"
+ "	-m --mktable      output a \"defkeymap.c\" to stdout\n"
+ "	-s --clearstrings clear kernel string table\n"
+ "	-u --unicode      implicit conversion to Unicode\n"
+-"	-v --verbose      report the changes\n"), VERSION);
++"	-v --verbose      report the changes\n"), VERSION, DEFMAP);
+ 	exit(1);
+ }
+ 
+@@ -284,6 +284,10 @@
+ 
+ 	set_progname(argv[0]);
+ 
++	setlocale(LC_ALL, "");
++	bindtextdomain(PACKAGE, LOCALEDIR);
++	textdomain(PACKAGE);
++
+ 	while ((c = getopt_long(argc, argv,
+ 		short_opts, long_opts, NULL)) != -1) {
+ 		switch (c) {
+--- kbd-1.08/openvt/openvt.c.orig	Fri Oct 11 13:08:59 2002
++++ kbd-1.08/openvt/openvt.c	Sun Nov 24 10:53:37 2002
+@@ -53,6 +53,10 @@
+    char vtname[sizeof VTNAME + 2]; /* allow 999 possible VTs */
+    char *cmd = NULL, *def_cmd = NULL, *username = NULL;
+ 
++   setlocale(LC_ALL, "");
++   bindtextdomain(PACKAGE, LOCALEDIR);
++   textdomain(PACKAGE);
++
+    /*
+     * I don't like using getopt for this, but otherwise this gets messy.
+     * POSIX/Gnu getopt forces the use of -- to separate child/program
+@@ -261,7 +265,7 @@
+    }
+ 
+    if ( pid < 0 ) {
+-      perror("openvt: fork() error");
++      perror("openvt: fork()");
+       return(6);
+    }
+ 
+@@ -292,7 +296,7 @@
+ void usage(int stat)
+ {
+    fprintf(stderr,
+-     "Usage: openvt [-c vtnumber] [-l] [-u] [-s] [-v] [-w] -- command_line\n");
++     _("Usage: openvt [-c vtnumber] [-l] [-u] [-s] [-v] [-w] -- command_line\n"));
+    exit (stat);
+ }
+ 
+@@ -372,7 +376,7 @@
+ 			goto got_a_process;
+ 	}
+ 
+-	fprintf(stderr,"couldn't find owner of current tty!\n");
++	fprintf(stderr,_("couldn't find owner of current tty!\n"));
+ 	exit(1);
+ 
+    got_a_process:
+--- kbd-1.08/po/POTFILES.in.orig	Sat Oct 12 01:07:11 2002
++++ kbd-1.08/po/POTFILES.in	Sun Nov 24 11:20:20 2002
+@@ -5,6 +5,7 @@
+ openvt/getfd.c
+ openvt/openvt.c
+ po/cat-id-tbl.c
++src/analyze.c
+ src/chvt.c
+ src/clrunimap.c
+ src/deallocvt.c
+@@ -18,6 +19,7 @@
+ src/kbdrate.c
+ src/kdfontop.c
+ src/ksyms.c
++src/loadkeys.c
+ src/loadunimap.c
+ src/mapscrn.c
+ src/outpsfheader.c
+--- kbd-1.08/src/analyze.l.orig	Fri Oct 11 13:08:59 2002
++++ kbd-1.08/src/analyze.l	Sun Nov 24 11:21:15 2002
+@@ -67,7 +67,7 @@
+ 			 BEGIN(0);
+ 			}
+ <INCLSTR>[^"]|\"\"|\"[^"\n]*{Eol}	{
+-			  yyerror("expected filename between quotes");
++			  yyerror(_("expected filename between quotes"));
+ 			  BEGIN(0); }
+ {Continuation}		{line_nr++;}
+ {Eol}			{line_nr++;BEGIN(0);return(EOL);}
+@@ -121,5 +121,5 @@
+ 
+ void
+ stringovfl(void) {
+-	lkfatal("string too long");
++	lkfatal(_("string too long"));
+ }
