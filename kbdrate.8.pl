@@ -2,15 +2,15 @@
 .\" Copyright 1992, 1994 Rickard E. Faith (faith@cs.unc.edu)
 .\" May be distributed under the GNU General Public License
 .\" Updated Wed Jun 22 21:09:43 1994, faith@cs.unc.edu
-.TH KBDRATE 8 "22 June 1994" "Linux 1.1.19" "Podrêcznik programisty linuxowego"
+.TH KBDRATE 8 "22 June 1994" "Linux 1.1.19" "Podrêcznik programisty linuksowego"
 .SH NAZWA
 kbdrate \- zresetuj czêsto¶æ samopowtarzania i opó¼nienia klawiatury
 .SH SK£ADNIA
-.B "kbdrate [ \-s ] [ \-r"
-czêsto¶æ
-.B "] [ \-d"
-opó¼nienie
-.B ]
+.B kbdrate
+.RB [ \-s "] [" \-r
+.IR czêsto¶æ ]
+.RB [ \-d
+.IR opó¼nienie ]
 .SH OPIS
 .B kbdrate
 jest u¿ywane do zmiany czêstotliwo¶ci samopowtarzania i opó¼nienia
@@ -47,8 +47,8 @@ Nie wszystkie klawiatury obs³uguj± wszystkie czêsto¶ci.
 .PP
 Nie wszystkie czêsto¶ci s± mapowane tak samo.
 .PP
-Ustawianie czêsto¶æi powtarzania nie dzia³a na klawiaturze Gateway AnyKey.
-Jeli kto¶ z t± klawiatur± wie jak programowaæ tê klawiaturê, to niech wy¶le
+Ustawianie czêsto¶ci powtarzania nie dzia³a na klawiaturze Gateway AnyKey.
+Jeli kto¶ z t± klawiatur± wie jak j± programowaæ, to niech wy¶le
 wiadomo¶æ do faith@cs.unc.edu.
 .SH PLIKI
 .I /etc/rc.local
