@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# console	Load console font and keyboard table
+#
+# chkconfig:	345 70 30
+#
+# description:	Loads the console font, the application-charset map \
+#		and the keyboard table.
+
+# This must be executed *after* /usr is mounted.
+# This means is /usr is NFS-mounted, it needs to
+# run after networking and NFS mounts are up.
+
+[ -f /etc/sysconfig/console ] || exit 0
+
+[ -f /bin/loadkeys ] || exit 0
+[ -f /usr/bin/setfont ] || exit 0
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+case "$1" in
+	start|restart)
+		. /etc/sysconfig/console
+
+		if [ -n "$SVGATEXTMODE" ]
+		then
+			run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
+		fi
+		if [ -n "$CONSOLEFONT" ]
+		then
+			run_cmd "Loading console font and map" setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT
+			# Don't use "" here because additional options may be
+			# specified after the font name (e.g. fallback tables)
+		fi
+		if [ -n "$KEYTABLE" ]
+		then
+			run_cmd "Loading keyboard table" loadkeys $KEYTABLE < /dev/tty0 > /dev/tty0
+		fi
+		;;
+	stop)
+		# Nothing to stop
+		;;
+	status)
+		# Nothing to report
+		;;
+	*)
+		msg_usage "$0 {start|stop|status|restart}"
+		exit 1
+esac
+
+exit 0

@@ -1,0 +1,16 @@
+# SVGATextMode's mode (optional)
+#SVGATEXTMODE=100x37x9_SVGA
+
+# Console font file name (usually from /usr/share/kbd/consolefonts dir).
+# Determines the set of available characters, the typeface and the number
+# of character lines on the screen. Other options may be specified after
+# the font name, e.g. -u iso02 (but you don't need it)
+CONSOLEFONT=lat2-16
+
+# Application-charset map file name (usually from /usr/share/kbd/keymaps dir
+# Determines the encoding used by the console when in single-byte
+# (non-Unicode) mode.
+CONSOLEMAP=8859-2
+
+# Keyboard table file name
+KEYTABLE=pl2
