@@ -2,12 +2,6 @@ Output terminal control sequences only when output is a terminal.
 
 --- kbd-1.08/src/unicode_start	2002-11-22 19:23:00.000000000 -0500
 +++ kbd-1.08/src/unicode_start	2002-11-22 19:24:34.000000000 -0500
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- # Enables Unicode processing in the current console.
- #
- # 1. The input side: the keyboard driver.
 @@ -25,7 +25,9 @@
  # Tell the console output driver that the bytes arriving are UTF-8
  # encoded multibyte sequences.
