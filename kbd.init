@@ -99,8 +99,8 @@ case "$1" in
 	if [ "$BACKGROUND_COLOUR" ]; then
 		/usr/bin/setterm -background $BACKGROUND_COLOUR
 	fi
-	if [ "$BEEP_LENGHT" ]; then
-		/usr/bin/setterm -blength $BEEP_LENGHT
+	if [ "$BEEP_LENGTH" ]; then
+		/usr/bin/setterm -blength $BEEP_LENGTH
 	fi
 	;;
   stop)
