@@ -1,15 +1,15 @@
 # Polish translations for kbd.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2002 Free Software Foundation, Inc.
 # This file is distributed under the same license as the PACKAGE package.
-# Jakub Bogusz <qboosh@pld.org.pl>, 2002.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kbd 1.08\n"
 "POT-Creation-Date: 2002-11-03 16:20+0100\n"
 "PO-Revision-Date: 2002-11-23 23:34+0100\n"
-"Last-Translator: Jakub Bogusz <qboosh@pld.org.pl>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
+"Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1109,7 +1109,7 @@ msgstr "Wczytywanie %d-znakowego fontu %dx%d (%d)\n"
 #: src/setfont.c:336
 #, c-format
 msgid "%s: bug in do_loadtable\n"
-msgstr "%d: b³±d w do_loadtable\n"
+msgstr "%s: b³±d w do_loadtable\n"
 
 #: src/setfont.c:342
 msgid "Loading Unicode mapping table...\n"
