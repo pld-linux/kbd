@@ -12,6 +12,12 @@ case $(tty) in
 			# to the user-defined map (loaded with consolefonts)
 			echo -ne '\33(K'
 		fi
+		
+	fi
+        if dmesg|grep 'Console: mono' >/dev/null 2>&1
+	then
+	        TERM=linux-m
+	        export TERM
 	fi
 	;;
 esac
