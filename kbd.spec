@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.12
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -55,7 +55,7 @@ Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
 Obsoletes:	console-tools-static
 
-%define	_ldatadir	/%{_lib}/%{name}
+%define		_ldatadir	/%{_lib}/%{name}
 
 %description
 This package contains utilities to load console fonts and keyboard
@@ -151,6 +151,7 @@ fi
 
 %attr(755,root,root) /bin/*
 %attr(755,root,root) %{_bindir}/*
+%dir %{_ldatadir}
 %{_ldatadir}/console*
 %{_ldatadir}/keymaps
 %{_ldatadir}/unimaps
