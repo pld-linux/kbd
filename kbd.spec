@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -10,11 +10,13 @@ Group(pl):	Aplikacje/Konsola
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
+Source3:	kbdrate.8.pl
+Source4:	lat2u-16.psf.gz
+Source5:	lat2u.sfm.gz
 Patch0:		%{name}-install.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRequires:	gzip
 BuildRequires:	gettext-devel
 Prereq:		rc-scripts
 Provides:	console-tools
@@ -40,14 +42,14 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %build
 ./configure \
-	--datadir=%{_datadir}/%{name}
+	--datadir=%{_datadir}
 %{__make} \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{sysconfig,rc.d/init.d}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{sysconfig,rc.d/init.d},%{_mandir}/pl/man8}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
@@ -55,6 +57,9 @@ ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/console
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/console
+install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man8
+install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
+gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
 
 rm -f doc/{*,*/*}.sgml
 gzip -9nf CHANGES CREDITS README doc/*.txt
@@ -63,14 +68,11 @@ gzip -9nf CHANGES CREDITS README doc/*.txt
 
 %post
 /sbin/chkconfig --add console
-/sbin/ldconfig
 
 %preun
 if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del console
 fi
-
-%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -83,5 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) /bin/*
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/kbd
+%{_datadir}/console*
+%{_datadir}/keymaps
+%{_datadir}/unimaps
+
 %{_mandir}/man?/*
+%lang(pl) %{_mandir}/pl/man?/*
