@@ -1,6 +1,6 @@
-diff -urN aaa/kbd-1.08/Makefile.in kbd-1.08/Makefile.in
---- aaa/kbd-1.08/Makefile.in	Sun Oct 13 01:11:52 2002
-+++ kbd-1.08/Makefile.in	Sat Nov  2 17:31:44 2002
+diff -urN kbd-1.09.org/Makefile.in kbd-1.09/Makefile.in
+--- kbd-1.09.org/Makefile.in	2004-01-03 12:38:37.304752523 +0100
++++ kbd-1.09/Makefile.in	2004-01-03 12:38:43.603442541 +0100
 @@ -1,10 +1,9 @@
  # Note: BINDIR, DATA_DIR, and DESTDIR also occur in src/Makefile.
 -DESTDIR = @prefix@
@@ -15,15 +15,15 @@ diff -urN aaa/kbd-1.08/Makefile.in kbd-1.08/Makefile.in
  # If you change the names of any of the following subdirs,
  # also change paths.h.
  OLDKEYMAPDIR = keytables
-diff -urN aaa/kbd-1.08/po/Makefile kbd-1.08/po/Makefile
---- aaa/kbd-1.08/po/Makefile	Sun Oct 13 01:20:50 2002
-+++ kbd-1.08/po/Makefile	Sat Nov  2 17:38:49 2002
+diff -urN kbd-1.09.org/po/Makefile kbd-1.09/po/Makefile
+--- kbd-1.09.org/po/Makefile	2004-01-03 12:38:38.120582849 +0100
++++ kbd-1.09/po/Makefile	2004-01-03 12:39:02.391535035 +0100
 @@ -14,7 +14,7 @@
  FOREIGN=
  SHELL = /bin/sh
  
 -prefix = ${DESTDIR}
 +prefix = ${DESTDIR}/usr
+ exec_prefix = ${prefix}
  datadir = $(prefix)/share
  localedir = $(datadir)/locale
- gnulocaledir = $(prefix)/share/locale
