@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -16,6 +16,8 @@ Source5:	lat2u.sfm.gz
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
+Patch3:		%{name}-compat-suffixes.patch
+Patch4:		%{name}-unicode_start.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -43,6 +45,8 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 ./configure \
