@@ -27,3 +27,6 @@ POWERDOWN_TIME=60
 # black|red|green|yellow|blue|magenta|cyan|white|default
 #FOREGROUND_COLOUR=red
 #BACKGROUND_COLOUR=green
+
+# Setting of leds (on|off). Default is off:
+#NUM_LOCK=on
