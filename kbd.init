@@ -62,6 +62,13 @@ case "$1" in
 				
 				for cons in $SET_FONT_TERMINALS; do
 					/usr/bin/open -c $cons -s -w -- $CMD
+					if [ $NUM_LOCK ]; then
+						if [ $NUM_LOCK = "on" ]; then
+							/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D +num
+						else
+							/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
+						fi
+					fi
 				done
 				
 				if [ $tty = "/dev/console" ]; then tty=1; fi
@@ -94,17 +101,13 @@ case "$1" in
 		if [ $BACKGROUND_COLOUR ]; then
 			/usr/bin/setterm -background $BACKGROUND_COLOUR
 		fi
-		if [ $NUM_LOCK ]; then
-			if [ $NUM_LOCK = "on" ]; then
-				/usr/bin/setleds -D +num
-			else
-				/usr/bin/setleds -D -num
-			fi
-		fi
 		;;
 	stop)
-		/usr/bin/setterm -default
-		/usr/bin/setleds -D -num
+		. /etc/sysconfig/console
+		for cons in $SET_FONT_TERMINALS; do
+			/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
+		done
+		run_cmd "Setting terminals to default values" /usr/bin/setterm -default
 		;;
 	status)
 		/usr/bin/setleds
