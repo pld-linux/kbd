@@ -1,13 +1,10 @@
 
-case $(tty) in
-(/dev/tty[0-9]|/dev/tty[0-9][0-9]|/dev/vc/*)
-
-	if [ -f /etc/sysconfig/console ]
-	then
+case $TERM in
+ linux)
+ 	if [ -f /etc/sysconfig/console ]; then
 		. /etc/sysconfig/console
 	
-		if [ "$CONSOLEMAP" != "" ]
-		then
+		if [ "$CONSOLEMAP" != "" ]; then
 			# Switch the G0 charset map from the default ISO-8859-1
 			# to the user-defined map (loaded with consolefonts)
 			if [ -w /proc/$$/fd/0 ]; then
