@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.12
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -55,7 +55,7 @@ Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
 Obsoletes:	console-tools-static
 
-%define	_datadir	/%{_lib}/%{name}
+%define	_ldatadir	/%{_lib}/%{name}
 
 %description
 This package contains utilities to load console fonts and keyboard
@@ -83,7 +83,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %build
 ./configure \
 	--prefix=/ \
-	--datadir=%{_datadir} \
+	--datadir=%{_ldatadir} \
 	--mandir=%{_mandir}
 %{__make} \
 	CC="%{__cc}" \
@@ -92,7 +92,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{profile.d,rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/etc/{profile.d,rc.d/init.d,sysconfig}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -103,6 +103,8 @@ for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
   mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
 
+mv $RPM_BUILD_ROOT/share/locale $RPM_BUILD_ROOT%{_datadir}
+
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 %ifarch sparc sparc64
 sed 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' %{SOURCE2} > $RPM_BUILD_ROOT/etc/sysconfig/console
@@ -110,13 +112,13 @@ sed 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' %{SOURCE2} > $RPM_BUILD_ROOT/etc/syscon
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 %endif
 
-install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
-gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
+install %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
+gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_ldatadir}/unimaps/lat2u.uni
 
-gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl1.map.gz
-gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_datadir}/keymaps/mac/all/mac-pl.map.gz
-gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl3.map.gz
-gzip -c %{SOURCE12} > $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl4.map.gz
+gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl1.map.gz
+gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/mac/all/mac-pl.map.gz
+gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl3.map.gz
+gzip -c %{SOURCE12} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl4.map.gz
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
@@ -148,9 +150,9 @@ fi
 
 %attr(755,root,root) /bin/*
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/console*
-%{_datadir}/keymaps
-%{_datadir}/unimaps
+%{_ldatadir}/console*
+%{_ldatadir}/keymaps
+%{_ldatadir}/unimaps
 
 %{_mandir}/man?/*
 %lang(cs) %{_mandir}/cs/man?/*
