@@ -2,12 +2,12 @@ Summary:	Linux console utilities
 Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
-Version:	1.08
-Release:	8
+Version:	1.09
+Release:	1
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	924e6a05e52715dc0f96385b35f2f680
+# Source0-md5:	493ff483b8b536fef5aa60ad108b647c
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -86,7 +86,8 @@ mv -f po/Makefile.tmp po/Makefile
 
 %build
 ./configure \
-	--datadir=/share
+	--datadir=%{_datadir} \
+	--mandir=%{_mandir}
 %{__make} \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}"
