@@ -20,101 +20,99 @@
 . /etc/rc.d/init.d/functions
 
 case "$1" in
-	start|restart)
-		. /etc/sysconfig/console
+  start|restart|reload)
+	. /etc/sysconfig/console
 
-		# Checking if we have framebuffer enabled
-		if [ -f /proc/fb ]; then
-			# /proc shows as files with size=0, this is workaround
-			if cat /proc/fb | grep -q "."; then FB=yes; fi
-		fi
-			
-		if [ -n "$SVGATEXTMODE" ]
-		then
-			run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
-		fi
-		if [ -n "$CONSOLEFONT" ]
-		then
-			CMD="/usr/bin/setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
-			show "Loading console font and map"; busy
+	# Checking if we have framebuffer enabled
+	if [ -f /proc/fb ]; then
+		# /proc shows as files with size=0, this is workaround
+		if cat /proc/fb | grep -q "."; then FB=yes; fi
+	fi
 
-			# don't initialize on multiple terminals if we use fbset
-			# (assume that, in this case fb is loaded as a module)
-			if [ ! -z $FB ] && [ -f /var/lock/subsys/fbset ]; then			
-				# Check for devfs (workaround: -a option don't work at all)
-				if [ -d /dev/vc ]; then
-					pattern="s/\/dev\/vc\///g"
+	if [ -n "$SVGATEXTMODE" ]; then
+		run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
+	fi
+	if [ -n "$CONSOLEFONT" ]; then
+		CMD="/usr/bin/setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
+		show "Loading console font and map"
+		busy
+
+	# don't initialize on multiple terminals if we use fbset
+	# (assume that, in this case fb is loaded as a module)
+	if [ ! -z "$FB" ] && [ -f /var/lock/subsys/fbset ]; then			
+		# Check for devfs (workaround: -a option don't work at all)
+		if [ -d /dev/vc ]; then
+			pattern="s/\/dev\/vc\///g"
+		else
+			pattern="s/\/dev\/tty//g"
+		fi
+
+		# save old tty number
+		tty=`/usr/bin/tty | sed $pattern`
+
+		# check if devfs (workaround: -a option don't work at all)
+		if [ -d /dev/vc ]; then
+			DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+		else
+			DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
+		fi
+
+		[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
+
+		for cons in $SET_FONT_TERMINALS; do
+			/usr/bin/open -c $cons -s -w -- $CMD
+			if [ "$NUM_LOCK" ]; then
+				if [ $NUM_LOCK = "on" ]; then
+					/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D +num
 				else
-					pattern="s/\/dev\/tty//g"
+					/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
 				fi
-				
-				# save old tty number
-				tty=`/usr/bin/tty | sed $pattern`
-				
-				# check if devfs (workaround: -a option don't work at all)
-				if [ -d /dev/vc ]; then
-					DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
-				else
-					DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
-				fi
+			fi
+		done
 
-				[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
-				
-				for cons in $SET_FONT_TERMINALS; do
-					/usr/bin/open -c $cons -s -w -- $CMD
-					if [ $NUM_LOCK ]; then
-						if [ $NUM_LOCK = "on" ]; then
-							/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D +num
-						else
-							/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
-						fi
-					fi
-				done
-				
-				if [ $tty = "/dev/console" ]; then tty=1; fi
-				/usr/bin/switchto $tty
-			else
-				$CMD
-			fi
-			ok
+		if [ $tty = "/dev/console" ]; then tty=1; fi
+			/usr/bin/switchto $tty
+		else
+			$CMD
 		fi
-		if [ -n "$KEYTABLE" ]
-		then
-			run_cmd "Loading keyboard table" loadkeys $KEYTABLE < /dev/tty0 > /dev/tty0
-		fi
-		echo "Enabling SAK sequence"
-		echo Control Alt keycode 101 = SAK | loadkeys
+		ok
+	fi
+	if [ -n "$KEYTABLE" ]; then
+		run_cmd "Loading keyboard table" loadkeys $KEYTABLE < /dev/tty0 > /dev/tty0
+	fi
+	nls "Enabling SAK sequence"
+	echo Control Alt keycode 101 = SAK | loadkeys
 
-		power_option=""
-		if [ $POWER_SAVE ]; then
-			if [ $BLANK_TIME ]; then
-				power_option="-blank $BLANK_TIME";
-			fi
-			if [ $POWERDOWN_TIME ]; then
-				power_option="-powerdown $POWERDOWN_TIME $power_option";
-			fi
-			/usr/bin/setterm $power_option -powersave $POWER_SAVE
+	power_option=""
+	if [ "$POWER_SAVE" ]; then
+		if [ "$BLANK_TIME" ]; then
+			power_option="-blank $BLANK_TIME";
 		fi
-		if [ $FOREGROUND_COLOUR ]; then
-			/usr/bin/setterm -foreground $FOREGROUND_COLOUR
+		if [ "$POWERDOWN_TIME" ]; then
+			power_option="-powerdown $POWERDOWN_TIME $power_option";
 		fi
-		if [ $BACKGROUND_COLOUR ]; then
-			/usr/bin/setterm -background $BACKGROUND_COLOUR
-		fi
-		if [ $BEEPER_LENGHT ]; then
-			/usr/bin/setterm -blenght $BEEPER_LENGHT
-		fi
-		;;
-	stop)
-		. /etc/sysconfig/console
-		run_cmd "Setting terminals to default values" /usr/bin/setterm -default
-		;;
-	status)
-		/usr/bin/setleds
-		;;
-	*)
-		msg_usage "$0 {start|stop|status|restart}"
-		exit 1
+		/usr/bin/setterm $power_option -powersave $POWER_SAVE
+	fi
+	if [ "$FOREGROUND_COLOUR" ]; then
+		/usr/bin/setterm -foreground $FOREGROUND_COLOUR
+	fi
+	if [ "$BACKGROUND_COLOUR" ]; then
+		/usr/bin/setterm -background $BACKGROUND_COLOUR
+	fi
+	if [ "$BEEPER_LENGHT" ]; then
+		/usr/bin/setterm -blenght $BEEPER_LENGHT
+	fi
+	;;
+  stop)
+	. /etc/sysconfig/console
+	run_cmd "Setting terminals to default values" /usr/bin/setterm -default
+	;;
+  status)
+	/usr/bin/setleds
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|reload|status}"
+	exit 1
 esac
 
 exit 0
