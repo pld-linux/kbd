@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -25,6 +25,7 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gettext-devel
 Prereq:		rc-scripts
+Prereq:		/sbin/chkconfig
 Provides:	console-tools
 Provides:	console-data
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -78,6 +79,9 @@ gzip -9nf CHANGES CREDITS README doc/*.txt
 
 %find_lang %{name}
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
 /sbin/chkconfig --add console
 
@@ -85,9 +89,6 @@ gzip -9nf CHANGES CREDITS README doc/*.txt
 if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del console
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
