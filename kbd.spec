@@ -1,6 +1,6 @@
-Summary:	Linux terminal utilities
+Summary:	Linux console utilities
 Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
-Summary(pl):	Narzêdzia do obs³ugi terminala
+Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.08
 Release:	5
@@ -53,7 +53,7 @@ This package contains utilities to load console fonts and keyboard
 maps. It also includes a number of different fonts and keyboard maps.
 
 %description -l pl
-Pakiet zawiera narzêdzia do ³adowania fontów terminalowych oraz map
+Pakiet zawiera narzêdzia do ³adowania fontów konsolowych oraz map
 klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %prep
