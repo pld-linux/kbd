@@ -26,8 +26,8 @@ BuildRequires:	flex
 BuildRequires:	gettext-devel
 Prereq:		rc-scripts
 Prereq:		/sbin/chkconfig
-Provides:	console-tools
 Provides:	console-data
+Provides:	console-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	util-linux < 2.11
 Obsoletes:	console-data
@@ -44,7 +44,7 @@ Pakiet zawiera narzêdzia do ³adowania fontów konsolowych oraz map
 klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %prep
-%setup  -q 
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -60,14 +60,14 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{sysconfig,rc.d/init.d,profile.d},%{_mandir}/pl/man8}
+install -d $RPM_BUILD_ROOT{/etc/{profile.d,rc.d/init.d,sysconfig},%{_mandir}/pl/man8}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/console
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/console
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
@@ -93,8 +93,8 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc *.gz doc
-%attr(754,root,root) %{_sysconfdir}/rc.d/init.d/console
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/console
+%attr(754,root,root) /etc/rc.d/init.d/console
+%config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/console
 %attr(755,root,root) /etc/profile.d/console.*
 
 %attr(755,root,root) /bin/*
