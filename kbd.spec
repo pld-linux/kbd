@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.09
-Release:	1
+Release:	1.1
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -26,8 +26,6 @@ Source10:	%{name}-mac-pl.kmap.gz
 # Source10-md5:	47f26751e2d633e0d663e5774d5c1516
 # MIME-decoded from po/kbd.sv
 Source11:	%{name}-1.06.sv.po
-# new
-Source12:	%{name}-pl.po
 Source13:	pl3.map.gz
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
@@ -69,7 +67,6 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %prep
 %setup -q
 cp -f %{SOURCE11} po/sv.po
-cp -f %{SOURCE12} po/pl.po
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -81,7 +78,7 @@ cp -f %{SOURCE12} po/pl.po
 %patch8 -p1
 %patch9 -p1
 
-sed -e 's@ ru\.\(po\|gmo\)$@ ru.\1 sv.\1 pl.\1@' po/Makefile > po/Makefile.tmp
+sed -e 's@ tr\.\(po\|gmo\)$@ tr.\1 sv.\1@;s@\(\.gmo pl\.\)po@\1gmo@' po/Makefile > po/Makefile.tmp
 mv -f po/Makefile.tmp po/Makefile
 
 %build
