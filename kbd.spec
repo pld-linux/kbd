@@ -20,11 +20,10 @@ Source6:	console.sh
 Source7:	console.csh
 Source8:	console-man-pages.tar.bz2
 # Source8-md5:	3790029011f9f2e299ea4e56df0fa0f9
-Source9:	%{name}-pl1.kmap.gz
-Source10:	%{name}-mac-pl.kmap.gz
-# Source10-md5:	47f26751e2d633e0d663e5774d5c1516
-Source11:	pl3.map.gz
-Source12:	%{name}-pl4.map.gz
+Source9:	%{name}-pl1.kmap
+Source10:	%{name}-mac-pl.kmap
+Source11:	%{name}-pl3.map
+Source12:	%{name}-pl4.map
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-missing-nls.patch
 Patch2:		%{name}-install.patch
@@ -105,10 +104,10 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
 
-install %{SOURCE9} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl1.map.gz
-install %{SOURCE10} $RPM_BUILD_ROOT%{_datadir}/keymaps/mac/all/mac-pl.map.gz
-install %{SOURCE11} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl3.map.gz
-install %{SOURCE12} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl4.map.gz
+gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl1.map.gz
+gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_datadir}/keymaps/mac/all/mac-pl.map.gz
+gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl3.map.gz
+gzip -c %{SOURCE12} > $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl4.map.gz
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
