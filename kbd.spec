@@ -42,7 +42,7 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gettext-devel
 PreReq:		rc-scripts
-PreReq:		/sbin/chkconfig
+Requires(post,preun):	/sbin/chkconfig
 Requires:	sed
 Requires:	open
 Requires:	util-linux
