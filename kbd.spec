@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.09
-Release:	1.1
+Release:	1.2
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -27,16 +27,17 @@ Source10:	%{name}-mac-pl.kmap.gz
 # MIME-decoded from po/kbd.sv
 Source11:	%{name}-1.06.sv.po
 Source13:	pl3.map.gz
-Patch0:		%{name}-install.patch
-Patch1:		%{name}-sparc.patch
-Patch2:		%{name}-compose.patch
-Patch3:		%{name}-compat-suffixes.patch
-Patch4:		%{name}-unicode_start.patch
-Patch5:		%{name}-posixsh.patch
-Patch6:		%{name}-DESTDIR.patch
-Patch7:		%{name}-missing-nls.patch
-Patch8:		%{name}-gcc33.patch
-Patch9:		%{name}-po.patch
+Patch0:		%{name}-pl.po-update.patch
+Patch1:		%{name}-missing-nls.patch
+Patch2:		%{name}-install.patch
+Patch3:		%{name}-sparc.patch
+Patch4:		%{name}-compose.patch
+Patch5:		%{name}-compat-suffixes.patch
+Patch6:		%{name}-unicode_start.patch
+Patch7:		%{name}-posixsh.patch
+Patch8:		%{name}-DESTDIR.patch
+Patch9:		%{name}-gcc33.patch
+Patch10:	%{name}-po.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -77,6 +78,7 @@ cp -f %{SOURCE11} po/sv.po
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 sed -e 's@ tr\.\(po\|gmo\)$@ tr.\1 sv.\1@;s@\(\.gmo pl\.\)po@\1gmo@' po/Makefile > po/Makefile.tmp
 mv -f po/Makefile.tmp po/Makefile
@@ -93,7 +95,8 @@ mv -f po/Makefile.tmp po/Makefile
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{profile.d,rc.d/init.d,sysconfig}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
 
