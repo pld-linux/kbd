@@ -100,7 +100,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/etc/{profile.d,rc.d/init.d,sy
 # some binaries are needed in /bin but rest is not
 mv $RPM_BUILD_ROOT/bin/* $RPM_BUILD_ROOT%{_bindir}
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
-  mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
+	mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
 
 mv $RPM_BUILD_ROOT/share/locale $RPM_BUILD_ROOT%{_datadir}
@@ -128,6 +128,7 @@ bzip2 -dc %{SOURCE8} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 rm -f doc/{*,*/*}.sgml
 
+rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/gr
 %find_lang %{name}
 
 %clean
