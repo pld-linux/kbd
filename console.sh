@@ -1,6 +1,6 @@
-
-case $TERM in
- linux)
+if (tty -s); then
+ case $TERM in
+  linux)
  	if [ -f /etc/sysconfig/console ]; then
 		. /etc/sysconfig/console
 	
@@ -16,4 +16,5 @@ case $TERM in
 		
 	fi
 	;;
-esac
+ esac
+fi
