@@ -20,7 +20,7 @@
 . /etc/rc.d/init.d/functions
 
 case "$1" in
-  start|restart|reload)
+  start|restart|reload|force-reload)
 	. /etc/sysconfig/console
 
 	# Checking if we have framebuffer enabled
@@ -111,8 +111,8 @@ case "$1" in
 	/usr/bin/setleds
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
 esac
 
 exit 0
