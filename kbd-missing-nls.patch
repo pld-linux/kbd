@@ -1,33 +1,6 @@
---- kbd-1.08/src/loadkeys.y.orig	Sun Nov 24 10:44:56 2002
-+++ kbd-1.08/src/loadkeys.y	Sun Nov 24 10:50:43 2002
-@@ -248,12 +248,12 @@
- "valid options are:\n"
- "\n"
- "	-c --clearcompose clear kernel compose table\n"
--"	-d --default	  load \"" DEFMAP "\"\n"
-+"	-d --default	  load \"%s\"\n"
- "	-h --help	  display this help text\n"
- "	-m --mktable      output a \"defkeymap.c\" to stdout\n"
- "	-s --clearstrings clear kernel string table\n"
- "	-u --unicode      implicit conversion to Unicode\n"
--"	-v --verbose      report the changes\n"), VERSION);
-+"	-v --verbose      report the changes\n"), VERSION, DEFMAP);
- 	exit(1);
- }
- 
-@@ -284,6 +284,10 @@
- 
- 	set_progname(argv[0]);
- 
-+	setlocale(LC_ALL, "");
-+	bindtextdomain(PACKAGE, LOCALEDIR);
-+	textdomain(PACKAGE);
-+
- 	while ((c = getopt_long(argc, argv,
- 		short_opts, long_opts, NULL)) != -1) {
- 		switch (c) {
---- kbd-1.08/openvt/openvt.c.orig	Fri Oct 11 13:08:59 2002
-+++ kbd-1.08/openvt/openvt.c	Sun Nov 24 10:53:37 2002
+diff -Nur kbd-1.08.orig/openvt/openvt.c kbd-1.08/openvt/openvt.c
+--- kbd-1.08.orig/openvt/openvt.c	2002-10-11 13:08:59.000000000 +0200
++++ kbd-1.08/openvt/openvt.c	2003-11-07 00:34:28.308371864 +0100
 @@ -53,6 +53,10 @@
     char vtname[sizeof VTNAME + 2]; /* allow 999 possible VTs */
     char *cmd = NULL, *def_cmd = NULL, *username = NULL;
@@ -66,8 +39,277 @@
  	exit(1);
  
     got_a_process:
---- kbd-1.08/po/POTFILES.in.orig	Sat Oct 12 01:07:11 2002
-+++ kbd-1.08/po/POTFILES.in	Sun Nov 24 11:20:20 2002
+diff -Nur kbd-1.08.orig/po/pl.po kbd-1.08/po/pl.po
+--- kbd-1.08.orig/po/pl.po	2003-11-07 00:45:12.710407864 +0100
++++ kbd-1.08/po/pl.po	2003-11-07 00:34:28.247381136 +0100
+@@ -79,6 +79,22 @@
+ msgid "openvt: could not deallocate console %d\n"
+ msgstr "openvt: nie mo¿na zwolniæ konsoli %d\n"
+ 
++#: openvt/openvt.c:299
++msgid "Usage: openvt [-c vtnumber] [-l] [-u] [-s] [-v] [-w] -- command_line\n"
++msgstr "Sk³adnia: openvt [-c numervt] [-l] [-u] [-s] [-v] [-w] -- linia_poleceñ\n"
++
++#: openvt/openvt.c:379
++msgid "couldn't find owner of current tty!\n"
++msgstr "nie mo¿na znale¼æ w³a¶ciciela aktualnego tty!\n"
++
++#: analyze.l:70
++msgid "expected filename between quotes"
++msgstr "oczekiwano nazwy pliku w cudzys³owach"
++
++#: analyze.l:124
++msgid "string too long"
++msgstr "³añcuch za d³ugi"
++
+ #: src/chvt.c:28
+ msgid "usage: chvt N\n"
+ msgstr "sk³adnia: chvt N\n"
+@@ -398,6 +414,241 @@
+ msgid "plus before %s ignored\n"
+ msgstr "zignorowano plus przed %s\n"
+ 
++#: loadkeys.y:147
++#, c-format
++msgid "'%s' is not a function key symbol"
++msgstr "'%s' nie jest symbolem klawisza funkcyjnego"
++
++#: loadkeys.y:210
++#, c-format
++msgid "too many (%d) entries on one line"
++msgstr "za du¿o (%d) wpisów w jednej linii"
++
++#: loadkeys.y:223
++msgid "too many keydefinitions on one line"
++msgstr "za du¿o definicji klawiszy w jednej linii"
++
++#: loadkeys.y:244
++#, c-format
++msgid ""
++"loadkeys version %s\n"
++"\n"
++"Usage: loadkeys [option...] [mapfile...]\n"
++"\n"
++"valid options are:\n"
++"\n"
++"\t-c --clearcompose clear kernel compose table\n"
++"\t-d --default\t  load \"%s\"\n"
++"\t-h --help\t  display this help text\n"
++"\t-m --mktable      output a \"defkeymap.c\" to stdout\n"
++"\t-s --clearstrings clear kernel string table\n"
++"\t-u --unicode      implicit conversion to Unicode\n"
++"\t-v --verbose      report the changes\n"
++msgstr ""
++"loadkeys wersja %s\n"
++"\n"
++"Sk³adnia: loadkeys [opcja...] [plik-mapy...]\n"
++"\n"
++"poprawne opcje to:\n"
++"\n"
++"\t-c --clearcompose wyczyszczenie tablicy compose w j±drze\n"
++"\t-d --default\t  wczytanie \"%s\"\n"
++"\t-h --help\t  wy¶wietlenie tego opisu\n"
++"\t-m --mktable      wypisanie \"defkeymap.c\" na standardowe wyj¶cie\n"
++"\t-s --clearstrings wyczyszczenie tablicy ³añcuchów w j±drze\n"
++"\t-u --unicode      niejawna konwersja do Unikodu\n"
++"\t-v --verbose      raportowanie zmian\n"
++
++#: loadkeys.y:327
++msgid "syntax error in map file\n"
++msgstr "b³±d sk³adni w pliku mapy\n"
++
++#: loadkeys.y:329
++msgid "key bindings not changed\n"
++msgstr "przypisania klawiszy nie zmienione\n"
++
++#: loadkeys.y:386
++msgid "includes nested too deeply"
++msgstr "do³±czane pliki zbyt g³êboko zagnie¿d¿one"
++
++#. start reading include file
++#: loadkeys.y:542
++#, c-format
++msgid "switching to %s\n"
++msgstr "prze³±czanie na %s\n"
++
++#: loadkeys.y:548
++#, c-format
++msgid "cannot open include file %s"
++msgstr "nie mo¿na otworzyæ do³±czanego pliku %s"
++
++#: loadkeys.y:595
++#, c-format
++msgid "Cannot find %s\n"
++msgstr "Nie mo¿na znale¼æ %s\n"
++
++#: loadkeys.y:608
++#, c-format
++msgid "cannot open file %s\n"
++msgstr "nie mo¿na otworzyæ pliku %s\n"
++
++#: loadkeys.y:619
++#, c-format
++msgid "Loading %s\n"
++msgstr "Wczytywanie %s\n"
++
++#: loadkeys.y:631
++#, c-format
++msgid "addmap called with bad index %d"
++msgstr "addmap wywo³ane z b³êdnym indeksem %d"
++
++#: loadkeys.y:635
++#, c-format
++msgid "adding map %d violates explicit keymaps line"
++msgstr "dodawanie mapy %d narusza bezpo¶rednio podan± liniê keymaps"
++
++#: loadkeys.y:649
++#, c-format
++msgid "killkey called with bad index %d"
++msgstr "killkey wywo³ane z b³êdnym indeksem %d"
++
++#: loadkeys.y:651
++#, c-format
++msgid "killkey called with bad table %d"
++msgstr "killkey wywo³ane z b³êdn± tablic± %d"
++
++#: loadkeys.y:665
++#, c-format
++msgid "addkey called with bad index %d"
++msgstr "addkey wywo³ane z b³êdnym indeksem %d"
++
++#: loadkeys.y:667
++#, c-format
++msgid "addkey called with bad table %d"
++msgstr "addkey wywo³ane z b³êdn± tablic± %d"
++
++#: loadkeys.y:707
++#, c-format
++msgid "%s: addfunc called with bad func %d\n"
++msgstr "%s: addfunc wywo³ane z b³êdn± funkcj± %d\n"
++
++#: loadkeys.y:733
++#, c-format
++msgid "%s: addfunc: func_buf overflow\n"
++msgstr "%s: addfunc: przepe³nienie func_buf\n"
++
++#: loadkeys.y:751
++msgid "compose table overflow\n"
++msgstr "przepe³nienie tablicy compose\n"
++
++#: loadkeys.y:788
++#, c-format
++msgid "Keymap %d: Permission denied\n"
++msgstr "Mapa %d: Brak uprawnieñ\n"
++
++#: loadkeys.y:797
++msgid "    FAILED"
++msgstr "    NIE POWIOD£O SIÊ"
++
++#: loadkeys.y:800
++#, c-format
++msgid "failed to bind key %d to value %d\n"
++msgstr "przypisanie klawisza %d do warto¶ci %d nie powiod³o siê\n"
++
++#: loadkeys.y:811
++#, c-format
++msgid "deallocate keymap %d\n"
++msgstr "zwalnianie mapy klawiszy %d\n"
++
++#: loadkeys.y:817
++#, c-format
++msgid "%s: could not deallocate keymap %d\n"
++msgstr "%s: nie mo¿na zwolniæ mapy %d\n"
++
++#: loadkeys.y:832
++#, c-format
++msgid "%s: cannot deallocate or clear keymap\n"
++msgstr "%s: nie mo¿na zwolniæ ani wyczy¶ciæ mapy\n"
++
++#: loadkeys.y:843
++#, c-format
++msgid "%s: failed to restore keyboard mode\n"
++msgstr "%s: przywrócenie trybu klawiatury nie powiod³o siê\n"
++
++#: loadkeys.y:846
++#, c-format
++msgid ""
++"%s: warning: this map uses Unicode symbols\n"
++"    (perhaps you want to do `kbd_mode -u'?)\n"
++msgstr ""
++"%s: uwaga: ta mapa u¿ywa symboli unikodowych\n"
++"    (zapewne trzeba jeszcze wywo³aæ `kbd_mode -u'?)\n"
++
++#: loadkeys.y:890
++#, c-format
++msgid "failed to bind string '%s' to function %s\n"
++msgstr "przypisanie ³añcucha '%s' do funkcji %s nie powiod³o siê\n"
++
++#: loadkeys.y:897
++#, c-format
++msgid "failed to clear string %s\n"
++msgstr "czyszczenie ³añcucha %s nie powiod³o siê\n"
++
++#: loadkeys.y:914
++msgid "too many compose definitions\n"
++msgstr "za du¿o definicji compose\n"
++
++#: loadkeys.y:974
++msgid "impossible error in do_constant"
++msgstr "niemo¿liwy b³±d w do_constant"
++
++#: loadkeys.y:992
++#, c-format
++msgid ""
++"\n"
++"Changed %d %s and %d %s.\n"
++msgstr ""
++"\n"
++"Zmieniono %d %s i %d %s.\n"
++
++#: loadkeys.y:993
++msgid "key"
++msgstr "klawisz"
++
++#: loadkeys.y:993
++msgid "keys"
++msgstr "klawiszy"
++
++#: loadkeys.y:994
++msgid "string"
++msgstr "³añcuch"
++
++#: loadkeys.y:994
++msgid "strings"
++msgstr "³añcuchów"
++
++#: loadkeys.y:996
++#, c-format
++msgid "Loaded %d compose %s.\n"
++msgstr "Wczytano %d %s compose.\n"
++
++#: loadkeys.y:997
++msgid "definition"
++msgstr "definicjê"
++
++#: loadkeys.y:997
++msgid "definitions"
++msgstr "definicji"
++
++#: loadkeys.y:999
++msgid "(No change in compose definitions.)\n"
++msgstr "(Brak zmian w definicjach compose.)\n"
++
++#: loadkeys.y:1032
++#, c-format
++msgid "loadkeys: don't know how to compose for %s\n"
++msgstr "loadkeys: nie wiadomo jak zrobiæ compose dla %s\n"
++
+ #: src/loadunimap.c:62
+ #, c-format
+ msgid "usage: %s [-o map.orig] [map-file]\n"
+diff -Nur kbd-1.08.orig/po/POTFILES.in kbd-1.08/po/POTFILES.in
+--- kbd-1.08.orig/po/POTFILES.in	2002-10-12 01:07:11.000000000 +0200
++++ kbd-1.08/po/POTFILES.in	2003-11-07 00:34:28.308371864 +0100
 @@ -5,6 +5,7 @@
  openvt/getfd.c
  openvt/openvt.c
@@ -84,8 +326,9 @@
  src/loadunimap.c
  src/mapscrn.c
  src/outpsfheader.c
---- kbd-1.08/src/analyze.l.orig	Fri Oct 11 13:08:59 2002
-+++ kbd-1.08/src/analyze.l	Sun Nov 24 11:21:15 2002
+diff -Nur kbd-1.08.orig/src/analyze.l kbd-1.08/src/analyze.l
+--- kbd-1.08.orig/src/analyze.l	2002-10-11 13:08:59.000000000 +0200
++++ kbd-1.08/src/analyze.l	2003-11-07 00:34:28.309371712 +0100
 @@ -67,7 +67,7 @@
  			 BEGIN(0);
  			}
@@ -102,3 +345,32 @@
 -	lkfatal("string too long");
 +	lkfatal(_("string too long"));
  }
+diff -Nur kbd-1.08.orig/src/loadkeys.y kbd-1.08/src/loadkeys.y
+--- kbd-1.08.orig/src/loadkeys.y	2002-10-13 03:22:34.000000000 +0200
++++ kbd-1.08/src/loadkeys.y	2003-11-07 00:34:28.273377184 +0100
+@@ -248,12 +248,12 @@
+ "valid options are:\n"
+ "\n"
+ "	-c --clearcompose clear kernel compose table\n"
+-"	-d --default	  load \"" DEFMAP "\"\n"
++"	-d --default	  load \"%s\"\n"
+ "	-h --help	  display this help text\n"
+ "	-m --mktable      output a \"defkeymap.c\" to stdout\n"
+ "	-s --clearstrings clear kernel string table\n"
+ "	-u --unicode      implicit conversion to Unicode\n"
+-"	-v --verbose      report the changes\n"), VERSION);
++"	-v --verbose      report the changes\n"), VERSION, DEFMAP);
+ 	exit(1);
+ }
+ 
+@@ -284,6 +284,10 @@
+ 
+ 	set_progname(argv[0]);
+ 
++	setlocale(LC_ALL, "");
++	bindtextdomain(PACKAGE, LOCALEDIR);
++	textdomain(PACKAGE);
++
+ 	while ((c = getopt_long(argc, argv,
+ 		short_opts, long_opts, NULL)) != -1) {
+ 		switch (c) {

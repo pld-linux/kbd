@@ -1,12 +1,12 @@
 # Polish translations for kbd.
 # Copyright (C) 2002 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the kbd package.
 # Jakub Bogusz <qboosh@pld-linux.org>, 2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kbd 1.08\n"
-"POT-Creation-Date: 2002-11-03 16:20+0100\n"
+"POT-Creation-Date: 2002-10-25 09:40-0400\n"
 "PO-Revision-Date: 2002-11-23 23:34+0100\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -78,22 +78,6 @@ msgstr ""
 #, c-format
 msgid "openvt: could not deallocate console %d\n"
 msgstr "openvt: nie mo¿na zwolniæ konsoli %d\n"
-
-#: openvt/openvt.c:299
-msgid "Usage: openvt [-c vtnumber] [-l] [-u] [-s] [-v] [-w] -- command_line\n"
-msgstr "Sk³adnia: openvt [-c numervt] [-l] [-u] [-s] [-v] [-w] -- linia_poleceñ\n"
-
-#: openvt/openvt.c:379
-msgid "couldn't find owner of current tty!\n"
-msgstr "nie mo¿na znale¼æ w³a¶ciciela aktualnego tty!\n"
-
-#: analyze.l:70
-msgid "expected filename between quotes"
-msgstr "oczekiwano nazwy pliku w cudzys³owach"
-
-#: analyze.l:124
-msgid "string too long"
-msgstr "³añcuch za d³ugi"
 
 #: src/chvt.c:28
 msgid "usage: chvt N\n"
@@ -352,16 +336,16 @@ msgstr "Klawiatura jest w nieznanym trybie\n"
 msgid "%s: error setting keyboard mode\n"
 msgstr "%s: b³±d podczas ustawiania trybu klawiatury\n"
 
-#: src/kbdrate.c:152 src/kbdrate.c:292
+#: src/kbdrate.c:149 src/kbdrate.c:284
 #, c-format
 msgid "Typematic Rate set to %.1f cps (delay = %d ms)\n"
 msgstr "Czêstotliwo¶æ powtarzania ustawiono na %.1f zn/sek (opó¼nienie = %d ms)\n"
 
-#: src/kbdrate.c:236
+#: src/kbdrate.c:229
 msgid "Usage: kbdrate [-V] [-s] [-r rate] [-d delay]\n"
 msgstr "Sk³adnia: kbdrate [-V] [-s] [-r czêstotliwo¶æ] [-d opó¼nienie]\n"
 
-#: src/kbdrate.c:267
+#: src/kbdrate.c:259
 msgid "Cannot open /dev/port"
 msgstr "Nie mo¿na otworzyæ /dev/port"
 
@@ -413,241 +397,6 @@ msgstr "nieznany symbol '%s'\n"
 #, c-format
 msgid "plus before %s ignored\n"
 msgstr "zignorowano plus przed %s\n"
-
-#: loadkeys.y:147
-#, c-format
-msgid "'%s' is not a function key symbol"
-msgstr "'%s' nie jest symbolem klawisza funkcyjnego"
-
-#: loadkeys.y:210
-#, c-format
-msgid "too many (%d) entries on one line"
-msgstr "za du¿o (%d) wpisów w jednej linii"
-
-#: loadkeys.y:223
-msgid "too many keydefinitions on one line"
-msgstr "za du¿o definicji klawiszy w jednej linii"
-
-#: loadkeys.y:244
-#, c-format
-msgid ""
-"loadkeys version %s\n"
-"\n"
-"Usage: loadkeys [option...] [mapfile...]\n"
-"\n"
-"valid options are:\n"
-"\n"
-"\t-c --clearcompose clear kernel compose table\n"
-"\t-d --default\t  load \"%s\"\n"
-"\t-h --help\t  display this help text\n"
-"\t-m --mktable      output a \"defkeymap.c\" to stdout\n"
-"\t-s --clearstrings clear kernel string table\n"
-"\t-u --unicode      implicit conversion to Unicode\n"
-"\t-v --verbose      report the changes\n"
-msgstr ""
-"loadkeys wersja %s\n"
-"\n"
-"Sk³adnia: loadkeys [opcja...] [plik-mapy...]\n"
-"\n"
-"poprawne opcje to:\n"
-"\n"
-"\t-c --clearcompose wyczyszczenie tablicy compose w j±drze\n"
-"\t-d --default\t  wczytanie \"%s\"\n"
-"\t-h --help\t  wy¶wietlenie tego opisu\n"
-"\t-m --mktable      wypisanie \"defkeymap.c\" na standardowe wyj¶cie\n"
-"\t-s --clearstrings wyczyszczenie tablicy ³añcuchów w j±drze\n"
-"\t-u --unicode      niejawna konwersja do Unikodu\n"
-"\t-v --verbose      raportowanie zmian\n"
-
-#: loadkeys.y:327
-msgid "syntax error in map file\n"
-msgstr "b³±d sk³adni w pliku mapy\n"
-
-#: loadkeys.y:329
-msgid "key bindings not changed\n"
-msgstr "przypisania klawiszy nie zmienione\n"
-
-#: loadkeys.y:386
-msgid "includes nested too deeply"
-msgstr "do³±czane pliki zbyt g³êboko zagnie¿d¿one"
-
-#. start reading include file
-#: loadkeys.y:542
-#, c-format
-msgid "switching to %s\n"
-msgstr "prze³±czanie na %s\n"
-
-#: loadkeys.y:548
-#, c-format
-msgid "cannot open include file %s"
-msgstr "nie mo¿na otworzyæ do³±czanego pliku %s"
-
-#: loadkeys.y:595
-#, c-format
-msgid "Cannot find %s\n"
-msgstr "Nie mo¿na znale¼æ %s\n"
-
-#: loadkeys.y:608
-#, c-format
-msgid "cannot open file %s\n"
-msgstr "nie mo¿na otworzyæ pliku %s\n"
-
-#: loadkeys.y:619
-#, c-format
-msgid "Loading %s\n"
-msgstr "Wczytywanie %s\n"
-
-#: loadkeys.y:631
-#, c-format
-msgid "addmap called with bad index %d"
-msgstr "addmap wywo³ane z b³êdnym indeksem %d"
-
-#: loadkeys.y:635
-#, c-format
-msgid "adding map %d violates explicit keymaps line"
-msgstr "dodawanie mapy %d narusza bezpo¶rednio podan± liniê keymaps"
-
-#: loadkeys.y:649
-#, c-format
-msgid "killkey called with bad index %d"
-msgstr "killkey wywo³ane z b³êdnym indeksem %d"
-
-#: loadkeys.y:651
-#, c-format
-msgid "killkey called with bad table %d"
-msgstr "killkey wywo³ane z b³êdn± tablic± %d"
-
-#: loadkeys.y:665
-#, c-format
-msgid "addkey called with bad index %d"
-msgstr "addkey wywo³ane z b³êdnym indeksem %d"
-
-#: loadkeys.y:667
-#, c-format
-msgid "addkey called with bad table %d"
-msgstr "addkey wywo³ane z b³êdn± tablic± %d"
-
-#: loadkeys.y:707
-#, c-format
-msgid "%s: addfunc called with bad func %d\n"
-msgstr "%s: addfunc wywo³ane z b³êdn± funkcj± %d\n"
-
-#: loadkeys.y:733
-#, c-format
-msgid "%s: addfunc: func_buf overflow\n"
-msgstr "%s: addfunc: przepe³nienie func_buf\n"
-
-#: loadkeys.y:751
-msgid "compose table overflow\n"
-msgstr "przepe³nienie tablicy compose\n"
-
-#: loadkeys.y:788
-#, c-format
-msgid "Keymap %d: Permission denied\n"
-msgstr "Mapa %d: Brak uprawnieñ\n"
-
-#: loadkeys.y:797
-msgid "    FAILED"
-msgstr "    NIE POWIOD£O SIÊ"
-
-#: loadkeys.y:800
-#, c-format
-msgid "failed to bind key %d to value %d\n"
-msgstr "przypisanie klawisza %d do warto¶ci %d nie powiod³o siê\n"
-
-#: loadkeys.y:811
-#, c-format
-msgid "deallocate keymap %d\n"
-msgstr "zwalnianie mapy klawiszy %d\n"
-
-#: loadkeys.y:817
-#, c-format
-msgid "%s: could not deallocate keymap %d\n"
-msgstr "%s: nie mo¿na zwolniæ mapy %d\n"
-
-#: loadkeys.y:832
-#, c-format
-msgid "%s: cannot deallocate or clear keymap\n"
-msgstr "%s: nie mo¿na zwolniæ ani wyczy¶ciæ mapy\n"
-
-#: loadkeys.y:843
-#, c-format
-msgid "%s: failed to restore keyboard mode\n"
-msgstr "%s: przywrócenie trybu klawiatury nie powiod³o siê\n"
-
-#: loadkeys.y:846
-#, c-format
-msgid ""
-"%s: warning: this map uses Unicode symbols\n"
-"    (perhaps you want to do `kbd_mode -u'?)\n"
-msgstr ""
-"%s: uwaga: ta mapa u¿ywa symboli unikodowych\n"
-"    (zapewne trzeba jeszcze wywo³aæ `kbd_mode -u'?)\n"
-
-#: loadkeys.y:890
-#, c-format
-msgid "failed to bind string '%s' to function %s\n"
-msgstr "przypisanie ³añcucha '%s' do funkcji %s nie powiod³o siê\n"
-
-#: loadkeys.y:897
-#, c-format
-msgid "failed to clear string %s\n"
-msgstr "czyszczenie ³añcucha %s nie powiod³o siê\n"
-
-#: loadkeys.y:914
-msgid "too many compose definitions\n"
-msgstr "za du¿o definicji compose\n"
-
-#: loadkeys.y:974
-msgid "impossible error in do_constant"
-msgstr "niemo¿liwy b³±d w do_constant"
-
-#: loadkeys.y:992
-#, c-format
-msgid ""
-"\n"
-"Changed %d %s and %d %s.\n"
-msgstr ""
-"\n"
-"Zmieniono %d %s i %d %s.\n"
-
-#: loadkeys.y:993
-msgid "key"
-msgstr "klawisz"
-
-#: loadkeys.y:993
-msgid "keys"
-msgstr "klawiszy"
-
-#: loadkeys.y:994
-msgid "string"
-msgstr "³añcuch"
-
-#: loadkeys.y:994
-msgid "strings"
-msgstr "³añcuchów"
-
-#: loadkeys.y:996
-#, c-format
-msgid "Loaded %d compose %s.\n"
-msgstr "Wczytano %d %s compose.\n"
-
-#: loadkeys.y:997
-msgid "definition"
-msgstr "definicjê"
-
-#: loadkeys.y:997
-msgid "definitions"
-msgstr "definicji"
-
-#: loadkeys.y:999
-msgid "(No change in compose definitions.)\n"
-msgstr "(Brak zmian w definicjach compose.)\n"
-
-#: loadkeys.y:1032
-#, c-format
-msgid "loadkeys: don't know how to compose for %s\n"
-msgstr "loadkeys: nie wiadomo jak zrobiæ compose dla %s\n"
 
 #: src/loadunimap.c:62
 #, c-format
@@ -868,11 +617,8 @@ msgstr "%s: B³êdny koniec przedzia³u (0x%lx)\n"
 
 #: src/psfxtable.c:166
 #, c-format
-msgid ""
-"%s: Corresponding to a range of font positions, there should be a Unicode "
-"range\n"
-msgstr ""
-"%s: przedzia³owi w foncie powinien odpowiadaæ przedzia³ Unikodu\n"
+msgid "%s: Corresponding to a range of font positions, there should be a Unicode range\n"
+msgstr "%s: przedzia³owi w foncie powinien odpowiadaæ przedzia³ Unikodu\n"
 
 #: src/psfxtable.c:255
 #, c-format
@@ -958,8 +704,7 @@ msgstr "resizecons: trzeba zmieniæ TERM (mo¿e na con%dx%d lub linux-%dx%d)\n"
 msgid ""
 "resizecons:\n"
 "call is:  resizecons COLSxROWS  or:  resizecons COLS ROWS\n"
-"or: resizecons -lines ROWS, with ROWS one of 25, 28, 30, 34, 36, 40, 44, 50, "
-"60\n"
+"or: resizecons -lines ROWS, with ROWS one of 25, 28, 30, 34, 36, 40, 44, 50, 60\n"
 msgstr ""
 "resizecons:\n"
 "sk³adnia:  resizecons KOLUMNYxWIERSZE  lub resizecons KOLUMNY WIERSZE\n"
@@ -1003,8 +748,7 @@ msgstr "B³±d podczas zapisu zrzutu ekranu\n"
 
 #: src/setfont.c:73
 msgid ""
-"Usage: setfont [write-options] [-<N>] [newfont..] [-m consolemap] [-u "
-"unicodemap]\n"
+"Usage: setfont [write-options] [-<N>] [newfont..] [-m consolemap] [-u unicodemap]\n"
 "  write-options (take place before file loading):\n"
 "    -o  <filename>\tWrite current font to <filename>\n"
 "    -O  <filename>\tWrite current font and unicode map to <filename>\n"
@@ -1055,11 +799,8 @@ msgid "setfont: too many input files\n"
 msgstr "setfont: zbyt du¿o plików wej¶ciowych\n"
 
 #: src/setfont.c:177
-msgid ""
-"setfont: cannot both restore from character ROM and from file. Font "
-"unchanged.\n"
-msgstr ""
-"setfont: nie mo¿na jednocze¶nie odtworzyæ z ROM-u i z pliku. Font nie zmieniony.\n"
+msgid "setfont: cannot both restore from character ROM and from file. Font unchanged.\n"
+msgstr "setfont: nie mo¿na jednocze¶nie odtworzyæ z ROM-u i z pliku. Font nie zmieniony.\n"
 
 #: src/setfont.c:236
 #, c-format

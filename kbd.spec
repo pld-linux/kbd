@@ -68,6 +68,8 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %prep
 %setup -q
+cp -f %{SOURCE11} po/sv.po
+cp -f %{SOURCE12} po/pl.po
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -78,9 +80,6 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-
-cp -f %{SOURCE11} po/sv.po
-cp -f %{SOURCE12} po/pl.po
 
 sed -e 's@ ru\.\(po\|gmo\)$@ ru.\1 sv.\1 pl.\1@' po/Makefile > po/Makefile.tmp
 mv -f po/Makefile.tmp po/Makefile
