@@ -19,8 +19,6 @@
 # Source function library
 . /etc/rc.d/init.d/functions
 
-FB=
-
 case "$1" in
 	start|restart)
 		. /etc/sysconfig/console
@@ -39,7 +37,10 @@ case "$1" in
 		then
 			CMD="/usr/bin/setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
 			show "Loading console font and map"; busy
-			if [ ! -z $FB ]; then			
+
+			# don't initialize on multiple terminals if we use fbset
+			# (assume that, in this case fb is loaded as a module)
+			if [ ! -z $FB ] && [ -f /var/lock/subsys/fbset ]; then			
 				# Check for devfs (workaround: -a option don't work at all)
 				if [ -d /dev/vc ]; then
 					pattern="s/\/dev\/vc\///g"
@@ -47,9 +48,20 @@ case "$1" in
 					pattern="s/\/dev\/tty//g"
 				fi
 				
+				# save old tty number
 				tty=`/usr/bin/tty | sed $pattern`
-				for a in $SET_FONT_TERMINALS; do
-					/usr/bin/open -c $a -s -w -- $CMD
+				
+				# check if devfs (workaround: -a option don't work at all)
+				if [ -d /dev/vc ]; then
+					DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+				else
+					DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
+				fi
+
+				[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
+				
+				for cons in $SET_FONT_TERMINALS; do
+					/usr/bin/open -c $cons -s -w -- $CMD
 				done
 				
 				if [ $tty = "/dev/console" ]; then tty=1; fi
