@@ -15,5 +15,5 @@ CONSOLEMAP=8859-2
 # Keyboard table file name
 KEYTABLE=pl2
 
-# Only on this terminals fonts will be set
+# Terminals affected with font change when using framebuffer
 SET_FONT_TERMINALS="1 2 3 4 5 6 7 8"
