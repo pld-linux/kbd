@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	18
+Release:	19
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ Prereq:		rc-scripts
 Prereq:		/sbin/chkconfig
 Requires:	sed
 Requires:	open
+Requires:	util-linux
 Provides:	console-data
 Provides:	console-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -87,7 +88,6 @@ bzip2 -dc %{SOURCE3} | tar xvf - -C $RPM_BUILD_ROOT%{_mandir}
 bzip2 -dc %{SOURCE8} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 rm -f doc/{*,*/*}.sgml
-gzip -9nf CHANGES CREDITS README doc/*.txt
 
 %find_lang %{name}
 
@@ -104,7 +104,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc *.gz doc
+%doc CHANGES CREDITS README doc/*.txt
 %attr(754,root,root) /etc/rc.d/init.d/console
 %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/console
 %attr(755,root,root) /etc/profile.d/console.*

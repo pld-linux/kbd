@@ -77,9 +77,26 @@ case "$1" in
 		fi
 		echo "Enabling SAK sequence"
 		echo Control Alt keycode 101 = SAK | loadkeys
+
+		power_option=""
+		if [ $POWER_SAVE ]; then
+			if [ $BLANK_TIME ]; then
+				power_option="-blank $BLANK_TIME";
+			fi
+			if [ $POWERDOWN_TIME ]; then
+				power_option="-powerdown $POWERDOWN_TIME $power_option";
+			fi
+			/usr/bin/setterm $power_option -powersave $POWER_SAVE
+		fi
+		if [ $FOREGROUND_COLOUR ]; then
+			/usr/bin/setterm -foreground $FOREGROUND_COLOUR
+		fi
+		if [ $BACKGROUND_COLOUR ]; then
+			/usr/bin/setterm -background $BACKGROUND_COLOUR
+		fi
 		;;
 	stop)
-		# Nothing to stop
+		/usr/bin/setterm -defaults
 		;;
 	status)
 		# Nothing to report

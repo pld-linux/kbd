@@ -17,3 +17,13 @@ KEYTABLE=pl2
 
 # Terminals affected with font change when using framebuffer
 SET_FONT_TERMINALS="1 2 3 4 5 6 7 8"
+
+# Turn on powersave on console?
+POWER_SAVE=on
+BLANK_TIME=10
+POWERDOWN_TIME=60
+
+# Colours of console. Possible values:
+# black|red|green|yellow|blue|magenta|cyan|white|default
+#FOREGROUND_COLOUR=red
+#BACKGROUND_COLOUR=green
