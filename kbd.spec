@@ -28,6 +28,7 @@ Source10:	%{name}-mac-pl.kmap.gz
 Source11:	%{name}-1.06.sv.po
 # new
 Source12:	%{name}-pl.po
+Source13:	pl3.map.gz
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
@@ -108,8 +109,10 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
+
 install %{SOURCE9} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl1.map.gz
 install %{SOURCE10} $RPM_BUILD_ROOT%{_datadir}/keymaps/mac/all/mac-pl.map.gz
+install %{SOURCE13} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl3.map.gz
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
