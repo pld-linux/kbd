@@ -26,6 +26,7 @@ BuildRequires:	flex
 BuildRequires:	gettext-devel
 Prereq:		rc-scripts
 Prereq:		/sbin/chkconfig
+Requires:	sed
 Provides:	console-data
 Provides:	console-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
