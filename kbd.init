@@ -13,8 +13,8 @@
 
 [ -f /etc/sysconfig/console ] || exit 0
 
-[ -f /bin/loadkeys ] || exit 0
-[ -f /usr/bin/setfont ] || exit 0
+[ -f /bin/loadkeys -o -f /usr/bin/loadkeys] || exit 0
+[ -f /bin/setfont -o -f /usr/bin/setfont ] || exit 0
 
 # Source function library
 . /etc/rc.d/init.d/functions
@@ -33,7 +33,7 @@ case "$1" in
 		run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
 	fi
 	if [ -n "$CONSOLEFONT" ]; then
-		CMD="/usr/bin/setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
+		CMD="setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
 		show "Loading console font and map"
 		busy
 
