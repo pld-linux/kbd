@@ -15,7 +15,7 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gzip
 BuildRequires:	gettext-devel
-Prereq:		/sbin/chkconfig
+Prereq:		rc-scripts
 Obsoletes:	console-tools
 Obsoletes:	console-data
 Provides:	console-tools
