@@ -30,3 +30,7 @@ POWERDOWN_TIME=60
 
 # Setting of leds (on|off). Default is off:
 #NUM_LOCK=on
+
+# Setting of internal beeper of computer [0-2000]
+# 0 - disable beeper completelly
+#BEEP_LENGHT=0

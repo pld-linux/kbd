@@ -101,12 +101,12 @@ case "$1" in
 		if [ $BACKGROUND_COLOUR ]; then
 			/usr/bin/setterm -background $BACKGROUND_COLOUR
 		fi
+		if [ $BEEPER_LENGHT ]; then
+			/usr/bin/setterm -blenght $BEEPER_LENGHT
+		fi
 		;;
 	stop)
 		. /etc/sysconfig/console
-		for cons in $SET_FONT_TERMINALS; do
-			/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
-		done
 		run_cmd "Setting terminals to default values" /usr/bin/setterm -default
 		;;
 	status)
