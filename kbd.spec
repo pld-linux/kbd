@@ -2,7 +2,7 @@ Summary:	Linux terminal utilities
 Summary(pl):	Narzêdzia do obs³ugi terminala
 Name:		kbd
 Version:	1.08
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
