@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.12
-Release:	1
+Release:	1.1
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -35,6 +35,7 @@ Patch7:		%{name}-posixsh.patch
 Patch8:		%{name}-gcc33.patch
 Patch9:		%{name}-pl.patch
 Patch10:	%{name}-pl2.patch
+Patch11:	%{name}-terminal.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -53,6 +54,8 @@ Obsoletes:	console-data
 Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
 Obsoletes:	console-tools-static
+
+%define	_datadir	/%{_lib}/%{name}
 
 %description
 This package contains utilities to load console fonts and keyboard
@@ -75,9 +78,11 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 ./configure \
+	--prefix=/ \
 	--datadir=%{_datadir} \
 	--mandir=%{_mandir}
 %{__make} \
@@ -93,6 +98,11 @@ install -d $RPM_BUILD_ROOT/etc/{profile.d,rc.d/init.d,sysconfig}
 	DESTDIR=$RPM_BUILD_ROOT
 
 ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
+
+# some binaries are needed in /bin
+for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
+  mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
+done
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 %ifarch sparc sparc64
