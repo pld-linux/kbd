@@ -79,6 +79,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 	--datadir=%{_datadir} \
 	--mandir=%{_mandir}
 %{__make} \
+	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}"
 
