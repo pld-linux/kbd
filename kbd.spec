@@ -14,6 +14,8 @@ Source3:	kbdrate.8.pl
 Source4:	lat2u-16.psf.gz
 Source5:	lat2u.sfm.gz
 Patch0:		%{name}-install.patch
+Patch1:		%{name}-sparc.patch
+Patch2:		%{name}-compose.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -39,6 +41,8 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %prep
 %setup  -q 
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 ./configure \
