@@ -14,7 +14,7 @@ Source3:	kbdrate.8.pl
 Source4:	lat2u-16.psf.gz
 Source5:	lat2u.sfm.gz
 Source6:	console.sh
-Source6:	console.csh
+Source7:	console.csh
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
