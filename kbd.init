@@ -42,17 +42,14 @@ case "$1" in
 			if [ ! -z $FB ]; then			
 				# Check for devfs (workaround: -a option don't work at all)
 				if [ -d /dev/vc ]; then
-					list=`ls /dev/vc/*`
 					pattern="s/\/dev\/vc\///g"
 				else
-					list=`ls /dev/tty[0-9] && ls /dev/tty[0-9][0-9]`
 					pattern="s/\/dev\/tty//g"
 				fi
 				
 				tty=`/usr/bin/tty | sed $pattern`
-				for a in $list; do
-					b=`ls $a | sed $pattern`
-					/usr/bin/open -c $b -s -w -- $CMD
+				for a in $SET_FONT_TERMINALS; do
+					/usr/bin/open -c $a -s -w -- $CMD
 				done
 				
 				if [ $tty = "/dev/console" ]; then tty=1; fi
