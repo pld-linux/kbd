@@ -80,8 +80,7 @@ case "$1" in
 	if [ -n "$KEYTABLE" ]; then
 		run_cmd "Loading keyboard table" loadkeys $KEYTABLE < /dev/tty0 > /dev/tty0
 	fi
-	nls "Enabling SAK sequence"
-	echo Control Alt keycode 101 = SAK | loadkeys
+	run_cmd "Enabling SAK sequence" /bin/sh -c "echo Control Alt keycode 101 = SAK | loadkeys"
 
 	power_option=""
 	if [ "$POWER_SAVE" ]; then
