@@ -7,14 +7,17 @@ Release:	5
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
+# Source0-md5: 924e6a05e52715dc0f96385b35f2f680
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-non-english-man-pages.tar.bz2
+# Source3-md5: 93c72a27e4fdeba23cb62d62343e9483
 Source4:	lat2u-16.psf.gz
 Source5:	lat2u.sfm.gz
 Source6:	console.sh
 Source7:	console.csh
 Source8:	console-man-pages.tar.bz2
+# Source8-md5: 3790029011f9f2e299ea4e56df0fa0f9
 Source9:	%{name}-pl1.kmap.gz
 Source10:	%{name}-mac-pl.kmap.gz
 # MIME-decoded from po/kbd.sv
