@@ -16,6 +16,8 @@
 [ -f /bin/loadkeys -o -f /usr/bin/loadkeys ] || exit 0
 [ -f /bin/setfont -o -f /usr/bin/setfont ] || exit 0
 
+[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
+
 # Source function library
 . /etc/rc.d/init.d/functions
 
@@ -32,48 +34,60 @@ case "$1" in
 	if [ -n "$SVGATEXTMODE" ]; then
 		run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
 	fi
+
+	case "$LANG" in
+	    *.utf8|*.UTF-8)
+	    if [ -x /bin/unicode_start ] && /sbin/consoletype fg ; then
+		unicode_start $SYSFONT $SYSFONTACM
+		CONSOLEFONT=""
+	    fi
+	    ;;
+	esac
+
 	if [ -n "$CONSOLEFONT" ]; then
 		CMD="setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
 		show "Loading console font and map"
 		busy
 
-	# don't initialize on multiple terminals if we use fbset
-	# (assume that, in this case fb is loaded as a module)
-	if [ ! -z "$FB" ]; then
-		# Check for devfs (workaround: -a option don't work at all)
-		if [ -d /dev/vc ]; then
-			pattern="s/\/dev\/vc\///g"
-		else
-			pattern="s/\/dev\/tty//g"
-		fi
-
-		# save old tty number
-		tty=`/usr/bin/tty | sed $pattern`
-
-		# check if devfs (workaround: -a option don't work at all)
-		if [ -d /dev/vc ]; then
-			DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
-		else
-			DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
-		fi
-
-		[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
-
-		for cons in $SET_FONT_TERMINALS; do
-			/usr/bin/open -c $cons -s -w -- $CMD
-			if [ "$NUM_LOCK" ]; then
-				if [ $NUM_LOCK = "on" ]; then
-					/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D +num
-				else
-					/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
-				fi
+		# don't initialize on multiple terminals if we use fbset
+		# (assume that, in this case fb is loaded as a module)
+		if [ ! -z "$FB" ]; then
+			# Check for devfs (workaround: -a option don't work at all)
+			if [ -d /dev/vc ]; then
+				pattern="s/\/dev\/vc\///g"
+			else
+				pattern="s/\/dev\/tty//g"
 			fi
-		done
 
-		if [ $tty = "/dev/console" ]; then tty=1; fi
+			# save old tty number
+			tty=`/usr/bin/tty | sed $pattern`
+
+			# check if devfs (workaround: -a option don't work at all)
+			if [ -d /dev/vc ]; then
+				DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+			else
+				DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
+			fi
+
+			[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
+
+			for cons in $SET_FONT_TERMINALS; do
+				/usr/bin/open -c $cons -s -w -- $CMD
+				if [ "$NUM_LOCK" ]; then
+					if [ $NUM_LOCK = "on" ]; then
+						/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D +num
+					else
+						/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D -num
+					fi
+				fi
+			done
+
+			if [ "$tty" = "/dev/console" ]; then
+			    	tty=1
+			fi
 			/usr/bin/switchto $tty
 		else
-			$CMD
+		    	$CMD
 		fi
 		ok
 	fi
