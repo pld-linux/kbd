@@ -66,6 +66,7 @@ case "$1" in
 		then
 			run_cmd "Loading keyboard table" loadkeys $KEYTABLE < /dev/tty0 > /dev/tty0
 		fi
+		run_cmd "Enabling SAK sequence" echo Control Alt keycode 101 = SAK | loadkeys
 		;;
 	stop)
 		# Nothing to stop
