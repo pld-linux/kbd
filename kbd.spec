@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -13,6 +13,7 @@ Source2:	%{name}.sysconfig
 Source3:	kbdrate.8.pl
 Source4:	lat2u-16.psf.gz
 Source5:	lat2u.sfm.gz
+Source6:	console.sh
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
@@ -57,7 +58,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{sysconfig,rc.d/init.d},%{_mandir}/pl/man8}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/{sysconfig,rc.d/init.d,profile.d},%{_mandir}/pl/man8}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
@@ -68,6 +69,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/console
 install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
+install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 
 rm -f doc/{*,*/*}.sgml
 gzip -9nf CHANGES CREDITS README doc/*.txt
@@ -90,6 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz doc
 %attr(754,root,root) %{_sysconfdir}/rc.d/init.d/console
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/console
+%attr(755,root,root) /etc/profile.d/console.sh
 
 %attr(755,root,root) /bin/*
 %attr(755,root,root) %{_bindir}/*
