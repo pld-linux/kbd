@@ -124,23 +124,13 @@ diff -Nur kbd-1.09.orig/src/loadkeys.y kbd-1.09/src/loadkeys.y
  	while ((c = getopt_long(argc, argv,
  		short_opts, long_opts, NULL)) != -1) {
  		switch (c) {
---- kbd-1.09/po/pl.po.orig	2004-01-03 16:03:41.000000000 +0100
-+++ kbd-1.09/po/pl.po	2004-01-03 16:31:06.730271080 +0100
-@@ -6,7 +6,8 @@
- msgid ""
- msgstr ""
- "Project-Id-Version: kbd 1.09\n"
--"POT-Creation-Date: 2004-01-03 14:52+0100\n"
-+"Report-Msgid-Bugs-To: \n"
-+"POT-Creation-Date: 2004-01-03 16:15+0100\n"
- "PO-Revision-Date: 2004-01-03 14:53+0100\n"
- "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
- "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+--- kbd-1.10/po/pl.po.orig	2004-01-03 16:03:41.000000000 +0100
++++ kbd-1.10/po/pl.po	2004-01-03 16:31:06.730271080 +0100
 @@ -78,11 +79,46 @@
  "\n"
  "openvt: nie mo¿na otworzyæ %s w trybie R/W (%s)\n"
  
--#: openvt/openvt.c:284
+-#: openvt/openvt.c:291
 +#: openvt/openvt.c:247
 +#, c-format
 +msgid ""
@@ -154,7 +144,7 @@ diff -Nur kbd-1.09.orig/src/loadkeys.y kbd-1.09/src/loadkeys.y
 +msgid "openvt: fork() error"
 +msgstr "openvt: b³±d fork()"
 +
-+#: openvt/openvt.c:288
++#: openvt/openvt.c:295
  #, c-format
  msgid "openvt: could not deallocate console %d\n"
  msgstr "openvt: nie mo¿na zwolniæ konsoli %d\n"
