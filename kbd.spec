@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.08
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -76,7 +76,11 @@ install -d $RPM_BUILD_ROOT/etc/{profile.d,rc.d/init.d,sysconfig}
 ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
+%ifarch sparc sparc64
+sed 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' %{SOURCE2} > $RPM_BUILD_ROOT/etc/sysconfig/console
+%else
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
+%endif
 
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
