@@ -97,8 +97,6 @@ install -d $RPM_BUILD_ROOT/etc/{profile.d,rc.d/init.d,sysconfig}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
-
 # some binaries are needed in /bin
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
   mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
