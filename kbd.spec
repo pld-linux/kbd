@@ -15,6 +15,7 @@ Source4:	lat2u-16.psf.gz
 Source5:	lat2u.sfm.gz
 Source6:	console.sh
 Source7:	console.csh
+Source8:	console-man-pages.tar.bz2
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
@@ -31,6 +32,7 @@ Provides:	console-data
 Provides:	console-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	util-linux < 2.11
+Conflicts:	man-pages < 1.43-5
 Obsoletes:	console-data
 Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
@@ -74,6 +76,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
+bzip2 -dc %{SOURCE8} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 rm -f doc/{*,*/*}.sgml
 gzip -9nf CHANGES CREDITS README doc/*.txt
@@ -105,9 +108,15 @@ fi
 %{_datadir}/unimaps
 
 %{_mandir}/man?/*
+%lang(cs) %{_mandir}/cs/man?/*
+%lang(de) %{_mandir}/de/man?/*
 %lang(es) %{_mandir}/es/man?/*
 %lang(fi) %{_mandir}/fi/man?/*
 %lang(fr) %{_mandir}/fr/man?/*
 %lang(hu) %{_mandir}/hu/man?/*
+%lang(it) %{_mandir}/it/man?/*
+%lang(ja) %{_mandir}/ja/man?/*
 %lang(ko) %{_mandir}/ko/man?/*
 %lang(pl) %{_mandir}/pl/man?/*
+%lang(pt) %{_mandir}/pt/man?/*
+%lang(ru) %{_mandir}/ru/man?/*
