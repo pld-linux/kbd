@@ -1,8 +1,8 @@
 Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
-Version:	1.05
-Release:	2
+Version:	1.06
+Release:	1
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -11,6 +11,7 @@ Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.g
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-install.patch
+URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gzip
