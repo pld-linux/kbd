@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	14
+Release:	15
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
