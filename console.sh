@@ -1,6 +1,6 @@
 
 case $(tty) in
-(/dev/tty[0-9]|/dev/tty[0-9][0-9])
+(/dev/tty[0-9]|/dev/tty[0-9][0-9]|/dev/vc/*)
 
 	if [ -f /etc/sysconfig/console ]
 	then
