@@ -92,12 +92,13 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{profile.d,rc.d/init.d,sysconfig}
+install -d $RPM_BUILD_ROOT{%{_bindir},/etc/{profile.d,rc.d/init.d,sysconfig}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# some binaries are needed in /bin
+# some binaries are needed in /bin but rest is not
+mv $RPM_BUILD_ROOT/bin/* $RPM_BUILD_ROOT%{_bindir}
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
   mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
