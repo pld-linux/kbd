@@ -77,10 +77,12 @@ gzip -9nf CHANGES CREDITS README doc/*.txt
 %find_lang %{name}
 
 %post
-NAME=console; %chkconfig_add
+/sbin/chkconfig --add console
 
 %preun
-NAME=console; %chkconfig_del
+if [ "$1" = "0" ]; then
+	/sbin/chkconfig --del console
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
