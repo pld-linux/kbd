@@ -10,7 +10,7 @@ Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.g
 # Source0-md5: 924e6a05e52715dc0f96385b35f2f680
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Source3:	%{name}-non-english-man-pages.tar.bz2
+Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source3-md5: 93c72a27e4fdeba23cb62d62343e9483
 Source4:	lat2u-16.psf.gz
 # Source4-md5:	dc90a9bcff858175beea32a9b3bebb33
