@@ -37,6 +37,7 @@ Patch5:		%{name}-posixsh.patch
 Patch6:		%{name}-DESTDIR.patch
 Patch7:		%{name}-missing-nls.patch
 Patch8:		%{name}-gcc33.patch
+Patch9:		%{name}-po.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -75,6 +76,7 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 cp -f %{SOURCE11} po/sv.po
 cp -f %{SOURCE12} po/pl.po
