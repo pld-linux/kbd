@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.11
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -21,7 +21,6 @@ Source7:	console.csh
 Source8:	console-man-pages.tar.bz2
 # Source8-md5:	3790029011f9f2e299ea4e56df0fa0f9
 Source9:	%{name}-pl1.kmap.gz
-# Source9-md5:	18d119b54f3fbacbfb561d81ac1a9472
 Source10:	%{name}-mac-pl.kmap.gz
 # Source10-md5:	47f26751e2d633e0d663e5774d5c1516
 Source11:	pl3.map.gz
@@ -35,6 +34,8 @@ Patch5:		%{name}-compat-suffixes.patch
 Patch6:		%{name}-unicode_start.patch
 Patch7:		%{name}-posixsh.patch
 Patch8:		%{name}-gcc33.patch
+Patch9:		%{name}-pl.patch
+Patch10:	%{name}-pl2.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -73,6 +74,8 @@ klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 %build
 ./configure \
