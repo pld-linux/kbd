@@ -5,8 +5,6 @@ Version:	1.06
 Release:	15
 License:	GPL
 Group:		Applications/Console
-Group(de):	Applikationen/Konsole
-Group(pl):	Aplikacje/Konsola
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
