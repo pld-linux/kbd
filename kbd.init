@@ -39,7 +39,7 @@ case "$1" in
 
 	# don't initialize on multiple terminals if we use fbset
 	# (assume that, in this case fb is loaded as a module)
-	if [ ! -z "$FB" ]; then			
+	if [ ! -z "$FB" ]; then
 		# Check for devfs (workaround: -a option don't work at all)
 		if [ -d /dev/vc ]; then
 			pattern="s/\/dev\/vc\///g"
@@ -100,7 +100,7 @@ case "$1" in
 		/usr/bin/setterm -background $BACKGROUND_COLOUR
 	fi
 	if [ "$BEEP_LENGHT" ]; then
-		/usr/bin/setterm -blenght $BEEP_LENGHT
+		/usr/bin/setterm -blength $BEEP_LENGHT
 	fi
 	;;
   stop)
