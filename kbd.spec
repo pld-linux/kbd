@@ -2,7 +2,7 @@ Summary:	Linux console utilities
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.06
-Release:	11
+Release:	12
 License:	GPL
 Group:		Applications/Console
 Group(de):	Applikationen/Konsole
@@ -16,6 +16,7 @@ Source5:	lat2u.sfm.gz
 Source6:	console.sh
 Source7:	console.csh
 Source8:	console-man-pages.tar.bz2
+Source9:	%{name}-pl1.kmap.gz
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-compose.patch
@@ -71,11 +72,15 @@ ln -sf /bin/loadkeys $RPM_BUILD_ROOT%{_bindir}/loadkeys
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
-bzip2 -dc %{SOURCE3} | tar xvf - -C $RPM_BUILD_ROOT%{_mandir}
+
 install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_datadir}/unimaps/lat2u.uni
+install %{SOURCE9} $RPM_BUILD_ROOT%{_datadir}/keymaps/i386/qwerty/pl1.map.gz
+
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
+
+bzip2 -dc %{SOURCE3} | tar xvf - -C $RPM_BUILD_ROOT%{_mandir}
 bzip2 -dc %{SOURCE8} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 rm -f doc/{*,*/*}.sgml
