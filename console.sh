@@ -10,7 +10,7 @@ case $(tty) in
 		then
 			# Switch the G0 charset map from the default ISO-8859-1
 			# to the user-defined map (loaded with consolefonts)
-			echo -n -e '\033(K' > /proc/$$/fd/0
+			echo -n -e '\033(K' > /dev/tty
 		fi
 		
 	fi
