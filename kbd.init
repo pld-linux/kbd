@@ -39,7 +39,7 @@ case "$1" in
 
 	# don't initialize on multiple terminals if we use fbset
 	# (assume that, in this case fb is loaded as a module)
-	if [ ! -z "$FB" ] && [ -f /var/lock/subsys/fbset ]; then			
+	if [ ! -z "$FB" ]; then			
 		# Check for devfs (workaround: -a option don't work at all)
 		if [ -d /dev/vc ]; then
 			pattern="s/\/dev\/vc\///g"
