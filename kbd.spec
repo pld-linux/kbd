@@ -63,7 +63,7 @@ maps. It also includes a number of different fonts and keyboard maps.
 
 %description -l pl
 Pakiet zawiera narzêdzia do ³adowania fontów konsolowych oraz map
-klawiatury. Dodaktowo do³±czono znaczn± liczbê ró¿nych fontów i map.
+klawiatury. Dodatkowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 
 %prep
 %setup -q
