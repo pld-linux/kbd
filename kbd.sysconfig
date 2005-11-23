@@ -12,6 +12,9 @@ CONSOLEFONT=lat2u-16
 # (non-Unicode) mode.
 CONSOLEMAP=8859-2
 
+# Otherwise when using Unicode disable CONSOLEMAP and enable CONSOLESCREENFONTMAP
+# CONSOLESCREENFONTMAP="lat2u"
+
 # Keyboard table file name
 KEYTABLE=pl2
 
