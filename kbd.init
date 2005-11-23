@@ -35,8 +35,8 @@ case "$1" in
 		run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
 	fi
 
-	if [ -n "$CONSOLEFONT" ]; then
-		CMD="setfont -m ${CONSOLEMAP:-trivial} $CONSOLEFONT"
+	if [ -n "$CONSOLEFONT" -a -x /sbin/setsysfont ]; then
+		CMD="/sbin/setsysfont"
 		show "Loading console font and map"
 		busy
 
