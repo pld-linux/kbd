@@ -40,10 +40,10 @@ URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gettext-devel
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	sed
 Requires:	open
+Requires:	rc-scripts
+Requires:	sed
 Requires:	util-linux
 Provides:	console-data
 Provides:	console-tools
@@ -146,7 +146,7 @@ fi
 %defattr(644,root,root,755)
 %doc CHANGES CREDITS README doc/*.txt
 %attr(754,root,root) /etc/rc.d/init.d/console
-%config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/console
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/console
 %attr(755,root,root) /etc/profile.d/console.*
 
 %attr(755,root,root) /bin/*
