@@ -3,7 +3,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.12
-Release:	8
+Release:	9
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -18,12 +18,10 @@ Source5:	lat2u.sfm.gz
 # Source5-md5:	8ac4abc169fa1236fc3e64163c043113
 Source6:	console.sh
 Source7:	console.csh
-Source8:	console-man-pages.tar.bz2
-# Source8-md5:	3790029011f9f2e299ea4e56df0fa0f9
-Source9:	%{name}-pl1.kmap
-Source10:	%{name}-mac-pl.kmap
-Source11:	%{name}-pl3.map
-Source12:	%{name}-pl4.map
+Source8:	%{name}-pl1.kmap
+Source9:	%{name}-mac-pl.kmap
+Source10:	%{name}-pl3.map
+Source11:	%{name}-pl4.map
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-missing-nls.patch
 Patch2:		%{name}-install.patch
@@ -115,16 +113,15 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 install %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_ldatadir}/unimaps/lat2u.uni
 
-gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl1.map.gz
-gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/mac/all/mac-pl.map.gz
-gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl3.map.gz
-gzip -c %{SOURCE12} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl4.map.gz
+gzip -c %{SOURCE8} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl1.map.gz
+gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/mac/all/mac-pl.map.gz
+gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl3.map.gz
+gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl4.map.gz
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
 
-bzip2 -dc %{SOURCE3} | tar xvf - -C $RPM_BUILD_ROOT%{_mandir}
-bzip2 -dc %{SOURCE8} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 rm -f doc/{*,*/*}.sgml
 
@@ -157,15 +154,9 @@ fi
 %{_ldatadir}/unimaps
 
 %{_mandir}/man?/*
-%lang(cs) %{_mandir}/cs/man?/*
-%lang(de) %{_mandir}/de/man?/*
 %lang(es) %{_mandir}/es/man?/*
 %lang(fi) %{_mandir}/fi/man?/*
 %lang(fr) %{_mandir}/fr/man?/*
 %lang(hu) %{_mandir}/hu/man?/*
-%lang(it) %{_mandir}/it/man?/*
-%lang(ja) %{_mandir}/ja/man?/*
 %lang(ko) %{_mandir}/ko/man?/*
 %lang(pl) %{_mandir}/pl/man?/*
-%lang(pt) %{_mandir}/pt/man?/*
-%lang(ru) %{_mandir}/ru/man?/*
