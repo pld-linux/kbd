@@ -15,6 +15,11 @@ CONSOLEMAP=8859-2
 # Otherwise when using Unicode disable CONSOLEMAP and enable CONSOLESCREENFONTMAP
 # CONSOLESCREENFONTMAP="lat2u"
 
+# UTF-8 example using terminus-console-font:
+# CONSOLEFONT="ter-v14n"
+# CONSOLEMAP=""
+# CONSOLESCREENFONTMAP="lat2u"
+
 # Keyboard table file name
 KEYTABLE=pl2
 
