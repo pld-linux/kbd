@@ -1,9 +1,11 @@
+# TODO
+# - probably it doesn't make sense to package ppc keymaps on x86 and vice versa
 Summary:	Linux console utilities
 Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.12
-Release:	9
+Release:	9.1
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -45,15 +47,15 @@ Requires:	sed
 Requires:	util-linux
 Provides:	console-data
 Provides:	console-tools
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:	util-linux < 2.11
-Conflicts:	man-pages < 1.43-5
 Obsoletes:	console-data
 Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
 Obsoletes:	console-tools-static
+Conflicts:	man-pages < 1.43-5
+Conflicts:	util-linux < 2.11
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_ldatadir	/%{_lib}/%{name}
+%define		_ldatadir	/lib/%{name}
 
 %description
 This package contains utilities to load console fonts and keyboard
@@ -126,6 +128,7 @@ bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f doc/{*,*/*}.sgml
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/gr
+rm $RPM_BUILD_ROOT%{_mandir}/{README.kbd-non-english-man-pages,kbd-keypaps_instead_keytables.patch}*
 %find_lang %{name}
 
 %clean
