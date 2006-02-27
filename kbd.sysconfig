@@ -1,24 +1,25 @@
 # SVGATextMode's mode (optional)
 #SVGATEXTMODE=100x37x9_SVGA
 
-# Console font file name (usually from /lib/kbd/consolefonts dir).
+# Console font file name (take one from /lib/kbd/consolefonts dir).
 # Determines the set of available characters, the typeface and the number
 # of character lines on the screen. Other options may be specified after
 # the font name, e.g. -u iso02 (but you don't need it)
 CONSOLEFONT=lat2u-16
 
-# Application-charset map file name (usually from /lib/kbd/consoletrans
+# Application-charset map file name (take one from /lib/kbd/consoletrans
 # dir). Determines the encoding used by the console when in single-byte
 # (non-Unicode) mode.
 CONSOLEMAP=8859-2
 
 # Otherwise when using Unicode disable CONSOLEMAP and enable CONSOLESCREENFONTMAP
+# (take one from from /lib/kbd/unimaps dir)
 # CONSOLESCREENFONTMAP="lat2u"
 
 # UTF-8 example using terminus-console-font:
-# CONSOLEFONT="ter-v14n"
-# CONSOLEMAP=""
-# CONSOLESCREENFONTMAP="lat2u"
+#CONSOLEFONT="ter-v14n"
+#CONSOLEMAP=""
+#CONSOLESCREENFONTMAP="lat2u"
 
 # Keyboard table file name
 KEYTABLE=pl2
