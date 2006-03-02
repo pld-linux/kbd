@@ -1,0 +1,1 @@
+- added /etc/profile.d/console.sh from console-tools (fix problem with ISO-8859-2); release 4
