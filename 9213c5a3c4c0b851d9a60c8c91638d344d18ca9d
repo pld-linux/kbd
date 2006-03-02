@@ -1,0 +1,10 @@
+- fixed install patch: removed stripping
+- moved /usr/share/kbd/* to /usr/share (for compatibility with console-*)
+- added kbdrate.8.pl (removed from util-linux)
+- added lat2u-16 font (and optional sfm) from console-data; use it by default
+  (lat2-16 from kbd has frames which doesn't display correctly in VGA text mode,
+   lat2a-16 has non-unicode translation table)
+- removed BuildReq gzip (required by rpm-build - to build almost all packages)
+- removed ldconfig from post/postun - kbd doesn't provide any libraries
+- release 2
+  Still no fallback table support :(
