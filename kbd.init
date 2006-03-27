@@ -35,6 +35,18 @@ case "$1" in
 		run_cmd "Setting Text Mode $SVGATEXTMODE" SVGATextMode $SVGATEXTMODE
 	fi
 
+	# Check for devfs (workaround: -a option doesn't work at all)
+	if [ -d /dev/vc ]; then
+		pattern="s/\/dev\/vc\///g"
+	else
+		pattern="s/\/dev\/tty//g"
+	fi
+	# save old tty number
+	tty=`/usr/bin/tty | sed $pattern`
+	if [ "$tty" = "/dev/console" ]; then
+	    	tty=1
+	fi
+
 	if [ -n "$CONSOLEFONT" -a -x /sbin/setsysfont ]; then
 		CMD="/sbin/setsysfont"
 		show "Loading console font and map"
@@ -43,17 +55,8 @@ case "$1" in
 		# don't initialize on multiple terminals if we use fbset
 		# (assume that, in this case fb is loaded as a module)
 		if [ ! -z "$FB" ]; then
-			# Check for devfs (workaround: -a option don't work at all)
-			if [ -d /dev/vc ]; then
-				pattern="s/\/dev\/vc\///g"
-			else
-				pattern="s/\/dev\/tty//g"
-			fi
 
-			# save old tty number
-			tty=`/usr/bin/tty | sed $pattern`
-
-			# check if devfs (workaround: -a option don't work at all)
+			# check if devfs (workaround: -a option doesn't work at all)
 			if [ -d /dev/vc ]; then
 				DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
 			else
@@ -73,9 +76,6 @@ case "$1" in
 				fi
 			done
 
-			if [ "$tty" = "/dev/console" ]; then
-			    	tty=1
-			fi
 			/usr/bin/switchto $tty
 		else
 		    	$CMD
@@ -102,17 +102,24 @@ case "$1" in
 		if [ "$POWERDOWN_TIME" ]; then
 			power_option="-powerdown $POWERDOWN_TIME $power_option";
 		fi
-		/usr/bin/setterm $power_option -powersave $POWER_SAVE
 	fi
+	setterm_option="$power_option"
 	if [ "$FOREGROUND_COLOUR" ]; then
-		/usr/bin/setterm -foreground $FOREGROUND_COLOUR
+		setterm_option="$setterm_option -foreground $FOREGROUND_COLOUR"
 	fi
 	if [ "$BACKGROUND_COLOUR" ]; then
-		/usr/bin/setterm -background $BACKGROUND_COLOUR
+		setterm_option="$setterm_option -background $BACKGROUND_COLOUR"
 	fi
 	if [ "$BEEP_LENGTH" ]; then
-		/usr/bin/setterm -blength $BEEP_LENGTH
+		setterm_option="$setterm_option -blength $BEEP_LENGTH"
 	fi
+	setterm_option="$setterm_option -store"
+
+	for cons in $SET_FONT_TERMINALS; do
+		/usr/bin/open -c $cons -s -w -- /usr/bin/setterm $setterm_option
+	done
+	/usr/bin/switchto $tty
+	
 	;;
   stop)
 	. /etc/sysconfig/console
