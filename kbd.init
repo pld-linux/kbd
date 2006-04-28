@@ -21,6 +21,10 @@
 # Source function library
 . /etc/rc.d/init.d/functions
 
+if is_yes "$VSERVER"; then
+	exit 0
+fi
+
 case "$1" in
   start|restart|reload|force-reload)
 	. /etc/sysconfig/console
