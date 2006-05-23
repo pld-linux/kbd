@@ -1,9 +1,8 @@
-[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
-
-tty -s
-if [ $? -eq 0 ]; then
+if tty -s; then
  case $TERM in
   linux)
+	[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
+
  	if [ -f /etc/sysconfig/console ]; then
 		. /etc/sysconfig/console
 
