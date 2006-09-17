@@ -25,10 +25,9 @@ if is_yes "$VSERVER"; then
 	exit 0
 fi
 
-case "$1" in
-  start|restart|reload|force-reload)
-	. /etc/sysconfig/console
+. /etc/sysconfig/console
 
+start() {
 	# Checking if we have framebuffer enabled
 	if [ -f /proc/fb ]; then
 		# /proc shows as files with size=0, this is workaround
@@ -48,7 +47,7 @@ case "$1" in
 	# save old tty number
 	tty=`/usr/bin/tty | sed $pattern`
 	if [ "$tty" = "/dev/console" ]; then
-	    	tty=1
+		tty=1
 	fi
 
 	if [ -n "$CONSOLEFONT" -a -x /sbin/setsysfont ]; then
@@ -82,7 +81,7 @@ case "$1" in
 
 			/usr/bin/switchto $tty
 		else
-		    	$CMD
+			$CMD
 		fi
 		ok
 	fi
@@ -123,11 +122,24 @@ case "$1" in
 		/usr/bin/open -c $cons -s -w -- /usr/bin/setterm $setterm_option
 	done
 	/usr/bin/switchto $tty
-	
+}
+
+case "$1" in
+  start)
+	if [ ! -f /var/lock/subsys/console ]; then
+		start
+		touch /var/lock/subsys/console
+	fi
+	;;
+  restart|reload|force-reload)
+  	start
+	touch /var/lock/subsys/console
 	;;
   stop)
-	. /etc/sysconfig/console
-	run_cmd "Setting terminals to default values" /usr/bin/setterm -default
+	if [ -f /var/lock/subsys/console ]; then
+		run_cmd "Setting terminals to default values" /usr/bin/setterm -default
+		rm -f /var/lock/subsys/console
+	fi
 	;;
   status)
 	/usr/bin/setleds
