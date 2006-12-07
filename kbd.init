@@ -52,25 +52,23 @@ start() {
 	fi
 
 	if [ -n "$CONSOLEFONT" -a -x /sbin/setsysfont ]; then
-		CMD="/sbin/setsysfont"
 		show "Loading console font and map"
 		busy
 
 		# don't initialize on multiple terminals if we use fbset
 		# (assume that, in this case fb is loaded as a module)
 		if [ ! -z "$FB" ]; then
-
-			# check if devfs (workaround: -a option doesn't work at all)
-			if [ -d /dev/vc ]; then
-				DEVICES=$(ls /dev/vc/)
-			else
-				DEVICES=$(awk -F: '/^[0-9]*:/{print $1}' /etc/inittab)
+			if [ -z "$SET_FONT_TERMINALS" ]; then
+				# check if devfs (workaround: -a option doesn't work at all)
+				if [ -d /dev/vc ]; then
+					SET_FONT_TERMINALS=$(ls /dev/vc/)
+				else
+					SET_FONT_TERMINALS=$(awk -F: '/^[0-9]*:/{print $1}' /etc/inittab)
+				fi
 			fi
 
-			[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
-
 			for cons in $SET_FONT_TERMINALS; do
-				/usr/bin/open -c $cons -s -w -- $CMD
+				/usr/bin/open -c $cons -s -w -- /sbin/setsysfont
 				if [ "$NUM_LOCK" ]; then
 					if [ $NUM_LOCK = "on" ]; then
 						/usr/bin/open -c $cons -s -w -- /usr/bin/setleds -D +num
@@ -80,9 +78,11 @@ start() {
 				fi
 			done
 
-			/usr/bin/switchto $tty
+			if [[ "$tty" = [0-9]* ]]; then
+				/usr/bin/switchto $tty
+			fi
 		else
-			$CMD
+			/sbin/setsysfont
 		fi
 		ok
 	fi
@@ -122,7 +122,9 @@ start() {
 	for cons in $SET_FONT_TERMINALS; do
 		/usr/bin/open -c $cons -s -w -- /usr/bin/setterm $setterm_option
 	done
-	/usr/bin/switchto $tty
+	if [[ "$tty" = [0-9]* ]]; then
+		/usr/bin/switchto $tty
+	fi
 
 	touch /var/lock/subsys/console
 }
