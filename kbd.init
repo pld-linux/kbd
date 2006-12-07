@@ -40,12 +40,13 @@ start() {
 
 	# Check for devfs (workaround: -a option doesn't work at all)
 	if [ -d /dev/vc ]; then
-		pattern="s/\/dev\/vc\///g"
+		devpath="/dev/vc/"
 	else
-		pattern="s/\/dev\/tty//g"
+		devpath="/dev/tty"
 	fi
 	# save old tty number
-	tty=`/usr/bin/tty | sed $pattern`
+	tty=$(/usr/bin/tty)
+	tty=${tty#$devpath}
 	if [ "$tty" = "/dev/console" ]; then
 		tty=1
 	fi
@@ -61,9 +62,9 @@ start() {
 
 			# check if devfs (workaround: -a option doesn't work at all)
 			if [ -d /dev/vc ]; then
-				DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+				DEVICES=$(ls /dev/vc/)
 			else
-				DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
+				DEVICES=$(awk -F: '/^[0-9]*:/{print $1}' /etc/inittab)
 			fi
 
 			[ -z "$SET_FONT_TERMINALS" ] && SET_FONT_TERMINALS="$DEVICES"
@@ -122,18 +123,18 @@ start() {
 		/usr/bin/open -c $cons -s -w -- /usr/bin/setterm $setterm_option
 	done
 	/usr/bin/switchto $tty
+
+	touch /var/lock/subsys/console
 }
 
 case "$1" in
   start)
 	if [ ! -f /var/lock/subsys/console ]; then
 		start
-		touch /var/lock/subsys/console
 	fi
 	;;
   restart|reload|force-reload)
   	start
-	touch /var/lock/subsys/console
 	;;
   stop)
 	if [ -f /var/lock/subsys/console ]; then
