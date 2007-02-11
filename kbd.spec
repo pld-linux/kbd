@@ -5,7 +5,7 @@ Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
 Summary(pl):	Narzêdzia do obs³ugi konsoli
 Name:		kbd
 Version:	1.12
-Release:	15
+Release:	16
 License:	GPL
 Group:		Applications/Console
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
@@ -36,6 +36,7 @@ Patch8:		%{name}-gcc33.patch
 Patch9:		%{name}-pl.patch
 Patch10:	%{name}-pl2.patch
 Patch11:	%{name}-terminal.patch
+Patch12:	%{name}-stty-iutf8.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -79,6 +80,7 @@ klawiatury. Dodatkowo do³±czono znaczn± liczbê ró¿nych fontów i map.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 ./configure \

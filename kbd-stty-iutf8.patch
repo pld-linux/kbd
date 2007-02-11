@@ -1,0 +1,24 @@
+--- kbd-1.12/src/unicode_start~	2007-02-11 18:49:09.000000000 +0100
++++ kbd-1.12/src/unicode_start	2007-02-11 18:59:56.000000000 +0100
+@@ -14,6 +14,11 @@
+ 
+ kbd_mode -u
+ 
++# Set the kernel line editor in Unicode mode. This makes Backspace
++# delete one character rather than one byte, etc.
++
++stty iutf8
++
+ # Change the keyboard mapping in such a way that the non-ASCII keys
+ # produce UTF-8 encoded multibyte sequences, instead of single bytes
+ # >= 0x80 in a legacy 8-bit encoding.
+--- kbd-1.12/src/unicode_stop~	2007-02-11 18:49:09.000000000 +0100
++++ kbd-1.12/src/unicode_stop	2007-02-11 19:00:08.000000000 +0100
+@@ -1,6 +1,7 @@
+ #!/bin/sh
+ # stop unicode
+ kbd_mode -a
++stty -utf8
+ if test -t ; then
+ 	echo -n -e '\033%@'
+ fi
