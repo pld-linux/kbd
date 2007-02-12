@@ -1,8 +1,8 @@
 # TODO
 # - probably it doesn't make sense to package ppc keymaps on x86 and vice versa
 Summary:	Linux console utilities
-Summary(ko):	ÄÜ¼ÖÀ» ¼³Á¤ÇÏ´Â µµ±¸ (±Û¼èÆÇ, °¡»ó ÅÍ¹Ì³Î, ±× ¹Û¿¡)
-Summary(pl):	Narzêdzia do obs³ugi konsoli
+Summary(ko.UTF-8):   ì½˜ì†”ì„ ì„¤ì •í•˜ëŠ” ë„êµ¬ (ê¸€ì‡ íŒ, ê°€ìƒ í„°ë¯¸ë„, ê·¸ ë°–ì—)
+Summary(pl.UTF-8):   NarzÄ™dzia do obsÅ‚ugi konsoli
 Name:		kbd
 Version:	1.12
 Release:	16
@@ -62,9 +62,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This package contains utilities to load console fonts and keyboard
 maps. It also includes a number of different fonts and keyboard maps.
 
-%description -l pl
-Pakiet zawiera narzêdzia do ³adowania fontów konsolowych oraz map
-klawiatury. Dodatkowo do³±czono znaczn± liczbê ró¿nych fontów i map.
+%description -l pl.UTF-8
+Pakiet zawiera narzÄ™dzia do Å‚adowania fontÃ³w konsolowych oraz map
+klawiatury. Dodatkowo doÅ‚Ä…czono znacznÄ… liczbÄ™ rÃ³Å¼nych fontÃ³w i map.
 
 %prep
 %setup -q
