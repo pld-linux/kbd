@@ -1,8 +1,8 @@
 # TODO
 # - probably it doesn't make sense to package ppc keymaps on x86 and vice versa
 Summary:	Linux console utilities
-Summary(ko.UTF-8):   콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
-Summary(pl.UTF-8):   Narzędzia do obsługi konsoli
+Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
+Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	1.12
 Release:	16
