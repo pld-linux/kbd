@@ -82,7 +82,9 @@ start() {
 				/usr/bin/switchto $tty
 			fi
 		else
-			/sbin/setsysfont
+			for cons in $SET_FONT_TERMINALS; do
+				/usr/bin/open -c $cons -s -w -- /sbin/setsysfont
+			done
 		fi
 		ok
 	fi
