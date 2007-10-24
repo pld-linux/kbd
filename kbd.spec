@@ -129,7 +129,6 @@ bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 rm -f doc/{*,*/*}.sgml
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/gr
 rm $RPM_BUILD_ROOT%{_mandir}/{README.kbd-non-english-man-pages,kbd-keypaps_instead_keytables.patch}*
 %find_lang %{name}
 
