@@ -10,12 +10,14 @@ CONSOLEFONT=lat2u-16
 # If the font doesn't include a mapping between font glyphs and Unicode,
 # the map can be specified here (take one from from /lib/kbd/unimaps dir).
 # This is not needed with most modern fonts.
-#CONSOLESCREENFONTMAP=lat2u
+CONSOLESCREENFONTMAP=lat2u
 
 # Application-charset map file name (take one from /lib/kbd/consoletrans
 # dir). Determines the encoding used by the console when in single-byte
 # (non-Unicode) mode.
-CONSOLEMAP=8859-2
+# For old latin-2 behaviour use this:
+#CONSOLEMAP=8859-2
+CONSOLEMAP=
 
 # UTF-8 example using terminus-console-font:
 #CONSOLEFONT=ter-v14n
