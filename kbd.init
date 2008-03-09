@@ -90,13 +90,11 @@ start() {
 	fi
 
 	if [ -n "$KEYTABLE" ]; then
-		case "$LANG" in
-		*.utf8|*.UTF-8)
+		if [ "$(LANG="$LANG" locale charmap)" = "UTF-8" ]; then
 			run_cmd "Loading keyboard table" loadkeys -u $KEYTABLE < /dev/tty0 > /dev/tty0
-			;;
-		*)
+		else
 			run_cmd "Loading keyboard table" loadkeys $KEYTABLE < /dev/tty0 > /dev/tty0
-		esac
+		fi
 	fi
 	run_cmd "Enabling SAK sequence" /bin/sh -c "echo Control Alt keycode 101 = SAK | loadkeys"
 
