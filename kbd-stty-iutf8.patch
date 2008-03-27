@@ -18,7 +18,7 @@
  #!/bin/sh
  # stop unicode
  kbd_mode -a
-+stty -utf8
++stty -iutf8
  if test -t ; then
  	echo -n -e '\033%@'
  fi
