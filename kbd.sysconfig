@@ -19,7 +19,7 @@ CONSOLESCREENFONTMAP=lat2u
 #CONSOLEMAP=8859-2
 CONSOLEMAP=
 
-# UTF-8 example using terminus-console-font:
+# UTF-8 example using terminus-font-console package:
 #CONSOLEFONT=ter-v14n
 #CONSOLESCREENFONTMAP=
 #CONSOLEMAP=
