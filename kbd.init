@@ -117,6 +117,9 @@ start() {
 	if [ "$BEEP_LENGTH" ]; then
 		setterm_option="$setterm_option -blength $BEEP_LENGTH"
 	fi
+        if [ "$BEEP_FREQ" ]; then
+                setterm_option="$setterm_option -bfreq $BEEP_FREQ"
+        fi
 	setterm_option="$setterm_option -store"
 
 	for cons in $SET_FONT_TERMINALS; do

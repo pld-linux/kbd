@@ -46,3 +46,5 @@ POWERDOWN_TIME=60
 # Setting of internal beeper of computer [0-2000]
 # 0 - disable beeper completelly
 #BEEP_LENGTH=0
+# The beepers frequency
+#BEEP_FREQ=400
