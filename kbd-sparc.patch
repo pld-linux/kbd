@@ -15,95 +15,8 @@
  .I /dev/port
 +.br
 +.I /dev/kbd
---- kbd-1.08/src/kbdrate.c.jj	Tue Apr 17 11:06:19 2001
-+++ kbd-1.08/src/kbdrate.c	Tue Apr 17 11:07:30 2001
-@@ -104,8 +11,11 @@
- 
- static int
- KDKBDREP_ioctl_ok(double rate, int delay, int silent) {
-+#ifndef __sparc__
- 	/* This ioctl is defined in <linux/kd.h> but is not
--	   implemented anywhere - must be in some m68k patches. */
-+	   implemented anywhere - must be in some m68k patches.
-+	   Cannot blindly try unimplemented ioctls on sparc64 -
-+	   the 32<->64bit transition layer does not like it. */
- 	struct kbd_repeat kbdrep_s;
- 
- 	/* don't change, just test */
-@@ -150,6 +153,10 @@
- 			rate, kbdrep_s.delay );
- 
- 	return 1;			/* success! */
-+
-+#else
-+	return 0;
-+#endif /* __sparc__ */
- }
-
- static int
-@@ -164,10 +171,16 @@
- 		exit( 1 );
- 	}
- 
-+#ifdef __sparc__
-+	kbdrate_s.rate = (int) (rate + 0.5);  /* round up */
-+	if (kbdrate_s.rate > 50)
-+		kbdrate_s.rate = 50;
-+#else
- 	kbdrate_s.period = (int) (rate + 0.5);  /* round up */
--	kbdrate_s.delay = delay * HZ / 1000;  /* convert ms to Hz */
- 	if (kbdrate_s.period > 50)
- 		kbdrate_s.period = 50;
-+#endif
-+	kbdrate_s.delay = delay * HZ / 1000;  /* convert ms to Hz */
- 
- 	if (ioctl( fd, KIOCSRATE, &kbdrate_s )) {
- 		perror( "ioctl(KIOCSRATE)" );
-@@ -176,8 +189,13 @@
- 	close( fd );
- 
- 	if (!silent)
-+#ifdef __sparc__
-+		printf( "Typematic Rate set to %d cps (delay = %d ms)\n",
-+			kbdrate_s.rate, kbdrate_s.delay * 1000 / HZ );
-+#else
- 		printf( "Typematic Rate set to %d cps (delay = %d ms)\n",
- 			kbdrate_s.period, kbdrate_s.delay * 1000 / HZ );
-+#endif
- 
- 	return 1;
- #else /* no KIOCSRATE */
-@@ -188,7 +206,7 @@
- int
- main( int argc, char **argv ) {
- #ifdef __sparc__
--	double      rate = 5.0;      /* Default rate */
-+	double      rate = 20.0;     /* Default rate */
- 	int         delay = 200;     /* Default delay */
- #else
- 	double      rate = 10.9;     /* Default rate */
-@@ -238,8 +256,9 @@
- 		return 0;
- 
- 
--	/* The ioport way */
-+	/* The ioport way - will crash on sparc */
- 
-+#ifndef __sparc__
- 	for (i = 0; i < RATE_COUNT; i++)
- 		if (rate * 10 >= valid_rates[i]) {
- 			value &= 0x60;
-@@ -285,5 +304,7 @@
- 			valid_rates[value & 0x1f] / 10.0,
- 			valid_delays[ (value & 0x60) >> 5 ] );
- 
-+#endif
-+
- 	return 0;
- }
-diff -Nur kbd-1.12-orig/src/kbdrate.c kbd-1.12/src/kbdrate.c
---- kbd-1.12-orig/src/kbdrate.c	2007-07-11 20:36:34.000000000 +0000
-+++ kbd-1.12/src/kbdrate.c	2007-07-11 20:42:17.000000000 +0000
+--- kbd-1.15/src/kbdrate.c.orig	2008-03-14 09:03:43.000000000 +0100
++++ kbd-1.15/src/kbdrate.c	2008-12-05 20:01:54.512289465 +0100
 @@ -75,11 +75,6 @@
  #include <sys/file.h>
  #include <sys/ioctl.h>
@@ -116,6 +29,59 @@ diff -Nur kbd-1.12-orig/src/kbdrate.c kbd-1.12/src/kbdrate.c
  #ifndef KDKBDREP
  /* usually defined in <linux/kd.h> */
  #define KDKBDREP        0x4B52  /* set keyboard delay/repeat rate;
+@@ -109,10 +104,13 @@
+ 
+ static int
+ KDKBDREP_ioctl_ok(double rate, int delay, int silent) {
++#ifndef __sparc__
+ 	/*
+ 	 * This ioctl is defined in <linux/kd.h> but is not
+ 	 * implemented anywhere - must be in some m68k patches.
+ 	 * Since 2.4.9 also on i386.
++	 * Cannot blindly try unimplemented ioctls on sparc64 -
++	 * the 32<->64bit transition layer does not like it.
+ 	 */
+ 	struct my_kbd_repeat kbdrep_s;
+ 
+@@ -177,6 +175,10 @@
+ 			rate, kbdrep_s.delay );
+ 
+ 	return 1;			/* success! */
++
++#else
++	return 0;
++#endif /* __sparc__ */
+ }
+ 
+ static int
+@@ -221,7 +223,7 @@
+ int
+ main( int argc, char **argv ) {
+ #ifdef __sparc__
+-	double      rate = 5.0;      /* Default rate */
++	double      rate = 20.0;     /* Default rate */
+ 	int         delay = 200;     /* Default delay */
+ #else
+ 	double      rate = 10.9;     /* Default rate */
+@@ -271,8 +273,9 @@
+ 		return 0;
+ 
+ 
+-	/* The ioport way */
++	/* The ioport way - will crash on sparc */
+ 
++#ifndef __sparc__
+ 	for (i = 0; i < RATE_COUNT; i++)
+ 		if (rate * 10 >= valid_rates[i]) {
+ 			value &= 0x60;
+@@ -335,5 +338,7 @@
+ 			valid_rates[value & 0x1f] / 10.0,
+ 			valid_delays[ (value & 0x60) >> 5 ] );
+ 
++#endif
++
+ 	return 0;
+ }
 diff -Nur kbd-1.12-orig/src/setleds.c kbd-1.12/src/setleds.c
 --- kbd-1.12-orig/src/setleds.c	2004-01-16 19:45:31.000000000 +0000
 +++ kbd-1.12/src/setleds.c	2007-07-11 20:41:54.000000000 +0000
