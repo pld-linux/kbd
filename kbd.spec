@@ -28,6 +28,7 @@ Patch0:		%{name}-missing-nls.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-unicode_start.patch
 Patch3:		%{name}-posixsh.patch
+Patch4:		%{name}-ngettext.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -65,6 +66,7 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__aclocal}
