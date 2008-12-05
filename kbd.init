@@ -132,14 +132,27 @@ start() {
 	touch /var/lock/subsys/console
 }
 
+RETVAL=0
 case "$1" in
   start)
 	if [ ! -f /var/lock/subsys/console ]; then
 		start
 	fi
 	;;
-  restart|reload|force-reload)
+  restart)
 	start
+	;;
+  try-restart)
+	if [ -f /var/lock/subsys/console ]; then
+		start
+	fi
+	;;
+  reload|force-reload)
+	if [ -f /var/lock/subsys/console ]; then
+		start
+	else
+		RETVAL=7
+	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/console ]; then
@@ -151,8 +164,8 @@ case "$1" in
 	/usr/bin/setleds
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|status}"
 	exit 3
 esac
 
-exit 0
+exit $RETVAL
