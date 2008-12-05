@@ -4,12 +4,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	1.12
-Release:	21
+Version:	1.15
+Release:	0.1
 License:	GPL v2+
 Group:		Applications/Console
-Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	7892c7010512a9bc6697a295c921da25
+Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
+# Source0-md5:	ba3fd20e6c79e58422c3cc6b28718939
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -24,20 +24,13 @@ Source8:	%{name}-pl1.kmap
 Source9:	%{name}-mac-pl.kmap
 Source10:	%{name}-pl3.map
 Source11:	%{name}-pl4.map
-Patch0:		%{name}-pl.po-update.patch
-Patch1:		%{name}-missing-nls.patch
-Patch2:		%{name}-install.patch
-Patch3:		%{name}-sparc.patch
-Patch4:		%{name}-compose.patch
-Patch5:		%{name}-compat-suffixes.patch
-Patch6:		%{name}-unicode_start.patch
-Patch7:		%{name}-posixsh.patch
-Patch8:		%{name}-gcc33.patch
-Patch9:		%{name}-pl.patch
-Patch10:	%{name}-pl2.patch
-Patch11:	%{name}-terminal.patch
-Patch12:	%{name}-stty-iutf8.patch
+Patch0:		%{name}-missing-nls.patch
+Patch1:		%{name}-sparc.patch
+Patch2:		%{name}-unicode_start.patch
+Patch3:		%{name}-posixsh.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
+BuildRequires:	autoconf >= 2.60
+BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gettext-devel
@@ -72,40 +65,30 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %build
-./configure \
-	--prefix=/ \
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure \
 	--datadir=%{_ldatadir} \
-	--mandir=%{_mandir}
-%{__make} \
-	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}" \
-	LDFLAGS="%{rpmldflags}"
+	--localedir=%{_datadir}/locale \
+	--enable-nls
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/etc/{profile.d,rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{/bin,/etc/{profile.d,rc.d/init.d,sysconfig}}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
 # some binaries are needed in /bin but rest is not
-mv $RPM_BUILD_ROOT/bin/* $RPM_BUILD_ROOT%{_bindir}
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
 	mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
-
-mv $RPM_BUILD_ROOT/share/locale $RPM_BUILD_ROOT%{_datadir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 %ifarch sparc sparc64
@@ -147,7 +130,8 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CHANGES CREDITS README doc/*.txt
+# COPYING contains copyright summary, not GPL text
+%doc AUTHORS COPYING ChangeLog README doc/*.txt
 %attr(754,root,root) /etc/rc.d/init.d/console
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/console
 %attr(755,root,root) /etc/profile.d/console.*
