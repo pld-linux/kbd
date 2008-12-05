@@ -8,7 +8,7 @@
 -		       keyct, (keyct == 1) ? _("key") : _("keys"),
 -		       funcct, (funcct == 1) ? _("string") : _("strings"));
 +		printf(ngettext("\nChanged %d key", "\nChanged %d keys", keyct), keyct);
-+		printf(ngettext(" and %d string.", " and %d strings.", funcct), funcct);
++		printf(ngettext(" and %d string.\n", " and %d strings.\n", funcct), funcct);
  	}
  	if (accent_table_size > 0 || nocompose) {
  	  diacct = defdiacs(fd);
@@ -80,11 +80,11 @@
 -#: loadkeys.y:1055
 -msgid "definition"
 -msgstr "."
-+msgid " and %d string."
-+msgid_plural " and %d strings."
-+msgstr[0] " i %d ³añcuch."
-+msgstr[1] " i %d ³añcuchy."
-+msgstr[2] " i %d ³añcuchów."
++msgid " and %d string.\n"
++msgid_plural " and %d strings.\n"
++msgstr[0] " i %d ³añcuch.\n"
++msgstr[1] " i %d ³añcuchy.\n"
++msgstr[2] " i %d ³añcuchów.\n"
 +
 +#: loadkeys.y:1053
 +#, c-format
