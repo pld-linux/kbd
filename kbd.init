@@ -106,6 +106,8 @@ start() {
 		if [ "$POWERDOWN_TIME" ]; then
 			power_option="-powerdown $POWERDOWN_TIME $power_option";
 		fi
+	else
+		power_option="-blank 0 -powerdown 0 $power_option";
 	fi
 	setterm_option="$power_option"
 	if [ "$FOREGROUND_COLOUR" ]; then
