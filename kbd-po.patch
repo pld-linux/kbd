@@ -1,0 +1,10 @@
+--- kbd-1.15/po/Makefile.in.org	2009-01-08 10:57:25.845614542 +0100
++++ kbd-1.15/po/Makefile.in	2009-01-08 10:57:58.178964308 +0100
+@@ -90,7 +90,6 @@
+ install: install-data-$(HAVE_XGETTEXT)
+ install-data-no: all
+ install-data-yes: all
+-	../mkinstalldirs $(datadir);
+ 	@catalogs='$(CATALOGS)'; \
+ 	for cat in $$catalogs; do \
+ 	  case "$$cat" in \
