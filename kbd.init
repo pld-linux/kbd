@@ -99,7 +99,7 @@ start() {
 	run_cmd "Enabling SAK sequence" /bin/sh -c "echo Control Alt keycode 101 = SAK | loadkeys"
 
 	power_option=""
-	if [ ! is_no "$POWER_SAVE" ]; then
+	if ! is_no "$POWER_SAVE"; then
 		if [ "$BLANK_TIME" ]; then
 			power_option="-blank $BLANK_TIME";
 		fi
