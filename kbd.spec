@@ -5,7 +5,7 @@ Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, �
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	1.15
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
@@ -31,6 +31,7 @@ Patch3:		%{name}-posixsh.patch
 Patch4:		%{name}-ngettext.patch
 Patch5:		%{name}-po.patch
 Patch6:		%{name}-tty-detect.patch
+Patch7:		%{name}-defkeymap.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -71,6 +72,7 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %{__aclocal}
@@ -96,23 +98,22 @@ for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
 	mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
+cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 %ifarch sparc sparc64
-sed 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' %{SOURCE2} > $RPM_BUILD_ROOT/etc/sysconfig/console
-%else
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
+sed -i -e 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' $RPM_BUILD_ROOT/etc/sysconfig/console
 %endif
 
-install %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
-gunzip -c %{SOURCE5} >$RPM_BUILD_ROOT%{_ldatadir}/unimaps/lat2u.uni
+cp -a %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
+gunzip -c %{SOURCE5} > $RPM_BUILD_ROOT%{_ldatadir}/unimaps/lat2u.uni
 
 gzip -c %{SOURCE8} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl1.map.gz
 gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/mac/all/mac-pl.map.gz
 gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl3.map.gz
 gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl4.map.gz
 
-install %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
-install %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
+cp -a %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
+cp -a %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
 
 bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
