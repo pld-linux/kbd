@@ -34,7 +34,7 @@
  msgstr "niemo¿liwy b³±d w do_constant"
  
 -# XXX: ngettext should be used for the following five messages
- #: loadkeys.y:1047
+ #: loadkeys.y:1113
  #, c-format
  msgid ""
  "\n"
@@ -45,7 +45,7 @@
  "\n"
 -"Zmienionych klawiszy: %d%s ³añcuchów: %d%s\n"
 -
--#: loadkeys.y:1048
+-#: loadkeys.y:1114
 -msgid "key"
 -msgstr ","
 +"Changed %d keys"
@@ -59,25 +59,25 @@
 +"\n"
 +"Zmieniono %d klawiszy"
  
- #: loadkeys.y:1048
+ #: loadkeys.y:1114
 -msgid "keys"
 -msgstr ","
 -
--#: loadkeys.y:1049
+-#: loadkeys.y:1115
 -msgid "string"
 -msgstr "."
 -
--#: loadkeys.y:1049
+-#: loadkeys.y:1115
 -msgid "strings"
 -msgstr "."
 -
 -# XXX: ngettext should be used for the following three messages
--#: loadkeys.y:1054
+-#: loadkeys.y:1120
  #, c-format
 -msgid "Loaded %d compose %s.\n"
 -msgstr "Wczytanych definicji compose: %d%s\n"
 -
--#: loadkeys.y:1055
+-#: loadkeys.y:1121
 -msgid "definition"
 -msgstr "."
 +msgid " and %d string.\n"
@@ -86,7 +86,7 @@
 +msgstr[1] " i %d ³añcuchy.\n"
 +msgstr[2] " i %d ³añcuchów.\n"
 +
-+#: loadkeys.y:1053
++#: loadkeys.y:1126
 +#, c-format
 +msgid "Loaded %d compose definition.\n"
 +msgid_plural "Loaded %d compose definitions.\n"
@@ -94,12 +94,12 @@
 +msgstr[1] "Wczytano %d definicje compose.\n"
 +msgstr[2] "Wczytano %d definicji compose.\n"
  
--#: loadkeys.y:1055
+-#: loadkeys.y:1121
 -msgid "definitions"
 -msgstr "."
 -
--#: loadkeys.y:1060
-+#: loadkeys.y:1058
+-#: loadkeys.y:1126
++#: loadkeys.y:1126
  #, c-format
  msgid "(No change in compose definitions.)\n"
  msgstr "(Brak zmian w definicjach compose)\n"

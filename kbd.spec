@@ -4,12 +4,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	1.15
-Release:	4
+Version:	1.15.2
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	ba3fd20e6c79e58422c3cc6b28718939
+# Source0-md5:	77d0b51454522bc6c170bbdc6e31202a
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -25,13 +25,10 @@ Source9:	%{name}-mac-pl.kmap
 Source10:	%{name}-pl3.map
 Source11:	%{name}-pl4.map
 Patch0:		%{name}-missing-nls.patch
-Patch1:		%{name}-sparc.patch
-Patch2:		%{name}-unicode_start.patch
-Patch3:		%{name}-posixsh.patch
-Patch4:		%{name}-ngettext.patch
-Patch5:		%{name}-po.patch
-Patch6:		%{name}-tty-detect.patch
-Patch7:		%{name}-defkeymap.patch
+Patch1:		%{name}-unicode_start.patch
+Patch2:		%{name}-ngettext.patch
+Patch3:		%{name}-tty-detect.patch
+Patch4:		%{name}-defkeymap.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -70,12 +67,10 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 %build
-%{__aclocal}
+%{__gettextize}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
