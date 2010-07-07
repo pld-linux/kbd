@@ -31,10 +31,10 @@ Patch3:		%{name}-tty-detect.patch
 Patch4:		%{name}-defkeymap.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-devel >= 0.14.1
 Requires(post,preun):	/sbin/chkconfig
 Requires:	open
 Requires:	rc-scripts
