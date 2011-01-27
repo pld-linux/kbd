@@ -16,8 +16,6 @@
 [ -f /bin/loadkeys -o -f /usr/bin/loadkeys ] || exit 0
 [ -f /bin/setfont -o -f /usr/bin/setfont ] || exit 0
 
-[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
-
 # Source function library
 . /etc/rc.d/init.d/functions
 
@@ -25,6 +23,7 @@ if is_yes "$VSERVER"; then
 	exit 0
 fi
 
+[ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
 . /etc/sysconfig/console
 
 start() {
@@ -39,6 +38,7 @@ start() {
 	fi
 
 	# Check for devfs (workaround: -a option doesn't work at all)
+	local devpath tty cons
 	if [ -d /dev/vc ]; then
 		devpath="/dev/vc/"
 	else
