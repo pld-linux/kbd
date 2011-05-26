@@ -1,27 +1,29 @@
---- kbd-1.15/src/loadkeys.y.orig	2008-10-23 21:03:59.000000000 +0200
-+++ kbd-1.15/src/loadkeys.y	2008-12-05 22:13:37.720317959 +0100
-@@ -1044,15 +1044,13 @@
- 	keyct = defkeys(fd, console, warned);
+--- kbd-1.15.3/src/loadkeys.y.orig	2011-05-02 01:19:11.000000000 +0200
++++ kbd-1.15.3/src/loadkeys.y	2011-05-25 22:05:36.323510071 +0200
+@@ -582,17 +582,15 @@
  	funcct = deffuncs(fd);
+ 
  	if (verbose) {
--	        printf(_("\nChanged %d %s and %d %s.\n"),
+-		printf(_("\nChanged %d %s and %d %s.\n"),
 -		       keyct, (keyct == 1) ? _("key") : _("keys"),
 -		       funcct, (funcct == 1) ? _("string") : _("strings"));
 +		printf(ngettext("\nChanged %d key", "\nChanged %d keys", keyct), keyct);
 +		printf(ngettext(" and %d string.\n", " and %d strings.\n", funcct), funcct);
  	}
+ 
  	if (accent_table_size > 0 || nocompose) {
- 	  diacct = defdiacs(fd);
- 	  if (verbose) {
--			printf(_("Loaded %d compose %s.\n"), diacct,
--			       (diacct == 1) ? _("definition") : _("definitions"));
-+		printf(ngettext("Loaded %d compose definition.\n", "Loaded %d compose definitions.\n", diacct), diacct);
- 	  }
- 	}
- 	else
---- kbd-1.15/po/pl.po.orig	2008-12-01 20:58:05.000000000 +0100
-+++ kbd-1.15/po/pl.po	2008-12-05 22:25:04.324293655 +0100
-@@ -13,6 +13,7 @@
+ 		diacct = defdiacs(fd);
+ 
+ 		if (verbose) {
+-			printf(_("Loaded %d compose %s.\n"),
+-			       diacct, (diacct == 1) ? _("definition") : _("definitions"));
++			printf(ngettext("Loaded %d compose definition.\n", "Loaded %d compose definitions.\n", diacct), diacct);
+ 		}
+ 
+ 	} else if (verbose) {
+--- kbd-1.15.3/po/pl.po.orig	2011-05-14 23:07:50.000000000 +0200
++++ kbd-1.15.3/po/pl.po	2011-05-26 20:54:15.239593047 +0200
+@@ -14,6 +14,7 @@
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=ISO-8859-2\n"
  "Content-Transfer-Encoding: 8bit\n"
@@ -29,12 +31,12 @@
  
  #: src/chvt.c:28
  #, c-format
-@@ -615,47 +616,41 @@
+@@ -620,45 +621,39 @@
  msgid "impossible error in do_constant"
  msgstr "niemo¿liwy b³±d w do_constant"
  
 -# XXX: ngettext should be used for the following five messages
- #: loadkeys.y:1113
+ #: loadkeys.y:585
  #, c-format
  msgid ""
  "\n"
@@ -42,15 +44,23 @@
 -msgstr ""
 +"Changed %d key"
 +msgid_plural ""
++"\n"
++"Changed %d keys"
++msgstr[0] ""
  "\n"
 -"Zmienionych klawiszy: %d%s ³añcuchów: %d%s\n"
 -
--#: loadkeys.y:1114
+-#: loadkeys.y:586
 -msgid "key"
 -msgstr ","
-+"Changed %d keys"
-+msgstr[0] ""
-+"\n"
+-
+-#: loadkeys.y:586
+-msgid "keys"
+-msgstr ","
+-
+-#: loadkeys.y:587
+-msgid "string"
+-msgstr "."
 +"Zmieniono %d klawisz"
 +msgstr[1] ""
 +"\n"
@@ -59,47 +69,34 @@
 +"\n"
 +"Zmieniono %d klawiszy"
  
- #: loadkeys.y:1114
--msgid "keys"
--msgstr ","
--
--#: loadkeys.y:1115
--msgid "string"
--msgstr "."
--
--#: loadkeys.y:1115
+ #: loadkeys.y:587
 -msgid "strings"
 -msgstr "."
--
--# XXX: ngettext should be used for the following three messages
--#: loadkeys.y:1120
- #, c-format
--msgid "Loaded %d compose %s.\n"
--msgstr "Wczytanych definicji compose: %d%s\n"
--
--#: loadkeys.y:1121
--msgid "definition"
--msgstr "."
++#, c-format
 +msgid " and %d string.\n"
 +msgid_plural " and %d strings.\n"
 +msgstr[0] " i %d ³añcuch.\n"
 +msgstr[1] " i %d ³añcuchy.\n"
 +msgstr[2] " i %d ³añcuchów.\n"
-+
-+#: loadkeys.y:1126
-+#, c-format
+ 
+-# XXX: ngettext should be used for the following three messages
+ #: loadkeys.y:594
+ #, c-format
+-msgid "Loaded %d compose %s.\n"
+-msgstr "Wczytanych definicji compose: %d%s\n"
+-
+-#: loadkeys.y:595
+-msgid "definition"
+-msgstr "."
+-
+-#: loadkeys.y:595
+-msgid "definitions"
+-msgstr "."
 +msgid "Loaded %d compose definition.\n"
 +msgid_plural "Loaded %d compose definitions.\n"
 +msgstr[0] "Wczytano %d definicjê compose.\n"
 +msgstr[1] "Wczytano %d definicje compose.\n"
 +msgstr[2] "Wczytano %d definicji compose.\n"
  
--#: loadkeys.y:1121
--msgid "definitions"
--msgstr "."
--
--#: loadkeys.y:1126
-+#: loadkeys.y:1126
+ #: loadkeys.y:599
  #, c-format
- msgid "(No change in compose definitions.)\n"
- msgstr "(Brak zmian w definicjach compose)\n"
