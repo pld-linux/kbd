@@ -195,7 +195,9 @@ fi
 %{_mandir}/man8/kbdrate.8*
 %{_mandir}/man8/loadunimap.8*
 %{_mandir}/man8/mapscrn.8*
+%ifarch %{ix86}
 %{_mandir}/man8/resizecons.8*
+%endif
 %{_mandir}/man8/setfont.8*
 %{_mandir}/man8/setkeycodes.8*
 %{_mandir}/man8/setvtrgb.8*
