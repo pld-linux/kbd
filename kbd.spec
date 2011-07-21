@@ -5,7 +5,7 @@ Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, �
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	1.15.3
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
@@ -24,6 +24,7 @@ Source8:	%{name}-pl1.kmap
 Source9:	%{name}-mac-pl.kmap
 Source10:	%{name}-pl3.map
 Source11:	%{name}-pl4.map
+Source12:	console.upstart
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-ngettext.patch
 Patch2:		%{name}-tty-detect.patch
@@ -82,7 +83,7 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,/etc/{profile.d,rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{/bin,/etc/{profile.d,rc.d/init.d,sysconfig,init}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -94,12 +95,13 @@ for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
 done
 
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
-cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
+cp -p %{SOURCE12} $RPM_BUILD_ROOT/etc/init/console.conf
 %ifarch sparc sparc64
 sed -i -e 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' $RPM_BUILD_ROOT/etc/sysconfig/console
 %endif
 
-cp -a %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
+cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
 gunzip -c %{SOURCE5} > $RPM_BUILD_ROOT%{_ldatadir}/unimaps/lat2u.uni
 
 gzip -c %{SOURCE8} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl1.map.gz
@@ -107,8 +109,8 @@ gzip -c %{SOURCE9} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/mac/all/mac-pl.map.gz
 gzip -c %{SOURCE10} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl3.map.gz
 gzip -c %{SOURCE11} > $RPM_BUILD_ROOT%{_ldatadir}/keymaps/i386/qwerty/pl4.map.gz
 
-cp -a %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
-cp -a %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
+cp -p %{SOURCE6} $RPM_BUILD_ROOT/etc/profile.d
+cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
 
 bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
@@ -137,6 +139,7 @@ fi
 %doc AUTHORS COPYING ChangeLog README doc/*.txt
 %attr(754,root,root) /etc/rc.d/init.d/console
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/console
+%config(noreplace) %verify(not md5 mtime size) /etc/init/console.conf
 %attr(755,root,root) /etc/profile.d/console.csh
 %attr(755,root,root) /etc/profile.d/console.sh
 
