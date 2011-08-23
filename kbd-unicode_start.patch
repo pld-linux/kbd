@@ -1,16 +1,60 @@
---- kbd-1.15/src/unicode_start.orig	2008-10-23 21:03:59.000000000 +0200
-+++ kbd-1.15/src/unicode_start	2008-12-05 20:17:24.728295331 +0100
-@@ -55,7 +55,12 @@
- 	# redirect stderr and stdout of loadkeys to /dev/null to avoid the confusing
- 	# "plus before udiaeresis ignored" warnings.
+--- kbd-1.15.3/src/unicode_start~	2011-08-23 08:14:50.523611798 +0300
++++ kbd-1.15.3/src/unicode_start	2011-08-23 08:14:24.636851881 +0300
+@@ -34,29 +36,34 @@
+ # not the global keymap. root will have to load the keymap in unicode mode
+ # explicitly.
  
+-uid="`id -u 2>/dev/null`" ||:
+-if [ "$uid" = '0' ]; then
+-	# There is no way of reverting the effect of "dumpkeys | loadkeys --unicode",
+-	# the memory of the earlier keymap is lost. Therefore, try
+-	# to save a copy of the original keymap to be able to reload it in unicode_stop.
+-	# (see also http://mail.nl.linux.org/linux-utf8/2003-08/msg00053.html):
+-
+-	[ -n "$HOME" -a "$HOME" != '/' ] ||
+-		HOME='/root'
+-
+-	if [ -d "$HOME" -a -w "$HOME" ]; then
+-		[ -d "$HOME/.kbd" ] ||
+-			mkdir -- "$HOME/.kbd"
+-
+-		[ ! -w "$HOME/.kbd" ] ||
+-			dumpkeys > "$HOME/.kbd/.keymap_sv"
+-	fi
+-
+-	# redirect stderr and stdout of loadkeys to /dev/null to avoid the confusing
+-	# "plus before udiaeresis ignored" warnings.
+-
 -	dumpkeys | loadkeys --unicode > /dev/null 2>&1
-+	# PLD: disabled because it breaks non-iso-8859-1 keymaps
-+	# instead use manually:
-+	#   loadkeys --unicode <keymap>
-+	# or
-+	#   dumpkeys -c <charset> | loadkeys --unicode
-+	#dumpkeys | loadkeys --unicode > /dev/null 2>&1
- fi
+-fi
++# PLD Linux: disabled because it breaks non-iso-8859-1 keymaps
++# instead use manually:
++#   loadkeys --unicode <keymap>
++# or
++#   dumpkeys -c <charset> | loadkeys --unicode
++
++#uid="`id -u 2>/dev/null`" ||:
++#if [ "$uid" = '0' ]; then
++#	# There is no way of reverting the effect of "dumpkeys | loadkeys --unicode",
++#	# the memory of the earlier keymap is lost. Therefore, try
++#	# to save a copy of the original keymap to be able to reload it in unicode_stop.
++#	# (see also http://mail.nl.linux.org/linux-utf8/2003-08/msg00053.html):
++#
++#	[ -n "$HOME" -a "$HOME" != '/' ] ||
++#		HOME='/root'
++#
++#	if [ -d "$HOME" -a -w "$HOME" ]; then
++#		[ -d "$HOME/.kbd" ] ||
++#			mkdir -- "$HOME/.kbd"
++#
++#		[ ! -w "$HOME/.kbd" ] ||
++#			dumpkeys > "$HOME/.kbd/.keymap_sv"
++#	fi
++#
++#	# redirect stderr and stdout of loadkeys to /dev/null to avoid the confusing
++#	# "plus before udiaeresis ignored" warnings.
++#	#dumpkeys | loadkeys --unicode > /dev/null 2>&1
++#fi
  
  # 2. The output side: the console screen.
+ 
