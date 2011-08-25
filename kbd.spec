@@ -120,8 +120,6 @@ cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
 
 bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-%{__rm} -f doc/{*,*/*}.sgml
-
 # Greek is el, not gr
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/gr
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{README.kbd-non-english-man-pages,kbd-keypaps_instead_keytables.patch}*
