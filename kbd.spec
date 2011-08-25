@@ -30,6 +30,7 @@ Patch1:		%{name}-ngettext.patch
 Patch2:		%{name}-tty-detect.patch
 Patch3:		%{name}-defkeymap.patch
 Patch4:		%{name}-po.patch
+Patch5:		resizecon-x86_64.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
@@ -68,6 +69,7 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__gettextize}
@@ -98,7 +100,7 @@ install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
 cp -p %{SOURCE12} $RPM_BUILD_ROOT/etc/init/console.conf
 %ifarch sparc sparc64
-sed -i -e 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' $RPM_BUILD_ROOT/etc/sysconfig/console
+%{__sed} -i -e 's/KEYTABLE=pl2/KEYTABLE=sunkeymap/' $RPM_BUILD_ROOT/etc/sysconfig/console
 %endif
 
 cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_ldatadir}/consolefonts/lat2u-16.psfu.gz
@@ -114,7 +116,7 @@ cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
 
 bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-%{__rm} doc/{*,*/*}.sgml
+%{__rm} -f doc/{*,*/*}.sgml
 
 # Greek is el, not gr
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/gr
@@ -162,7 +164,7 @@ fi
 %attr(755,root,root) %{_bindir}/psfgettable
 %attr(755,root,root) %{_bindir}/psfstriptable
 %attr(755,root,root) %{_bindir}/psfxtable
-%ifarch %{ix86}
+%ifarch %{ix86} %{x8664}
 %attr(755,root,root) %{_bindir}/resizecons
 %endif
 %attr(755,root,root) %{_bindir}/setkeycodes
@@ -198,7 +200,7 @@ fi
 %{_mandir}/man8/kbdrate.8*
 %{_mandir}/man8/loadunimap.8*
 %{_mandir}/man8/mapscrn.8*
-%ifarch %{ix86}
+%ifarch %{ix86} %{x8664}
 %{_mandir}/man8/resizecons.8*
 %endif
 %{_mandir}/man8/setfont.8*
