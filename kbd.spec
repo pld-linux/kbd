@@ -5,7 +5,7 @@ Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, �
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	1.15.3
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
@@ -18,6 +18,10 @@ Source4:	lat2u-16.psf.gz
 # Source4-md5:	dc90a9bcff858175beea32a9b3bebb33
 Source5:	lat2u.sfm.gz
 # Source5-md5:	8ac4abc169fa1236fc3e64163c043113
+Source51:	http://pkgs.fedoraproject.org/repo/pkgs/kbd/%{name}-latsun-fonts.tar.bz2/050e1e454e9c01e22f198303d649efb8/kbd-latsun-fonts.tar.bz2
+# Source51-md5:	050e1e454e9c01e22f198303d649efb8
+Source52:	http://pkgs.fedoraproject.org/repo/pkgs/kbd/%{name}-latarcyrheb-16-fixed.tar.bz2/cb1e2d5ba5d4cb8b0a27367029d36a56/kbd-latarcyrheb-16-fixed.tar.bz2
+# Source52-md5:	cb1e2d5ba5d4cb8b0a27367029d36a56
 Source6:	console.sh
 Source7:	console.csh
 Source8:	%{name}-pl1.kmap
@@ -63,7 +67,7 @@ Pakiet zawiera narzędzia do ładowania fontów konsolowych oraz map
 klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 
 %prep
-%setup -q
+%setup -q -a51 -a52
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1

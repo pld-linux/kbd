@@ -5,12 +5,13 @@
 # Determines the set of available characters, the typeface and the number
 # of character lines on the screen. Other options may be specified after
 # the font name, e.g. -u iso02 (but you don't need it).
-CONSOLEFONT=lat2u-16
+CONSOLEFONT=latarcyrheb-sun16
 
 # If the font doesn't include a mapping between font glyphs and Unicode,
 # the map can be specified here (take one from from /lib/kbd/unimaps dir).
 # This is not needed with most modern fonts.
-CONSOLESCREENFONTMAP=lat2u
+#CONSOLESCREENFONTMAP=lat2u
+CONSOLESCREENFONTMAP=
 
 # Application-charset map file name (take one from /lib/kbd/consoletrans
 # dir). Determines the encoding used by the console when in single-byte
