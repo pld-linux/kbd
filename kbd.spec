@@ -5,7 +5,7 @@ Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, �
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	1.15.3
-Release:	5
+Release:	6
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
@@ -46,8 +46,6 @@ Requires:	open
 Requires:	rc-scripts >= 0.4.3.0
 Requires:	sed
 Requires:	util-linux
-Provides:	console-data
-Provides:	console-tools
 Obsoletes:	console-data
 Obsoletes:	console-tools
 Obsoletes:	console-tools-devel
