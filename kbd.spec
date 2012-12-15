@@ -1,15 +1,22 @@
-# TODO
+# NOTE: kbd's vlock is a fork of vlock v1.x
+#       comparing with vlock v2.x it has NLS, but no plugins support
+# TODO:
+# - pam file for vlock
 # - probably it doesn't make sense to package ppc keymaps on x86 and vice versa
+#
+# Conditional build:
+%bcond_without	vlock	# don't build vlock
+#
 Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	1.15.3
-Release:	6
+Version:	1.15.5
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	8143e179a0f3c25646ce5085e8777200
+# Source0-md5:	34c71feead8ab9c01ec638acea8cd877
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -32,15 +39,13 @@ Source12:	console.upstart
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-ngettext.patch
 Patch2:		%{name}-tty-detect.patch
-Patch3:		%{name}-defkeymap.patch
-Patch4:		%{name}-po.patch
-Patch5:		resizecon-x86_64.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gettext-devel >= 0.14.1
+%{?with_vlock:BuildRequires:	pam-devel}
 Requires(post,preun):	/sbin/chkconfig
 Requires:	open
 Requires:	rc-scripts >= 0.4.3.0
@@ -64,14 +69,24 @@ maps. It also includes a number of different fonts and keyboard maps.
 Pakiet zawiera narzędzia do ładowania fontów konsolowych oraz map
 klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 
+%package vlock
+Summary:	Utility to lock one or more virtual consoles
+Summary(pl.UTF-8):	Narzędzie do blokowania jednej lub wielu konsol wirtualnych
+Group:		Applications/Console
+Requires:	%{name} = %{version}-%{release}
+Obsoletes:	vlock
+
+%description vlock
+Utility to lock one or more virtual consoles.
+
+%description vlock -l pl.UTF-8
+Narzędzie do blokowania jednej lub wielu konsol wirtualnych.
+
 %prep
 %setup -q -a51 -a52
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %{__gettextize}
@@ -82,7 +97,9 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 %configure \
 	--datadir=%{_ldatadir} \
 	--localedir=%{_datadir}/locale \
-	--enable-nls
+	--enable-nls \
+	--disable-silent-rules \
+	%{!?with_vlock:--disable-vlock}
 %{__make}
 
 %install
@@ -213,3 +230,11 @@ fi
 %lang(hu) %{_mandir}/hu/man[158]/*
 %lang(ko) %{_mandir}/ko/man[158]/*
 %lang(pl) %{_mandir}/pl/man[158]/*
+
+%if %{with vlock}
+%files vlock
+%defattr(644,root,root,755)
+%doc src/vlock/README.vlock
+%attr(755,root,root) %{_bindir}/vlock
+%{_mandir}/man1/vlock.1*
+%endif
