@@ -12,7 +12,7 @@ Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, �
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	1.15.5
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
@@ -74,7 +74,6 @@ Summary:	Utility to lock one or more virtual consoles
 Summary(pl.UTF-8):	Narzędzie do blokowania jednej lub wielu konsol wirtualnych
 Group:		Applications/Console
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	vlock
 
 %description vlock
 Utility to lock one or more virtual consoles.
