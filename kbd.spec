@@ -52,7 +52,7 @@ BuildRequires:	libtool >= 2:2
 %{?with_vlock:BuildRequires:	pam-devel}
 BuildRequires:	pkgconfig
 Requires(post,preun):	/sbin/chkconfig
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 Requires:	open
 Requires:	rc-scripts >= 0.4.3.0
 Requires:	sed
