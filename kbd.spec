@@ -40,7 +40,7 @@ Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-ngettext.patch
 Patch2:		%{name}-tty-detect.patch
 Patch3:		%{name}-pl.po-update.patch
-URL:		http://www.win.tue.nl/~aeb/linux/
+URL:		http://www.kbd-project.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
