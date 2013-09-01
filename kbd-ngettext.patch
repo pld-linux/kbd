@@ -1,28 +1,33 @@
---- kbd-1.15.3/src/loadkeys.y.orig	2011-05-02 01:19:11.000000000 +0200
-+++ kbd-1.15.3/src/loadkeys.y	2011-05-25 22:05:36.323510071 +0200
-@@ -582,17 +582,15 @@
- 	funcct = deffuncs(fd);
+--- kbd-2.0.0/src/libkeymap/loadkeys.c.orig	2013-08-13 15:46:23.000000000 +0200
++++ kbd-2.0.0/src/libkeymap/loadkeys.c	2013-08-31 20:25:59.227675901 +0200
+@@ -250,9 +250,12 @@
+ 	if ((keyct = defkeys(ctx, fd, kbd_mode)) < 0 || (funcct = deffuncs(ctx, fd)) < 0)
+ 		return -1;
  
- 	if (verbose) {
--		printf(_("\nChanged %d %s and %d %s.\n"),
--		       keyct, (keyct == 1) ? _("key") : _("keys"),
--		       funcct, (funcct == 1) ? _("string") : _("strings"));
-+		printf(ngettext("\nChanged %d key", "\nChanged %d keys", keyct), keyct);
-+		printf(ngettext(" and %d string.\n", " and %d strings.\n", funcct), funcct);
- 	}
+-	INFO(ctx, _("\nChanged %d %s and %d %s"),
+-		keyct, (keyct == 1) ? _("key") : _("keys"),
+-		funcct, (funcct == 1) ? _("string") : _("strings"));
++	{
++	char msgbuf1[128], msgbuf2[128];
++	snprintf(msgbuf1, sizeof(msgbuf1), ngettext("\nChanged %d key", "\nChanged %d keys", keyct), keyct);
++	snprintf(msgbuf2, sizeof(msgbuf2), ngettext(" and %d string.", " and %d strings.", funcct), funcct);
++	INFO(ctx, "%s%s", msgbuf1, msgbuf2);
++	}
  
- 	if (accent_table_size > 0 || nocompose) {
- 		diacct = defdiacs(fd);
+ 	if (ctx->accent_table->count > 0 || ctx->flags & LK_FLAG_CLEAR_COMPOSE) {
+ 		diacct = defdiacs(ctx, fd);
+@@ -260,8 +263,7 @@
+ 		if (diacct < 0)
+ 			return -1;
  
- 		if (verbose) {
--			printf(_("Loaded %d compose %s.\n"),
--			       diacct, (diacct == 1) ? _("definition") : _("definitions"));
-+			printf(ngettext("Loaded %d compose definition.\n", "Loaded %d compose definitions.\n", diacct), diacct);
- 		}
+-		INFO(ctx, _("Loaded %d compose %s"),
+-			diacct, (diacct == 1) ? _("definition") : _("definitions"));
++		INFO(ctx, ngettext("Loaded %d compose definition", "Loaded %s compose definitions", diacct), diacct);
  
- 	} else if (verbose) {
---- kbd-1.15.5/po/pl.po.orig	2012-12-03 07:35:17.000000000 +0100
-+++ kbd-1.15.5/po/pl.po	2012-12-15 22:02:26.542184855 +0100
+ 	} else {
+ 		INFO(ctx, _("(No change in compose definitions)"));
+--- kbd-2.0.0/po/pl.po.orig	2013-09-01 07:25:30.719348576 +0200
++++ kbd-2.0.0/po/pl.po	2013-09-01 07:33:38.449328112 +0200
 @@ -14,6 +14,7 @@
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -31,32 +36,37 @@
  
  #: src/chvt.c:28
  #, c-format
-@@ -623,37 +624,39 @@
- msgid "impossible error in do_constant"
- msgstr "niemo¿liwy b³±d w do_constant"
+@@ -472,47 +473,41 @@
+ msgid "unable to get compose definitions"
+ msgstr "nie uda³o siê pobraæ definicji compose"
  
 -# XXX: ngettext should be used for the following five messages
- #: loadkeys.y:596
+-#: src/libkeymap/loadkeys.c:253
++#: src/libkeymap/loadkeys.c:255
  #, c-format
  msgid ""
  "\n"
--"Changed %d %s and %d %s.\n"
+-"Changed %d %s and %d %s"
 -msgstr ""
 +"Changed %d key"
 +msgid_plural ""
  "\n"
--"Zmienionych klawiszy: %d%s ³añcuchów: %d%s\n"
+-"Zmienionych klawiszy: %d%s ³añcuchów: %d%s"
 -
--#: loadkeys.y:597
+-#: src/libkeymap/loadkeys.c:254
 -msgid "key"
 -msgstr ","
 -
--#: loadkeys.y:597
+-#: src/libkeymap/loadkeys.c:254
 -msgid "keys"
 -msgstr ","
 -
--#: loadkeys.y:598
+-#: src/libkeymap/loadkeys.c:255
 -msgid "string"
+-msgstr "."
+-
+-#: src/libkeymap/loadkeys.c:255
+-msgid "strings"
 -msgstr "."
 +"Changed %d keys"
 +msgstr[0] ""
@@ -69,27 +79,35 @@
 +"\n"
 +"Zmieniono %d klawiszy"
  
--#: loadkeys.y:598
--msgid "strings"
--msgstr "."
-+#: loadkeys.y:596
-+#, c-format
-+msgid " and %d string.\n"
-+msgid_plural " and %d strings.\n"
-+msgstr[0] " i %d ³añcuch.\n"
-+msgstr[1] " i %d ³añcuchy.\n"
-+msgstr[2] " i %d ³añcuchów.\n"
- 
 -# XXX: ngettext should be used for the following three messages
- #: loadkeys.y:605
+-#: src/libkeymap/loadkeys.c:263
++#: src/libkeymap/loadkeys.c:256
  #, c-format
--msgid "Loaded %d compose %s.\n"
--msgstr "Wczytanych definicji compose: %d%s\n"
-+msgid "Loaded %d compose definition.\n"
-+msgid_plural "Loaded %d compose definitions.\n"
-+msgstr[0] "Wczytano %d definicjê compose.\n"
-+msgstr[1] "Wczytano %d definicje compose.\n"
-+msgstr[2] "Wczytano %d definicji compose.\n"
+-msgid "Loaded %d compose %s"
+-msgstr "Wczytanych definicji compose: %d%s"
+-
+-#: src/libkeymap/loadkeys.c:264
+-msgid "definition"
+-msgstr "."
++msgid " and %d string."
++msgid_plural " and %d strings."
++msgstr[0] " i %d ³añcuch."
++msgstr[1] " i %d ³añcuchy."
++msgstr[2] " i %d ³añcuchów."
  
- #: loadkeys.y:606
- msgid "definition"
+-#: src/libkeymap/loadkeys.c:264
+-msgid "definitions"
+-msgstr "."
++#: src/libkeymap/loadkeys.c:266
++#, c-format
++msgid "Loaded %d compose definition"
++msgid_plural "Loaded %s compose definitions"
++msgstr[0] "Wczytano %d definicjê compose"
++msgstr[1] "Wczytano %d definicje compose"
++msgstr[2] "Wczytano %d definicji compose"
+ 
+-#: src/libkeymap/loadkeys.c:267
++#: src/libkeymap/loadkeys.c:269
+ msgid "(No change in compose definitions)"
+ msgstr "(Brak zmian w definicjach compose)"
+ 

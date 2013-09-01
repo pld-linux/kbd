@@ -11,12 +11,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	1.15.5
-Release:	2
+Version:	2.0.0
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	34c71feead8ab9c01ec638acea8cd877
+# Source0-md5:	5ba259a0b2464196f6488a72070a3d60
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -39,14 +39,20 @@ Source12:	console.upstart
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-ngettext.patch
 Patch2:		%{name}-tty-detect.patch
+Patch3:		%{name}-pl.po-update.patch
 URL:		http://www.win.tue.nl/~aeb/linux/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
+#BuildRequires:	check >= 0.9.4
+BuildRequires:	doxygen
 BuildRequires:	flex
 BuildRequires:	gettext-devel >= 0.14.1
+BuildRequires:	libtool >= 2:2
 %{?with_vlock:BuildRequires:	pam-devel}
+BuildRequires:	pkgconfig
 Requires(post,preun):	/sbin/chkconfig
+Requires:	%{name} = %{version}-%{release}
 Requires:	open
 Requires:	rc-scripts >= 0.4.3.0
 Requires:	sed
@@ -81,14 +87,52 @@ Utility to lock one or more virtual consoles.
 %description vlock -l pl.UTF-8
 Narzędzie do blokowania jednej lub wielu konsol wirtualnych.
 
+%package libs
+Summary:	libkeymap - library to manage the Linux keymaps
+Summary(pl.UTF-8):	libkeymap - biblioteka do zarządzania linuksowymi przypisaniami klawiszy
+Group:		Libraries
+
+%description libs
+libkeymap - library to manage the Linux keymaps.
+
+%description libs -l pl.UTF-8
+libkeymap - biblioteka do zarządzania linuksowymi przypisaniami
+klawiszy.
+
+%package devel
+Summary:	Header files for libkeymap library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libkeymap
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+
+%description devel
+Header files for libkeymap library.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki libkeymap.
+
+%package static
+Summary:	Static libkeymap library
+Summary(pl.UTF-8):	Statyczna biblioteka libkeymap
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static libkeymap library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka libkeymap.
+
 %prep
 %setup -q -a51 -a52
+%patch3 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
 %{__gettextize}
+%{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
@@ -96,6 +140,7 @@ Narzędzie do blokowania jednej lub wielu konsol wirtualnych.
 %configure \
 	--datadir=%{_ldatadir} \
 	--localedir=%{_datadir}/locale \
+	--enable-libkeymap \
 	--enable-nls \
 	--disable-silent-rules \
 	%{!?with_vlock:--disable-vlock}
@@ -109,10 +154,17 @@ install -d $RPM_BUILD_ROOT{/bin,/etc/{profile.d,rc.d/init.d,sysconfig,init}}
 	DESTDIR=$RPM_BUILD_ROOT \
 	gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
-# some binaries are needed in /bin but rest is not
+# some binaries are needed in /bin but the rest is not
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
 	mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
+
+# move library to /lib* for utils in /bin
+install -d $RPM_BUILD_ROOT/%{_lib}
+mv $RPM_BUILD_ROOT%{_libdir}/libkeymap.so.* $RPM_BUILD_ROOT/%{_lib}
+ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkeymap.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libkeymap.so
+# no external dependencies; also .pc file exists
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libkeymap.la
 
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
@@ -138,6 +190,10 @@ bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/gr
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{README.kbd-non-english-man-pages,kbd-keypaps_instead_keytables.patch}*
 
+# doxygen docs
+%{__rm} -rf docs-doxy
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/kbd/html docs-doxy
+
 %find_lang %{name}
 
 %clean
@@ -154,7 +210,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 # COPYING contains copyright summary, not GPL text
-%doc AUTHORS COPYING ChangeLog README doc/*.txt
+%doc AUTHORS COPYING CREDITS ChangeLog README docs/doc/kbd.FAQ.txt
 %attr(754,root,root) /etc/rc.d/init.d/console
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/console
 %config(noreplace) %verify(not md5 mtime size) /etc/init/console.conf
@@ -237,3 +293,20 @@ fi
 %attr(755,root,root) %{_bindir}/vlock
 %{_mandir}/man1/vlock.1*
 %endif
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/libkeymap.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/libkeymap.so.0
+
+%files devel
+%defattr(644,root,root,755)
+%doc docs-doxy/*
+%attr(755,root,root) %{_libdir}/libkeymap.so
+%{_includedir}/keymap
+%{_includedir}/keymap.h
+%{_pkgconfigdir}/libkeymap.pc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libkeymap.a
