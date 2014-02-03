@@ -48,9 +48,10 @@ start() {
 	fi
 	# save old tty number
 	tty=$(/usr/bin/tty)
-	tty=${tty#$devpath}
-	if [ "$tty" = "/dev/console" -o "$tty" = "not a tty" ]; then
+	if [ "$?" -ne 0 -o "$tty" = "/dev/console" ]; then
 		tty=1
+	else
+		tty=${tty#$devpath}
 	fi
 
 	if [ -n "$CONSOLEFONT" -a -x /sbin/setsysfont ]; then
