@@ -11,12 +11,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.0.1
-Release:	3
+Version:	2.0.2
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	cc0ee9f2537d8636cae85a8c6541ed2e
+# Source0-md5:	f1f75f0dd5f7dde89ce47585274366f8
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -37,9 +37,7 @@ Source10:	%{name}-pl3.map
 Source11:	%{name}-pl4.map
 Source12:	console.upstart
 Patch0:		%{name}-unicode_start.patch
-Patch1:		%{name}-ngettext.patch
-Patch2:		%{name}-tty-detect.patch
-Patch3:		%{name}-pl.po-update.patch
+Patch1:		%{name}-tty-detect.patch
 URL:		http://www.kbd-project.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
@@ -125,10 +123,11 @@ Statyczna biblioteka libkeymap.
 
 %prep
 %setup -q -a51 -a52
-%patch3 -p1
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+
+# force rebuild
+%{__rm} docs/reference/libkeymap/Doxyfile
 
 %build
 %{__gettextize}
