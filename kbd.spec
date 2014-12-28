@@ -45,7 +45,7 @@ BuildRequires:	bison
 #BuildRequires:	check >= 0.9.4
 BuildRequires:	doxygen
 BuildRequires:	flex
-BuildRequires:	gettext-devel >= 0.14.1
+BuildRequires:	gettext-tools >= 0.14.1
 BuildRequires:	libtool >= 2:2
 %{?with_vlock:BuildRequires:	pam-devel}
 BuildRequires:	pkgconfig
