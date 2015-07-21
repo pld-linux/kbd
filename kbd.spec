@@ -11,12 +11,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.0.2
-Release:	2
+Version:	2.0.3
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	f1f75f0dd5f7dde89ce47585274366f8
+# Source0-md5:	d636ee56f35233b5cd6f855c08372489
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -25,8 +25,6 @@ Source4:	lat2u-16.psf.gz
 # Source4-md5:	dc90a9bcff858175beea32a9b3bebb33
 Source5:	lat2u.sfm.gz
 # Source5-md5:	8ac4abc169fa1236fc3e64163c043113
-Source51:	http://pkgs.fedoraproject.org/repo/pkgs/kbd/%{name}-latsun-fonts.tar.bz2/050e1e454e9c01e22f198303d649efb8/kbd-latsun-fonts.tar.bz2
-# Source51-md5:	050e1e454e9c01e22f198303d649efb8
 Source52:	http://pkgs.fedoraproject.org/repo/pkgs/kbd/%{name}-latarcyrheb-16-fixed.tar.bz2/cb1e2d5ba5d4cb8b0a27367029d36a56/kbd-latarcyrheb-16-fixed.tar.bz2
 # Source52-md5:	cb1e2d5ba5d4cb8b0a27367029d36a56
 Source6:	console.sh
@@ -38,7 +36,7 @@ Source11:	%{name}-pl4.map
 Source12:	console.upstart
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-tty-detect.patch
-URL:		http://www.kbd-project.org/
+URL:		http://kbd-project.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
@@ -122,7 +120,7 @@ Static libkeymap library.
 Statyczna biblioteka libkeymap.
 
 %prep
-%setup -q -a51 -a52
+%setup -q -a52
 %patch0 -p1
 %patch1 -p1
 
@@ -141,6 +139,7 @@ Statyczna biblioteka libkeymap.
 	--localedir=%{_datadir}/locale \
 	--enable-libkeymap \
 	--enable-nls \
+	--enable-optional-progs \
 	--disable-silent-rules \
 	%{!?with_vlock:--disable-vlock}
 %{__make}
@@ -164,6 +163,13 @@ mv $RPM_BUILD_ROOT%{_libdir}/libkeymap.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkeymap.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libkeymap.so
 # no external dependencies; also .pc file exists
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libkeymap.la
+
+# optional-progs:
+# obsoleted by setfont
+%{__rm} $RPM_BUILD_ROOT{%{_bindir}/getunimap,%{_mandir}/man8/getunimap.8}
+# optional-progs: man pages for not installed utils from contrib
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{codepage,splitfont}.1
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man8/{mk_modmap,vcstime}.8
 
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/console
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/console
@@ -225,6 +231,7 @@ fi
 %attr(755,root,root) /bin/unicode_start
 %attr(755,root,root) /bin/unicode_stop
 %attr(755,root,root) %{_bindir}/chvt
+%attr(755,root,root) %{_bindir}/clrunimap
 %attr(755,root,root) %{_bindir}/deallocvt
 %attr(755,root,root) %{_bindir}/fgconsole
 %attr(755,root,root) %{_bindir}/getkeycodes
@@ -234,6 +241,7 @@ fi
 %attr(755,root,root) %{_bindir}/loadunimap
 %attr(755,root,root) %{_bindir}/mapscrn
 %attr(755,root,root) %{_bindir}/openvt
+%attr(755,root,root) %{_bindir}/outpsfheader
 %attr(755,root,root) %{_bindir}/psfaddtable
 %attr(755,root,root) %{_bindir}/psfgettable
 %attr(755,root,root) %{_bindir}/psfstriptable
@@ -241,12 +249,18 @@ fi
 %ifarch %{ix86} %{x8664}
 %attr(755,root,root) %{_bindir}/resizecons
 %endif
+%attr(755,root,root) %{_bindir}/screendump
 %attr(755,root,root) %{_bindir}/setkeycodes
 %attr(755,root,root) %{_bindir}/setleds
+%attr(755,root,root) %{_bindir}/setlogcons
 %attr(755,root,root) %{_bindir}/setmetamode
+%attr(755,root,root) %{_bindir}/setpalette
+%attr(755,root,root) %{_bindir}/setvesablank
 %attr(755,root,root) %{_bindir}/setvtrgb
 %attr(755,root,root) %{_bindir}/showconsolefont
 %attr(755,root,root) %{_bindir}/showkey
+%attr(755,root,root) %{_bindir}/spawn_console
+%attr(755,root,root) %{_bindir}/spawn_login
 %dir %{_ldatadir}
 %{_ldatadir}/consolefonts
 %{_ldatadir}/consoletrans
@@ -264,12 +278,14 @@ fi
 %{_mandir}/man1/psfgettable.1*
 %{_mandir}/man1/psfstriptable.1*
 %{_mandir}/man1/psfxtable.1*
+%{_mandir}/man1/screendump.1*
 %{_mandir}/man1/setleds.1*
 %{_mandir}/man1/setmetamode.1*
 %{_mandir}/man1/showkey.1*
 %{_mandir}/man1/unicode_start.1*
 %{_mandir}/man1/unicode_stop.1*
 %{_mandir}/man5/keymaps.5*
+%{_mandir}/man8/clrunimap.8*
 %{_mandir}/man8/getkeycodes.8*
 %{_mandir}/man8/kbdrate.8*
 %{_mandir}/man8/loadunimap.8*
@@ -279,6 +295,8 @@ fi
 %endif
 %{_mandir}/man8/setfont.8*
 %{_mandir}/man8/setkeycodes.8*
+%{_mandir}/man8/setlogcons.8*
+%{_mandir}/man8/setvesablank.8*
 %{_mandir}/man8/setvtrgb.8*
 %{_mandir}/man8/showconsolefont.8*
 %lang(es) %{_mandir}/es/man[158]/*
