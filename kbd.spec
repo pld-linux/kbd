@@ -1,18 +1,12 @@
-# NOTE: kbd's vlock is a fork of vlock v1.x
-#       comparing with vlock v2.x it has NLS, but no plugins support
 # TODO:
-# - pam file for vlock
 # - probably it doesn't make sense to package ppc keymaps on x86 and vice versa
-#
-# Conditional build:
-%bcond_without	vlock	# don't build vlock
 #
 Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
 Version:	2.0.3
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
@@ -33,6 +27,7 @@ Source8:	%{name}-pl1.kmap
 Source9:	%{name}-mac-pl.kmap
 Source10:	%{name}-pl3.map
 Source11:	%{name}-pl4.map
+Source12:	vlock.pamd
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-tty-detect.patch
 URL:		http://kbd-project.org/
@@ -44,7 +39,7 @@ BuildRequires:	doxygen
 BuildRequires:	flex
 BuildRequires:	gettext-tools >= 0.14.1
 BuildRequires:	libtool >= 2:2
-%{?with_vlock:BuildRequires:	pam-devel}
+BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
@@ -74,6 +69,8 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 Summary:	Utility to lock one or more virtual consoles
 Summary(pl.UTF-8):	Narzędzie do blokowania jednej lub wielu konsol wirtualnych
 Group:		Applications/Console
+Obsoletes:	vlock
+Provides:	vlock
 Requires:	%{name} = %{version}-%{release}
 
 %description vlock
@@ -139,17 +136,18 @@ Statyczna biblioteka libkeymap.
 	--enable-libkeymap \
 	--enable-nls \
 	--enable-optional-progs \
-	--disable-silent-rules \
-	%{!?with_vlock:--disable-vlock}
+	--disable-silent-rules
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,/etc/{profile.d,rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{/bin,/etc/{profile.d,rc.d/init.d,sysconfig,pam.d}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
+
+install %{SOURCE11} $RPM_BUILD_ROOT/etc/pam.d/vlock
 
 # some binaries are needed in /bin but the rest is not
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
@@ -303,13 +301,12 @@ fi
 %lang(ko) %{_mandir}/ko/man[158]/*
 %lang(pl) %{_mandir}/pl/man[158]/*
 
-%if %{with vlock}
 %files vlock
 %defattr(644,root,root,755)
 %doc src/vlock/README.vlock
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/vlock
 %attr(755,root,root) %{_bindir}/vlock
 %{_mandir}/man1/vlock.1*
-%endif
 
 %files libs
 %defattr(644,root,root,755)
