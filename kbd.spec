@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.0.3
-Release:	3
+Version:	2.0.4
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
-Source0:	ftp://ftp.altlinux.org/pub/people/legion/kbd/%{name}-%{version}.tar.gz
-# Source0-md5:	d636ee56f35233b5cd6f855c08372489
+Source0:	http://kbd-project.org/download/%{name}-%{version}.tar.xz
+# Source0-md5:	cb5f04288d26a8806b144e50fe9fb506
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -41,6 +41,8 @@ BuildRequires:	gettext-tools >= 0.14.1
 BuildRequires:	libtool >= 2:2
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	open
