@@ -10,7 +10,7 @@ Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	http://kbd-project.org/download/%{name}-%{version}.tar.xz
-# Source0-md5:	cb5f04288d26a8806b144e50fe9fb506
+# Source0-md5:	c1635a5a83b63aca7f97a3eab39ebaa6
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
