@@ -23,8 +23,6 @@ if is_yes "$VSERVER"; then
 	exit 0
 fi
 
-upstart_controlled
-
 [ -f /etc/sysconfig/i18n ] && . /etc/sysconfig/i18n
 . /etc/sysconfig/console
 
