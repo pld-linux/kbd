@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.0.4
-Release:	2
+Version:	2.1.0
+Release:	1
 License:	GPL v2+
 Group:		Applications/Console
-Source0:	https://mirrors.edge.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	c1635a5a83b63aca7f97a3eab39ebaa6
+Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
+# Source0-md5:	8af96ca067ddca1a950c25a24b9ca245
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -30,8 +30,9 @@ Source11:	%{name}-pl4.map
 Source12:	vlock.pamd
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-tty-detect.patch
+Patch2:		%{name}-pc.patch
 URL:		http://kbd-project.org/
-BuildRequires:	autoconf >= 2.60
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 #BuildRequires:	check >= 0.9.4
@@ -121,6 +122,7 @@ Statyczna biblioteka libkeymap.
 %setup -q -a52
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # force rebuild
 %{__rm} docs/reference/libkeymap/Doxyfile
@@ -153,15 +155,16 @@ install %{SOURCE11} $RPM_BUILD_ROOT/etc/pam.d/vlock
 
 # some binaries are needed in /bin but the rest is not
 for f in setfont dumpkeys kbd_mode unicode_start unicode_stop; do
-	mv $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
+	%{__mv} $RPM_BUILD_ROOT%{_bindir}/$f $RPM_BUILD_ROOT/bin
 done
 
-# move library to /lib* for utils in /bin
+# move libraries to /lib* for utils in /bin
 install -d $RPM_BUILD_ROOT/%{_lib}
-mv $RPM_BUILD_ROOT%{_libdir}/libkeymap.so.* $RPM_BUILD_ROOT/%{_lib}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/lib{kbdfile,keymap}.so.* $RPM_BUILD_ROOT/%{_lib}
+ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkbdfile.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libkbdfile.so
 ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkeymap.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libkeymap.so
 # no external dependencies; also .pc file exists
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libkeymap.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{kbdfile,keymap}.la
 
 # optional-progs:
 # obsoleted by setfont
@@ -216,7 +219,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 # COPYING contains copyright summary, not GPL text
-%doc AUTHORS COPYING CREDITS ChangeLog README docs/doc/kbd.FAQ.txt
+%doc AUTHORS COPYING CREDITS NEWS README docs/doc/kbd.FAQ.txt
 %attr(754,root,root) /etc/rc.d/init.d/console
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/console
 %attr(755,root,root) /etc/profile.d/console.csh
@@ -243,7 +246,7 @@ fi
 %attr(755,root,root) %{_bindir}/psfgettable
 %attr(755,root,root) %{_bindir}/psfstriptable
 %attr(755,root,root) %{_bindir}/psfxtable
-%ifarch %{ix86} %{x8664}
+%ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_bindir}/resizecons
 %endif
 %attr(755,root,root) %{_bindir}/screendump
@@ -269,6 +272,7 @@ fi
 %{_mandir}/man1/dumpkeys.1*
 %{_mandir}/man1/fgconsole.1*
 %{_mandir}/man1/kbd_mode.1*
+%{_mandir}/man1/kbdinfo.1*
 %{_mandir}/man1/loadkeys.1*
 %{_mandir}/man1/openvt.1*
 %{_mandir}/man1/psfaddtable.1*
@@ -287,7 +291,7 @@ fi
 %{_mandir}/man8/kbdrate.8*
 %{_mandir}/man8/loadunimap.8*
 %{_mandir}/man8/mapscrn.8*
-%ifarch %{ix86} %{x8664}
+%ifarch %{ix86} %{x8664} x32
 %{_mandir}/man8/resizecons.8*
 %endif
 %{_mandir}/man8/setfont.8*
@@ -312,17 +316,22 @@ fi
 
 %files libs
 %defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/libkbdfile.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/libkbdfile.so.1
 %attr(755,root,root) /%{_lib}/libkeymap.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/libkeymap.so.0
+%attr(755,root,root) %ghost /%{_lib}/libkeymap.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %doc docs-doxy/*
+%attr(755,root,root) %{_libdir}/libkbdfile.so
 %attr(755,root,root) %{_libdir}/libkeymap.so
 %{_includedir}/keymap
+%{_includedir}/kbdfile.h
 %{_includedir}/keymap.h
 %{_pkgconfigdir}/libkeymap.pc
 
 %files static
 %defattr(644,root,root,755)
+%{_libdir}/libkbdfile.a
 %{_libdir}/libkeymap.a
