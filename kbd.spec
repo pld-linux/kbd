@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.2.0
+Version:	2.3.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	d1d7ae0b5fb875dc082731e09cd0c8bc
+# Source0-md5:	ac7ec9cedad48f4c279251cddc72008a
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -124,9 +124,6 @@ Statyczna biblioteka libkeymap.
 %patch1 -p1
 %patch2 -p1
 
-# force rebuild
-%{__rm} docs/reference/libkeymap/Doxyfile
-
 %build
 %{__gettextize}
 %{__libtoolize}
@@ -163,8 +160,11 @@ install -d $RPM_BUILD_ROOT/%{_lib}
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/lib{kbdfile,keymap}.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkbdfile.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libkbdfile.so
 ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkeymap.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libkeymap.so
-# no external dependencies; also .pc file exists
+# no external dependencies in libkbdfile
+# for libkeymap .pc file exists
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{kbdfile,keymap}.la
+# library used for tests
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libtswrap.*
 
 # optional-progs:
 # obsoleted by setfont
