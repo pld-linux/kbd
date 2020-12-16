@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.3.0
+Version:	2.4.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	ac7ec9cedad48f4c279251cddc72008a
+# Source0-md5:	3cac5be0096fcf7b32dcbd3c53831380
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -163,8 +163,6 @@ ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkeymap.so.*.*.*) $RPM_BUILD_ROOT%{_
 # no external dependencies in libkbdfile
 # for libkeymap .pc file exists
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{kbdfile,keymap}.la
-# library used for tests
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libtswrap.*
 
 # optional-progs:
 # obsoleted by setfont
