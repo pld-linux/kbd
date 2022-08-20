@@ -1,60 +1,33 @@
---- kbd-1.15.3/src/unicode_start~	2011-08-23 08:14:50.523611798 +0300
-+++ kbd-1.15.3/src/unicode_start	2011-08-23 08:14:24.636851881 +0300
-@@ -34,29 +36,34 @@
- # not the global keymap. root will have to load the keymap in unicode mode
- # explicitly.
+--- kbd-2.5.1/src/unicode_start.orig	2022-08-20 19:32:56.350906358 +0200
++++ kbd-2.5.1/src/unicode_start	2022-08-20 19:58:04.852734102 +0200
+@@ -11,6 +11,14 @@ case "$TTY" in
+ 		;;
+ esac
  
--uid="`id -u 2>/dev/null`" ||:
--if [ "$uid" = '0' ]; then
--	# There is no way of reverting the effect of "dumpkeys | loadkeys --unicode",
--	# the memory of the earlier keymap is lost. Therefore, try
--	# to save a copy of the original keymap to be able to reload it in unicode_stop.
--	# (see also http://mail.nl.linux.org/linux-utf8/2003-08/msg00053.html):
--
--	[ -n "$HOME" -a "$HOME" != '/' ] ||
--		HOME='/root'
--
--	if [ -d "$HOME" -a -w "$HOME" ]; then
--		[ -d "$HOME/.kbd" ] ||
--			mkdir -- "$HOME/.kbd"
--
--		[ ! -w "$HOME/.kbd" ] ||
--			dumpkeys > "$HOME/.kbd/.keymap_sv"
--	fi
--
--	# redirect stderr and stdout of loadkeys to /dev/null to avoid the confusing
--	# "plus before udiaeresis ignored" warnings.
--
--	dumpkeys | loadkeys --unicode > /dev/null 2>&1
--fi
-+# PLD Linux: disabled because it breaks non-iso-8859-1 keymaps
-+# instead use manually:
-+#   loadkeys --unicode <keymap>
-+# or
-+#   dumpkeys -c <charset> | loadkeys --unicode
++DUMPKEYS_OPT=
++if [ -r /etc/sysconfig/console ]; then
++	. /etc/sysconfig/console
++	if [ -n "$KEYTABLE_CHARSET" ]; then
++		DUMPKEYS_OPT="-c$KEYTABLE_CHARSET"
++	fi
++fi
 +
-+#uid="`id -u 2>/dev/null`" ||:
-+#if [ "$uid" = '0' ]; then
-+#	# There is no way of reverting the effect of "dumpkeys | loadkeys --unicode",
-+#	# the memory of the earlier keymap is lost. Therefore, try
-+#	# to save a copy of the original keymap to be able to reload it in unicode_stop.
-+#	# (see also http://mail.nl.linux.org/linux-utf8/2003-08/msg00053.html):
-+#
-+#	[ -n "$HOME" -a "$HOME" != '/' ] ||
-+#		HOME='/root'
-+#
-+#	if [ -d "$HOME" -a -w "$HOME" ]; then
-+#		[ -d "$HOME/.kbd" ] ||
-+#			mkdir -- "$HOME/.kbd"
-+#
-+#		[ ! -w "$HOME/.kbd" ] ||
-+#			dumpkeys > "$HOME/.kbd/.keymap_sv"
-+#	fi
-+#
-+#	# redirect stderr and stdout of loadkeys to /dev/null to avoid the confusing
-+#	# "plus before udiaeresis ignored" warnings.
-+#	#dumpkeys | loadkeys --unicode > /dev/null 2>&1
-+#fi
+ # Enables Unicode processing in the current console.
+ #
+ # 1. The input side: the keyboard driver.
+@@ -49,13 +57,13 @@ if [ "$uid" = 0 ]; then
+ 			mkdir -- "$HOME/.kbd"
+ 
+ 		[ ! -w "$HOME/.kbd" ] ||
+-			dumpkeys > "$HOME/.kbd/.keymap_sv"
++			dumpkeys $DUMPKEYS_OPT > "$HOME/.kbd/.keymap_sv"
+ 	fi
+ 
+ 	# redirect stderr and stdout of loadkeys to /dev/null to avoid the confusing
+ 	# "plus before udiaeresis ignored" warnings.
+ 
+-	dumpkeys | loadkeys --unicode > /dev/null 2>&1
++	dumpkeys $DUMPKEYS_OPT | loadkeys --unicode > /dev/null 2>&1
+ fi
  
  # 2. The output side: the console screen.
- 

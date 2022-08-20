@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.4.0
+Version:	2.5.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	3cac5be0096fcf7b32dcbd3c53831380
+# Source0-md5:	10f10c0a9d897807733f2e2419814abb
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -30,7 +30,6 @@ Source11:	%{name}-pl4.map
 Source12:	vlock.pamd
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-tty-detect.patch
-Patch2:		%{name}-pc.patch
 URL:		http://kbd-project.org/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.9
@@ -50,10 +49,10 @@ Requires:	open
 Requires:	rc-scripts >= 0.4.3.0
 Requires:	sed
 Requires:	util-linux
-Obsoletes:	console-data
-Obsoletes:	console-tools
-Obsoletes:	console-tools-devel
-Obsoletes:	console-tools-static
+Obsoletes:	console-data < 1999.08.30
+Obsoletes:	console-tools < 1:0.4
+Obsoletes:	console-tools-devel < 1:0.4
+Obsoletes:	console-tools-static < 1:0.4
 Conflicts:	man-pages < 1.43-5
 Conflicts:	util-linux < 2.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -72,9 +71,9 @@ klawiatury. Dodatkowo dołączono znaczną liczbę różnych fontów i map.
 Summary:	Utility to lock one or more virtual consoles
 Summary(pl.UTF-8):	Narzędzie do blokowania jednej lub wielu konsol wirtualnych
 Group:		Applications/Console
-Obsoletes:	vlock
-Provides:	vlock
 Requires:	%{name} = %{version}-%{release}
+Provides:	vlock
+Obsoletes:	vlock < 2.3
 
 %description vlock
 Utility to lock one or more virtual consoles.
@@ -122,7 +121,6 @@ Statyczna biblioteka libkeymap.
 %setup -q -a52
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__gettextize}
