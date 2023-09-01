@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.6.1
+Version:	2.6.2
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	986241b5d94c6bd4ed2f6d2a5ab4320b
+# Source0-md5:	35e261a31e673c8aec7dbc6553ea075c
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -121,9 +121,6 @@ Statyczna biblioteka libkeymap.
 %setup -q -a52
 %patch0 -p1
 %patch1 -p1
-
-# force regeneration from .in (developer's system paths inside)
-%{__rm} docs/reference/libkeymap/Doxyfile
 
 %build
 %{__gettextize}
