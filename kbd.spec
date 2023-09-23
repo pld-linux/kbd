@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.6.2
+Version:	2.6.3
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	35e261a31e673c8aec7dbc6553ea075c
+# Source0-md5:	4764775cac0415f1d35a0cd311249941
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -31,7 +31,7 @@ Source12:	vlock.pamd
 Patch0:		%{name}-unicode_start.patch
 Patch1:		%{name}-tty-detect.patch
 URL:		http://kbd-project.org/
-BuildRequires:	autoconf >= 2.69
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 #BuildRequires:	check >= 0.9.4
