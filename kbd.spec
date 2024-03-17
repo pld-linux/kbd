@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.6.3
+Version:	2.6.4
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	4764775cac0415f1d35a0cd311249941
+# Source0-md5:	e2fd7adccf6b1e98eb1ae8d5a1ce5762
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
