@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.6.4
+Version:	2.7.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	e2fd7adccf6b1e98eb1ae8d5a1ce5762
+# Source0-md5:	f15673d9f748e58f82fa50cff0d0fd20
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -37,7 +37,7 @@ BuildRequires:	bison
 #BuildRequires:	check >= 0.9.4
 BuildRequires:	doxygen
 BuildRequires:	flex
-BuildRequires:	gettext-tools >= 0.14.1
+BuildRequires:	gettext-tools >= 0.19.8
 BuildRequires:	libtool >= 2:2
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
@@ -119,8 +119,8 @@ Statyczna biblioteka libkeymap.
 
 %prep
 %setup -q -a52
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %{__gettextize}
@@ -188,8 +188,6 @@ cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/profile.d
 
 bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-# Greek is el, not gr
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/gr
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{README.kbd-non-english-man-pages,kbd-keypaps_instead_keytables.patch}*
 
 # doxygen docs
@@ -215,7 +213,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 # COPYING contains copyright summary, not GPL text
-%doc AUTHORS COPYING CREDITS NEWS README docs/doc/kbd.FAQ.txt
+%doc AUTHORS COPYING CREDITS NEWS README
 %attr(754,root,root) /etc/rc.d/init.d/console
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/console
 %attr(755,root,root) /etc/profile.d/console.csh
@@ -322,7 +320,7 @@ fi
 %doc docs-doxy/*
 %attr(755,root,root) %{_libdir}/libkbdfile.so
 %attr(755,root,root) %{_libdir}/libkeymap.so
-%{_includedir}/keymap
+%{_includedir}/kbd
 %{_includedir}/kbdfile.h
 %{_includedir}/keymap.h
 %{_pkgconfigdir}/libkeymap.pc
