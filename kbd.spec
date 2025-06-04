@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.7.1
+Version:	2.8.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	f15673d9f748e58f82fa50cff0d0fd20
+# Source0-md5:	24b5d24f7483726b88f214dc6c77aa41
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -122,6 +122,8 @@ Statyczna biblioteka libkeymap.
 %patch -P0 -p1
 %patch -P1 -p1
 
+echo po/*.po | sed -e 's,po/,,g;s,\.po,,g' > po/LINGUAS
+
 %build
 %{__gettextize}
 %{__libtoolize}
@@ -161,6 +163,8 @@ ln -sf $(basename $RPM_BUILD_ROOT/%{_lib}/libkeymap.so.*.*.*) $RPM_BUILD_ROOT%{_
 # no external dependencies in libkbdfile
 # for libkeymap .pc file exists
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{kbdfile,keymap}.la
+# used only internally, not part of API (as of 2.8.0)
+%{__rm} $RPM_BUILD_ROOT%{_includedir}/array_size.h
 
 # optional-progs:
 # obsoleted by setfont
