@@ -5,12 +5,12 @@ Summary:	Linux console utilities
 Summary(ko.UTF-8):	콘솔을 설정하는 도구 (글쇠판, 가상 터미널, 그 밖에)
 Summary(pl.UTF-8):	Narzędzia do obsługi konsoli
 Name:		kbd
-Version:	2.8.0
+Version:	2.9.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Console
 Source0:	https://www.kernel.org/pub/linux/utils/kbd/%{name}-%{version}.tar.xz
-# Source0-md5:	24b5d24f7483726b88f214dc6c77aa41
+# Source0-md5:	7be7c6f658f5fb9512e2c490349a8eeb
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -315,15 +315,15 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) /%{_lib}/libkbdfile.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/libkbdfile.so.1
+%ghost /%{_lib}/libkbdfile.so.1
 %attr(755,root,root) /%{_lib}/libkeymap.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/libkeymap.so.1
+%ghost /%{_lib}/libkeymap.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %doc docs-doxy/*
-%attr(755,root,root) %{_libdir}/libkbdfile.so
-%attr(755,root,root) %{_libdir}/libkeymap.so
+%{_libdir}/libkbdfile.so
+%{_libdir}/libkeymap.so
 %{_includedir}/kbd
 %{_includedir}/kbdfile.h
 %{_includedir}/keymap.h
